@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name='viewport' content='width=device-width' />
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="manifest" href="manifest.json">
+<title>Javascript Game</title>
+<style>
+@media (orientation: landscape) {
+
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	body, html {
+		height:100%;
+	} 
+
+	canvas {
+
+		border: 1px solid;
+		position:absolute;
+		
+		width:100%;
+		height:100%;
+		background-color:black;
+	}
+}
+
+@media (orientation: portrait) {
+	canvas {
+
+		border: 1px solid;
+		position:absolute;
+		top:5%;
+		left:10%;
+		width:80%;
+		background-color:black;
+	}
+}
+
+</style>
+</head>
+
+<body>
+<canvas id="canvas" width="800" height="480">Your browser does not support html5 canvas.</canvas>
+
+<script type="text/javascript" src="rider.js"></script>  
+</body>
+</html>
