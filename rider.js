@@ -1,11 +1,6 @@
 var changeToLandscape;
-
-
-
 var canvas = document.getElementById("canvas");
 document.body.appendChild(canvas);
-//canvas.width=window.innerWidth;
-//canvas.height=window.innerHeight;
 var ctx = canvas.getContext("2d");
 ctx.strokeStyle="white";
 ctx.font="30px Arial";
@@ -29,24 +24,18 @@ var audio=new Audio('fftf.mp3');
 var nightAudio = new Audio('aoh.mp3');
 var splashAudio=new Audio('explode.wav');
 var gallop=new Audio('g.wav');
-
-var screenFactorsSet = false;
-
-
 var widthFactor = 0;
 var heightFactor = 0;
 var jx = 0, jx2 = 0, jy = 0, jy2 = 0;
 var hx = 0, hx2 = 0, hy = 0, hy2 = 0;
 var yx = 0, yx2 = 0, yy = 0, yy2 = 0;
-var screenw =screen.width, screenh = screen.height;
 
 var updateScreenCoords = function(){
 	widthFactor = screen.width/800;
 	heightFactor = screen.height/480;
 	jx = 50*widthFactor, jx2 = 250*widthFactor, jy = 50*heightFactor, jy2 = 200*heightFactor;
 	hx = 550*widthFactor, hx2 = 750*widthFactor, hy = 50*heightFactor, hy2 = 190*heightFactor;
-	yx = 300*widthFactor, yx2 = 500*widthFactor, yy = 280*heightFactor, yy2 = 430*heightFactor;
-	screenw =screen.width, screenh = screen.height;
+	yx = 300*widthFactor, yx2 = 500*widthFactor, yy = 280*heightFactor, yy2 = 430*heightFactor;	
 }
 
 
@@ -334,7 +323,7 @@ Horse.prototype.draw=function(upX,upY,upW,upH,downX,downY,downW,downH,standX,sta
 	else if(jumpS && goDown)this.horseGoDown.draw(downX,downY,downW,downH);
 	else if(jumpH && !goDown)this.horseGoUp.draw(upX,upY,upW,upH);
 	else if(jumpH && goDown)this.horseGoDown.draw(downX,downY,downW,downH);
-	else if(!start || endScreen)this.horseStand.draw(standX,standY,standW,standH);
+	else if(!start ||(endScreen && !move))this.horseStand.draw(standX,standY,standW,standH);
 	else if(!jumpS && !jumpH && !goDown && !itsOver)this.horseAnimation.animate(delay,frameNo,startX,startY,frameWidth,frameHeight);
 	else if(!jumpS && !jumpH && !goDown && itsOver)this.horseGoDown.draw(downX,downY,downW,downH);
 	if(move && !jumpS && !jumpH && !goDown && !itsOver)gallop.play();
@@ -534,7 +523,6 @@ Game.draw=function(){
 		ctx.fillText("The Rider's Glory",canvas.width/2-10,canvas.height/2-10);
 		ctx.font="20px Arial";
 		if(!changeToLandscape)ctx.fillText("Touch a Rider to select him or her",canvas.width/2,canvas.height/2+20);
-		ctx.fillText("screen width: "+screenw+", screen height: "+screenh,canvas.width/2,canvas.height/2-40);
 	}else if(timeScreen){
 		ctx.drawImage(allImages,0,600,200,60,0,0,canvas.width/2,canvas.height);
 		ctx.fillText("Tap the left or right half of the screen to choose day or night",canvas.width/2, 50);
@@ -609,7 +597,7 @@ Game.draw=function(){
 							localStorage.setItem('highScores', JSON.stringify(highScores));
 						}
 					
-				}
+					}
 					if(newHighScore){
 						ctx.fillText("NEW HIGH SCORE!",390,100);
 						ctx.fillText("CONGRATS!!!",390,150);
@@ -620,13 +608,15 @@ Game.draw=function(){
 						else ctx.fillText("Highest Score : "+highScores[2],390,100);
 					}
 				}
-				ctx.font="40px Arial";
-				ctx.fillText("Game Over",canvas.width/2,canvas.height/2);
-				ctx.font="20px Arial";
-				ctx.drawImage(allImages,880, 500, 130, 50, 135,335,130,50);
-				ctx.drawImage(allImages,230, 668, 74, 30, 163,345,74,30);
-				ctx.drawImage(allImages,880, 500, 130, 50, 535,335,130,50);
-				ctx.drawImage(allImages,305, 668, 125, 30, 538,345,125,30);
+				if(!move){
+						ctx.font="40px Arial";
+						ctx.fillText("Game Over",canvas.width/2,canvas.height/2);
+						ctx.font="20px Arial";
+						ctx.drawImage(allImages,880, 500, 130, 50, 135,335,130,50);
+						ctx.drawImage(allImages,230, 668, 74, 30, 163,345,74,30);
+						ctx.drawImage(allImages,880, 500, 130, 50, 535,335,130,50);
+						ctx.drawImage(allImages,305, 668, 125, 30, 538,345,125,30);
+				}
 			}
 	}
 	if(changeToLandscape)ctx.fillText("Tap the screen for fullscreen and rotate your device to Landscape orientation",canvas.width/2-10,30);
@@ -636,15 +626,6 @@ Game.draw=function(){
 Game.update=function(){
 	if(!selectPlayerScreen){
 		if(!timeScreen){
-			if(move){
-				if(day) audio.play();
-				else nightAudio.play();
-			}
-			else {
-				if(day) audio.pause();
-				else nightAudio.pause();
-			}
-
 			if(day)	moveCloud();
 			else moveStar();
 
@@ -777,10 +758,20 @@ touchCanvas.addEventListener("touchstart", e =>{
 				if(e.changedTouches[0].clientX >=335*widthFactor && e.changedTouches[0].clientX <=465*widthFactor && e.changedTouches[0].clientY >=215*heightFactor && e.changedTouches[0].clientY <=265*heightFactor){	
 					start=true;
 					move =true;
+					if(day) audio.play();
+					else nightAudio.play();
 				}
 			}else{
 				if(e.changedTouches[0].clientX >=650*widthFactor && e.changedTouches[0].clientY <=70*heightFactor){
 					move = !move;
+					if(move){
+						if(day) audio.play();
+						else nightAudio.play();
+					}
+					else {
+						if(day) audio.pause();
+						else nightAudio.pause();
+					}
 				}
 			}		
 		}
@@ -802,6 +793,14 @@ touchCanvas.addEventListener("touchstart", e =>{
 			}
 			if(e.changedTouches[0].clientX >=535*widthFactor && e.changedTouches[0].clientX <=665*widthFactor && e.changedTouches[0].clientY >=335*heightFactor && e.changedTouches[0].clientY <=385*heightFactor){	
 				Game.startScreen();
+				if(day){
+					audio.pause();
+					audio.currentTime = 0;
+				} 
+				else {
+					nightAudio.pause();
+					nightAudio.currentTime = 0;
+				}
 				start = false;
 			}
 		}
@@ -818,7 +817,7 @@ touchCanvas.addEventListener("touchstart", e =>{
 		if(toShowAd[0]){
 				if(e.changedTouches[0].clientX >=ad.locX*widthFactor && e.changedTouches[0].clientX <=ad.locX*widthFactor+100 && e.changedTouches[0].clientY >=195*heightFactor && e.changedTouches[0].clientY <=270*heightFactor){			
 					//window.open("https://www.linkedin.com/in/isimemen-omoifo-22081a14b/", "_self");
-					window.open("https://www.linkedin.com/in/isimemen-omoifo-22081a14b/", "_blank");
+					window.open("https://www.amazon.com/First-Five-Days-Lionean-Saga-ebook/dp/B01EQKZQCG/ref=cm_cr_arp_d_pdt_img_top?ie=UTF8", "_blank");
 				}
 			}
 			if(toShowAd[1]){
@@ -828,7 +827,7 @@ touchCanvas.addEventListener("touchstart", e =>{
 			}
 			if(toShowAd[2]){
 				if(e.changedTouches[0].clientX >=ad.locX*widthFactor && e.changedTouches[0].clientX <=ad.locX*widthFactor+100 && e.changedTouches[0].clientY >=195*heightFactor && e.changedTouches[0].clientY <=270*heightFactor){				
-					window.open("https://www.linkedin.com/in/isimemen-omoifo-22081a14b/", "_blank");
+					window.open("https://www.linkedin.com/in/azubuike-zubby-achara-68041a47/", "_blank");
 				}
 			}
 	}
