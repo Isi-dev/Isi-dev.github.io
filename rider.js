@@ -30,11 +30,25 @@ var nightAudio = new Audio('aoh.mp3');
 var splashAudio=new Audio('explode.wav');
 var gallop=new Audio('g.wav');
 
-const widthFactor = screen.width/800;
-const heightFactor = screen.height/480;
-const jx = 50*widthFactor, jx2 = 250*widthFactor, jy = 50*heightFactor, jy2 = 200*heightFactor;
-const hx = 550*widthFactor, hx2 = 750*widthFactor, hy = 50*heightFactor, hy2 = 190*heightFactor;
-const yx = 300*widthFactor, yx2 = 500*widthFactor, yy = 280*heightFactor, yy2 = 430*heightFactor;
+var screenFactorsSet = false;
+
+
+var widthFactor = 0;
+var heightFactor = 0;
+var jx = 0, jx2 = 0, jy = 0, jy2 = 0;
+var hx = 0, hx2 = 0, hy = 0, hy2 = 0;
+var yx = 0, yx2 = 0, yy = 0, yy2 = 0;
+var screenw =screen.width, screenh = screen.height;
+
+var updateScreenCoords = function(){
+	widthFactor = screen.width/800;
+	heightFactor = screen.height/480;
+	jx = 50*widthFactor, jx2 = 250*widthFactor, jy = 50*heightFactor, jy2 = 200*heightFactor;
+	hx = 550*widthFactor, hx2 = 750*widthFactor, hy = 50*heightFactor, hy2 = 190*heightFactor;
+	yx = 300*widthFactor, yx2 = 500*widthFactor, yy = 280*heightFactor, yy2 = 430*heightFactor;
+	screenw =screen.width, screenh = screen.height;
+}
+
 
 var Game={};
 Game.score=0;
@@ -520,6 +534,7 @@ Game.draw=function(){
 		ctx.fillText("The Rider's Glory",canvas.width/2-10,canvas.height/2-10);
 		ctx.font="20px Arial";
 		if(!changeToLandscape)ctx.fillText("Touch a Rider to select him or her",canvas.width/2,canvas.height/2+20);
+		ctx.fillText("screen width: "+screenw+", screen height: "+screenh,canvas.width/2,canvas.height/2-40);
 	}else if(timeScreen){
 		ctx.drawImage(allImages,0,600,200,60,0,0,canvas.width/2,canvas.height);
 		ctx.fillText("Tap the left or right half of the screen to choose day or night",canvas.width/2, 50);
@@ -660,6 +675,7 @@ Game.run=function(){
 		}
 	}else if(changeToLandscape){
 		changeToLandscape=false;
+		updateScreenCoords();
 	}
 };
 
