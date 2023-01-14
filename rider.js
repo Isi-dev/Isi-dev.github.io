@@ -14,6 +14,9 @@ ctx.textAlign="center";
 var img='images.png';
 var allImages=new Image();
 	allImages.src=img;
+	allImages.onload=function(){
+         console.log("Texture Ready!");
+ 	};
 var r=0,s=0,starRand=0;
 var countSplash=0;
 var selectPlayerScreen =true, playingScreen=false, endScreen=false, timeScreen=false;
@@ -29,6 +32,9 @@ var gallop=new Audio('g.wav');
 
 const widthFactor = screen.width/800;
 const heightFactor = screen.height/480;
+const jx = 50*widthFactor, jx2 = 250*widthFactor, jy = 50*heightFactor, jy2 = 200*heightFactor;
+const hx = 550*widthFactor, hx2 = 750*widthFactor, hy = 50*heightFactor, hy2 = 190*heightFactor;
+const yx = 300*widthFactor, yx2 = 500*widthFactor, yy = 280*heightFactor, yy2 = 430*heightFactor;
 
 var Game={};
 Game.score=0;
@@ -42,21 +48,21 @@ if (typeof(Storage) !== "undefined") {
 
 
 
-var horse1=new Horse(img);
-var horse2=new Horse(img);
-var horse3=new Horse(img);
+var horse1=new Horse();
+var horse2=new Horse();
+var horse3=new Horse();
 
-var river1=new Texture(img,0,420);
-var river2=new Texture(img,0,420);
-var splash=new Texture(img,200,385);
+var river1=new Texture(0,420);
+var river2=new Texture(0,420);
+var splash=new Texture(200,385);
 
-var sky=new Texture(img,0,420);
+var sky=new Texture(0,420);
 
 var blockLocX=[];
 var block=[];
 for(var i=0;i<6;i++){
 	blockLocX[i]=150 * i + 10 * i;
-	block[i]=new Texture(img,blockLocX[i],360);
+	block[i]=new Texture(blockLocX[i],360);
 };
 
 var restartBlocks = function(){
@@ -65,8 +71,8 @@ var restartBlocks = function(){
 	};
 }
 
-var pole=new Texture(img,canvas.width+45,270);
-var ad = new Texture(img,canvas.width,195);
+var pole=new Texture(canvas.width+45,270);
+var ad = new Texture(canvas.width,195);
 var toShowAd = [];
 for(var i =0; i<5; i++){
 	toShowAd[i] = false;
@@ -152,7 +158,7 @@ starY[3] = 180;
 starX[4] = 1050;
 starY[4] = 80;
 for(var i =0; i<5; i++){
-	star[i]=new Texture(img,starX[i],starY[i]);
+	star[i]=new Texture(starX[i],starY[i]);
 };
 
 //function to draw star
@@ -193,7 +199,7 @@ cloudY[2] = 150;
 cloudX[3] = 870;
 cloudY[3] = 40;
 for(var k=0;k<4;k++){
-	cloud[k]=new Texture(img,cloudX[k],cloudY[k]);
+	cloud[k]=new Texture(cloudX[k],cloudY[k]);
 };
 
 //function to draw cloud
@@ -263,12 +269,8 @@ var showSplash=function(){
 };
 
 
-function Texture(img,posX,posY){
-	this.image=new Image();
-	this.image.src=img;
-	this.image.onload=function(){
-         console.log("Texture Ready!");
- 	};
+function Texture(posX,posY){
+	this.image=allImages;
 	this.locX=posX;
 	this.locY=posY;
 	this.restartPosX = posX;
@@ -298,18 +300,19 @@ Texture.prototype.animate=function(delay,frameNo,startX,startY,frameWidth,frameH
 };
 
 
-function Horse(img){
+function Horse(){
 	this.posX=170;
 	this.posY=255;
-	this.horseStand=new Texture(img,this.posX,this.posY);
-	this.horseAnimation=new Texture(img,this.posX,this.posY);
-	this.horseGoUp=new Texture(img,this.posX,this.posY);
-	this.horseGoDown=new Texture(img,this.posX,this.posY);
+	this.horseStand=new Texture(this.posX,this.posY);
+	this.horseAnimation=new Texture(this.posX,this.posY);
+	this.horseGoUp=new Texture(this.posX,this.posY);
+	this.horseGoDown=new Texture(this.posX,this.posY);
 };
 
 Horse.prototype.restart= function(){
 	this.posX=170;
 	this.posY=255;
+	this.horseStand.locY=this.horseAnimation.locY=this.horseGoUp.locY=this.horseGoDown.locY=this.posY;
 }
 
 Horse.prototype.draw=function(upX,upY,upW,upH,downX,downY,downW,downH,standX,standY,standW,standH,delay,frameNo,startX,startY,frameWidth,frameHeight){
@@ -766,9 +769,9 @@ touchCanvas.addEventListener("touchstart", e =>{
 			}		
 		}
 		else if(selectPlayerScreen){
-			if(e.changedTouches[0].clientX >=50*widthFactor && e.changedTouches[0].clientX <=250*widthFactor && e.changedTouches[0].clientY >=50*heightFactor && e.changedTouches[0].clientY <=200*heightFactor)Game.jumpS();		
-			else if(e.changedTouches[0].clientX >=550*widthFactor && e.changedTouches[0].clientX <=750*widthFactor && e.changedTouches[0].clientY >=50*heightFactor && e.changedTouches[0].clientY <=190*heightFactor)Game.jumpH();
-			else if(e.changedTouches[0].clientX >=300*widthFactor && e.changedTouches[0].clientX <=500*widthFactor && e.changedTouches[0].clientY >=280*heightFactor && e.changedTouches[0].clientY <=430*heightFactor)Game.startScreen();
+			if(e.changedTouches[0].clientX >=jx && e.changedTouches[0].clientX <=jx2 && e.changedTouches[0].clientY >=jy && e.changedTouches[0].clientY <=jy2)Game.jumpS();		
+			else if(e.changedTouches[0].clientX >=hx && e.changedTouches[0].clientX <=hx2 && e.changedTouches[0].clientY >=hy && e.changedTouches[0].clientY <=hy2)Game.jumpH();
+			else if(e.changedTouches[0].clientX >=yx && e.changedTouches[0].clientX <=yx2 && e.changedTouches[0].clientY >=yy && e.changedTouches[0].clientY <=yy2)Game.startScreen();
 		}else if(timeScreen){
 			if(e.changedTouches[0].clientX <= 400*widthFactor)Game.jumpS();
 			else Game.jumpH();
