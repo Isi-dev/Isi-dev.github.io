@@ -1,0 +1,32 @@
+export const MyApps = [
+    {
+        id:1,
+        image:"",
+        genre:"",
+        platform:"",
+    },
+    {
+        id:2,
+        image:"",
+        genre:"",
+        platform:"",
+    },
+    {
+        id:3,
+        image:"",
+        genre:"",
+        platform:"",
+    },
+    {
+        id:4,
+        image:"",
+        genre:"",
+        platform:"",
+    },
+    {
+        id:5,
+        image:"",
+        genre:"",
+        platform:"",
+    },
+];

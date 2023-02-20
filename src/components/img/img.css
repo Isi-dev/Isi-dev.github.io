@@ -1,0 +1,24 @@
+.imageStyle{
+    width: 315px;
+    height:450px;
+}
+
+/* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
+@media screen and (max-width: 1024px) {
+    .imageStyle{
+        width: calc(100vw/2.3);
+        height:600px;
+    }
+
+}
+
+
+/* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
+@media screen and (max-width: 600px) {
+    .imageStyle{
+        width: 100%;
+        height:100%;
+        padding: .5rem 1rem;        
+    }
+    
+}

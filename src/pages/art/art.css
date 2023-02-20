@@ -1,0 +1,40 @@
+.linkS{
+    padding-left: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    color:white;
+    background-color: var(--color-bg-close);
+
+}
+
+.imgS{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding-top: 1.5rem;
+    gap:1rem;
+    padding-left: 1.2rem;
+}
+
+/* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
+@media screen and (max-width: 1024px) {
+    .imgS{
+        grid-template-columns: repeat(2, .1fr); 
+        padding:0;
+        padding-top: 1.5rem;
+        width:90%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+}
+
+/* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
+@media screen and (max-width: 600px) {
+    .imgS{
+        display:block;
+        width:100%;
+        padding: 0;
+       
+    }
+    
+}

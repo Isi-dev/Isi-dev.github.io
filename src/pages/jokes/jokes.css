@@ -1,0 +1,82 @@
+.linkS{
+    padding-left: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    color:white;
+    background-color: var(--color-bg-close);
+
+}
+
+.laugh{
+    padding-top: 1.5rem;
+    text-align: center;
+    padding-bottom: 1.5rem;
+}
+
+.jokesStyle{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    background-color: var(--color-bg-close);
+    margin-bottom: 2rem;
+    border: 1px solid transparent;
+    border-radius: 2rem;
+    font-family: Verdana;
+}
+
+.jokesStyle:hover{
+    background: transparent;
+    border: 1px solid transparent;
+    border-color: var(--color-primary-variant);
+}
+
+.jokeTitle{
+    padding-left: 1.5rem;
+    padding-bottom: 1rem;
+    color: var(--color-primary);
+}
+
+.jokeBody{
+    padding-left: 1.5rem;
+    padding-right: 1rem;
+    display: grid;
+    grid-auto-flow: row;
+    grid-row-gap: 20px;
+}
+
+.jokes{
+    width:50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+/* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
+@media screen and (max-width: 1024px) {
+
+    .jokes{
+        width:70%;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+}
+
+/* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
+@media screen and (max-width: 600px) {
+  
+    .laugh>h1{
+        font-size: 2rem;       
+    }
+
+    .jokes{
+        width:96%;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    .jokeTitle>h2{
+        font-size: 1.5rem;  
+    }
+    
+    .jokeBody>h3{
+        font-size: 1.08rem;
+    }
+}
