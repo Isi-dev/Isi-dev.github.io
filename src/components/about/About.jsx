@@ -20,16 +20,28 @@ const About = () => {
 
           <div className="about__content">
             <div className="about__cards">
-              <Link to="/articles#home">
-                <div className='about__card'>
-                  <MdOutlineArticle className='about__icon' />
-                  <h5>Articles</h5>
-                </div>
-              </Link>
               <Link to="/isiapps">
                 <div className='about__card'>
                   <GiGamepad className='about__icon' />
                   <h5>Apps</h5>
+                </div>
+              </Link>
+              <Link to="/videos">
+                <div className='about__card'>
+                  <MdVideoLibrary className='about__icon' />
+                  <h5>Videos</h5>
+                </div>
+              </Link>
+              <Link to="/art#home">
+                <div className='about__card'>
+                  <AiFillPicture className='about__icon' />
+                  <h5>Art</h5>
+                </div>
+              </Link>
+              <Link to="/articles#home">
+                <div className='about__card'>
+                  <MdOutlineArticle className='about__icon' />
+                  <h5>Writings</h5>
                 </div>
               </Link>
               <Link to="/books">
@@ -42,19 +54,6 @@ const About = () => {
                 <div className='about__card'>
                   <FaLaughSquint className='about__icon' />
                   <h5>Jokes</h5>
-                </div>
-
-              </Link>
-              <Link to="/art#home">
-                <div className='about__card'>
-                  <AiFillPicture className='about__icon' />
-                  <h5>Art</h5>
-                </div>
-              </Link>
-              <Link to="/videos">
-                <div className='about__card'>
-                  <MdVideoLibrary className='about__icon' />
-                  <h5>Videos</h5>
                 </div>
               </Link>
             </div>
