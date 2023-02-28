@@ -98,11 +98,11 @@
     .about__cards {
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
-        width: 50%;
+        width: 80%;
         justify-content: center;
     }
 
-    
+   
 
     .about__content p {
         margin: 1.5rem 0;
