@@ -6,6 +6,7 @@ function Ball() {
     this.posY = 620;
     this.dx = 0;
     this.curve = 0;
+    this.curveIntensity=0.04;
     this.curveMax = 0;
     this.dy = 4;
     this.rad = 10;
@@ -21,11 +22,12 @@ Ball.prototype.setPosition = function (x, y) {
     this.dy = 4;
     this.curve = 0;
     this.curveMax = 0;
+    this.curveIntensity=0.04;
 }
 
 Ball.prototype.draw = function (ctx) {
     ctx.beginPath();
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "orange";
     ctx.arc(this.posX, this.posY, this.rad, 0, 2 * Math.PI);
     ctx.fill();
 }
@@ -34,8 +36,8 @@ Ball.prototype.update = function (canvasWidth, canvasHeight) {
     this.posX += this.dx;
     this.posX -= this.curve;
     if (this.curveMax !== 0) {
-        if (this.curveMax > 0) this.curve += 0.04;
-        else this.curve -= 0.04;
+        if (this.curveMax > 0) this.curve += this.curveIntensity;
+        else this.curve -= this.curveIntensity;
     }
   
     if (this.posX <= 0) {

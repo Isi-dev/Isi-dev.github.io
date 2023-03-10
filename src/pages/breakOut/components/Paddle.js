@@ -77,7 +77,7 @@ Paddle.prototype.setPosition = function (canvas, canvasWidth, canvasHeight) {
 
 Paddle.prototype.draw = function (ctx) {
     ctx.beginPath();
-    ctx.fillStyle = "orange";
+    ctx.fillStyle = "red";
     ctx.rect(pPosX, this.posY, pWidth, 15);
     ctx.stroke();
     ctx.fill();
@@ -110,6 +110,10 @@ Paddle.prototype.update = function (canvasWidth, canvasHeight, ball) {
             else ball.dy = -4-Math.abs(vy);
             ball.dx = ball.dx + vx;
             if(ball.dx !== 0)ball.curveMax=vx*5;
+            if(vx===-2 || vx===2)ball.curveIntensity=0.04;
+            if(vx===-4 || vx===4)ball.curveIntensity=0.05;
+            if(vx===-6 || vx===6)ball.curveIntensity=0.06;
+            if(vx<=-8 || vx>=8)ball.curveIntensity=0.08;
         } 
     
         if (ball.posX + ball.rad + 5 >= pPosX && ball.posX + ball.rad <= pPosX) ball.dx = -4;

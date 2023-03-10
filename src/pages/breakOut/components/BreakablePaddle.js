@@ -30,7 +30,7 @@ BreakablePaddle.prototype.update = function (ball) {
         //Interaction with ball
         if (ball.posY + ball.rad >= this.posY && ball.posY + ball.rad <= this.posY + 8) {
             if (ball.posX + ball.rad + 5 >= this.posX && ball.posX - 5 <= this.posX + pWidth) {
-                ball.curveMax=0;
+                ball.curveMax = 0;
                 ball.dy = -4;
                 this.visible = false;
                 ball.takenOut++;
@@ -45,7 +45,9 @@ BreakablePaddle.prototype.update = function (ball) {
         }
         if (ball.posY <= this.posY + 17 && ball.posY >= this.posY + 8) {
             if (ball.posX + ball.rad + 5 >= this.posX && ball.posX - 5 <= this.posX + pWidth) {
-                ball.dy = 4;
+                if (ball.dy < -4) ball.dy += 1;
+                else
+                    ball.dy = 4;
                 this.visible = false;
                 ball.takenOut++;
             }
