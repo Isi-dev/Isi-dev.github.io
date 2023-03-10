@@ -20,7 +20,7 @@ const About = () => {
 
           <div className="about__content">
             <div className="about__cards">
-              <Link to="/isiapps">
+              <Link to="/isiapps#home">
                 <div className='about__card'>
                   <GiGamepad className='about__icon' />
                   <h5>Apps</h5>

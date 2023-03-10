@@ -1,0 +1,72 @@
+.imageStyle{
+    width: 300px;
+    height:300px;
+}
+
+.linkS{
+    padding-left: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    color:white;
+    background-color: var(--color-bg-close);
+
+}
+
+.imgS{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding-top: 1.5rem;
+    gap:1rem;
+    padding-left: 1.2rem;
+}
+
+.flexing{
+    display:flex;
+    margin-top: 2px;
+}
+
+.genre{
+    margin-left: 0;
+}
+.plat{
+    margin-left: 42%;
+}
+
+
+/* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
+@media screen and (max-width: 1024px) {
+    .imageStyle{
+        width: calc(100vw/2.3);
+        height:300px;
+    }
+
+    .imgS{
+        grid-template-columns: repeat(2, .1fr); 
+        padding:0;
+        padding-top: 1.5rem;
+        width:90%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+}
+
+
+/* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
+@media screen and (max-width: 600px) {
+    .imageStyle{
+        width: 300px;
+        height:300px;
+        padding: .5rem 1rem;        
+    }
+
+    .imgS{
+        display:block;
+        width:80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        padding: 0;
+       
+    }
+    
+}

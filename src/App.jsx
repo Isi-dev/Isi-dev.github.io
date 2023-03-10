@@ -7,6 +7,8 @@ import IsiApps from './pages/isiapps/IsiApps'
 import Jokes from './pages/jokes/Jokes'
 import Videos from './pages/videos/Videos'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import RidersGlory from './pages/ridersGlory/RidersGlory'
+import BreakOut from './pages/breakOut/BreakOut'
 
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
           <Route path="isiapps" element={<IsiApps />} />
           <Route path="jokes" element={<Jokes />} />
           <Route path="videos" element={<Videos />} />
+          <Route path="riders" element={<RidersGlory />} />
+          <Route path="breakout" element={<BreakOut />} />
         </Route>
       </Routes>
     </BrowserRouter>

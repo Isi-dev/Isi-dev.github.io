@@ -1,11 +1,25 @@
 import React from 'react'
 import { HashLink as Link } from 'react-router-hash-link';
+import IsiApp from './IsiApp'
+import { MyApps } from '../../assets/myAppsData';
+import './isiApp.css';
 
 const IsiApps = () => {
+
+
+
   return (
     <>
-    <div>Apps</div>
-    <Link to="/#about">Home</Link>
+      <div id='home' className="linkS">
+        <Link to="/#about">Home</Link>
+      </div>
+      <div  className="imgS">
+        {
+          MyApps.map((a) =>(
+            <IsiApp key={a.id} app={a} />
+          ))
+        }
+      </div>
     </>
   )
 }
