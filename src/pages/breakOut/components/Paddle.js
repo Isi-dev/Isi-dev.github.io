@@ -83,7 +83,7 @@ Paddle.prototype.draw = function (ctx) {
     ctx.fill();
 }
 
-Paddle.prototype.update = function (canvasWidth, canvasHeight, ball) {
+Paddle.prototype.update = function (canvasWidth, canvasHeight, ball, Game) {
     //Position the paddle
     if (pPosX >= 0 && pPosX + pWidth <= canvasWidth)
         pPosX += vx;
@@ -95,10 +95,10 @@ Paddle.prototype.update = function (canvasWidth, canvasHeight, ball) {
         pPosX = canvasWidth - pWidth;
         vx=0;
     } 
-    if (this.posY >= canvasHeight - 100 && this.posY <= canvasHeight - 40)
+    if (this.posY >= canvasHeight - 120 && this.posY <= canvasHeight - 40)
         this.posY += vy;
-    if (this.posY < canvasHeight - 100){
-        this.posY = canvasHeight - 100;
+    if (this.posY < canvasHeight - 120){
+        this.posY = canvasHeight - 120;
         vy=0;
     } 
     if (this.posY > canvasHeight - 40) this.posY = canvasHeight - 40;
@@ -110,18 +110,22 @@ Paddle.prototype.update = function (canvasWidth, canvasHeight, ball) {
             else ball.dy = -4-Math.abs(vy);
             ball.dx = ball.dx + vx;
             if(ball.dx !== 0)ball.curveMax=vx*5;
-            if(vx===-2 || vx===2)ball.curveIntensity=0.04;
-            if(vx===-4 || vx===4)ball.curveIntensity=0.05;
-            if(vx===-6 || vx===6)ball.curveIntensity=0.06;
-            if(vx<=-8 || vx>=8)ball.curveIntensity=0.08;
+            if(vx===-2 || vx===2)ball.curveIntensity=0.05;
+            if(vx===-4 || vx===4)ball.curveIntensity=0.06;
+            if(vx===-6 || vx===6)ball.curveIntensity=0.07;
+            if(vx<=-8 || vx>=8)ball.curveIntensity=0.09;
+            Game.score--;
         } 
     
         if (ball.posX + ball.rad + 5 >= pPosX && ball.posX + ball.rad <= pPosX) ball.dx = -4;
         if (ball.posX >= pPosX + pWidth && ball.posX - 5 <= pPosX + pWidth) ball.dx = 4;
 
     }
-    if (ball.posY <= this.posY + 15 && ball.posY >= this.posY + 8) {
-        if (ball.posX + ball.rad + 5 >= pPosX && ball.posX - 5 <= pPosX + pWidth) ball.dy = 4;
+    if (ball.posY <= this.posY + 16 && ball.posY >= this.posY + 8) {
+        if (ball.posX + ball.rad + 5 >= pPosX && ball.posX - 5 <= pPosX + pWidth){
+            ball.dy = 4;
+            Game.score-=2;
+        } 
     }
 }
 

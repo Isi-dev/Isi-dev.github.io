@@ -1,6 +1,6 @@
 
 
-const pWidth = 50;
+const pWidth = 60;
 const pHeight = 15;
 
 
@@ -25,7 +25,7 @@ BreakablePaddle.prototype.draw = function (ctx) {
     }
 }
 
-BreakablePaddle.prototype.update = function (ball) {
+BreakablePaddle.prototype.update = function (ball, Game) {
     if (this.visible) {
         //Interaction with ball
         if (ball.posY + ball.rad >= this.posY && ball.posY + ball.rad <= this.posY + 8) {
@@ -34,6 +34,7 @@ BreakablePaddle.prototype.update = function (ball) {
                 ball.dy = -4;
                 this.visible = false;
                 ball.takenOut++;
+                Game.score+=15;
             }
             if (ball.posX + ball.rad + 5 >= this.posX && ball.posX + ball.rad <= this.posX)
                 ball.dx = -4;
@@ -50,6 +51,7 @@ BreakablePaddle.prototype.update = function (ball) {
                     ball.dy = 4;
                 this.visible = false;
                 ball.takenOut++;
+                Game.score+=10;
             }
             if (ball.posX + ball.rad + 5 >= this.posX && ball.posX + ball.rad <= this.posX) ball.dx = -4;
             if (ball.posX >= this.posX + pWidth && ball.posX - 5 <= this.posX + pWidth) ball.dx = 4;

@@ -1,12 +1,12 @@
 
 
 function Ball() {
-    this.initialHeight = 620;
+    this.initialHeight = 60;
     this.posX = 240;
-    this.posY = 620;
+    this.posY = 60;
     this.dx = 0;
     this.curve = 0;
-    this.curveIntensity=0.04;
+    this.curveIntensity=0.05;
     this.curveMax = 0;
     this.dy = 4;
     this.rad = 10;
@@ -22,7 +22,7 @@ Ball.prototype.setPosition = function (x, y) {
     this.dy = 4;
     this.curve = 0;
     this.curveMax = 0;
-    this.curveIntensity=0.04;
+    this.curveIntensity=0.05;
 }
 
 Ball.prototype.draw = function (ctx) {
@@ -32,7 +32,7 @@ Ball.prototype.draw = function (ctx) {
     ctx.fill();
 }
 
-Ball.prototype.update = function (canvasWidth, canvasHeight) {
+Ball.prototype.update = function (canvasWidth, canvasHeight, Game) {
     this.posX += this.dx;
     this.posX -= this.curve;
     if (this.curveMax !== 0) {
@@ -55,6 +55,9 @@ Ball.prototype.update = function (canvasWidth, canvasHeight) {
 
     this.posY += this.dy;
     if (this.posY <= 0 || this.posY >= canvasHeight) {
+        if(this.posY >= canvasHeight){
+            Game.life--;
+        }
         this.dy = -this.dy;
     }
 

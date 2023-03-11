@@ -3,10 +3,11 @@ import BreakablePaddle from "./BreakablePaddle";
 var newLevel = true;
 var previousLevel = 0;
 var currentLevel = 0;
-const xSpace = 16.25, ySpace = 40;
+var ballHeightControl =0;
+const xSpace = 7.5, ySpace = 40;
 const noOfLevels =16;
 const noOfBreakables = 105;
-const breakableWidth = 50;
+const breakableWidth = 60;
 
 
 const level = [];
@@ -45,7 +46,7 @@ BreakablePaddleManager.prototype.setPosition = function () {
 	
 }
 
-BreakablePaddleManager.prototype.update = function (ctx, ball, paddle) {
+BreakablePaddleManager.prototype.update = function (ctx, ball, paddle, Game) {
 	if (newLevel) {
 		for (var l = 0; l < noOfLevels; l++) {
 			currentLevel = level[l];
@@ -62,7 +63,8 @@ BreakablePaddleManager.prototype.update = function (ctx, ball, paddle) {
 
 	if (ball.takenOut === currentLevel) {
 		newLevel = true;
-		ball.setPosition(240, ball.initialHeight);
+		ballHeightControl++;
+		ball.setPosition(240, ball.initialHeight+ballHeightControl*40);
 		ball.takenOut = 0;
 		paddle.setInitialPosition();
 	}
@@ -71,7 +73,7 @@ BreakablePaddleManager.prototype.update = function (ctx, ball, paddle) {
 	for (var n = 0; n < noOfBreakables; n++) {
 		if (breakables[n].visible) {
 			breakables[n].draw(ctx);
-			breakables[n].update(ball);
+			breakables[n].update(ball,  Game);
 		}
 	};
 }
