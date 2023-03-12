@@ -15,6 +15,17 @@ function Ball() {
 
 }
 
+Ball.prototype.restart = function () {
+    this.posX = 240;
+    this.posY = 60;
+    this.dx = 0;
+    this.curve = 0;
+    this.curveIntensity=0.05;
+    this.curveMax = 0;
+    this.dy = 4;
+    this.takenOut = 0;
+}
+
 Ball.prototype.setPosition = function (x, y) {
     this.posX = x;
     this.posY = y;
@@ -54,13 +65,13 @@ Ball.prototype.update = function (canvasWidth, canvasHeight, Game) {
 
 
     this.posY += this.dy;
-    if (this.posY <= 0 || this.posY >= canvasHeight) {
+    if (this.posY <= 10 || this.posY >= canvasHeight) {
         if(this.posY >= canvasHeight){
             Game.life--;
         }
         this.dy = -this.dy;
     }
-
+    
 
 }
 
