@@ -130,7 +130,6 @@ Paddle.prototype.update = function (canvasWidth, canvasHeight, ball, Game) {
     
         if (ball.posX + ball.rad + 5 >= this.pPosX && ball.posX + ball.rad <= this.pPosX) ball.dx = -4;
         if (ball.posX >= this.pPosX + this.pWidth && ball.posX - 5 <= this.pPosX + this.pWidth) ball.dx = 4;
-        console.log(Game.bonusScore);
     }
     if (ball.posY <= this.posY + 16 && ball.posY >= this.posY + 8) {
         if (ball.posX + ball.rad + 5 >= this.pPosX && ball.posX - 5 <= this.pPosX + this.pWidth){

@@ -53,14 +53,19 @@ body {
     color:gray;
  }
 
- .restart{
+ .restart1{
     text-align:left;
-    margin-left: 10px;
+    margin-left: 5%;
+ }
+
+ .restart2{
+    text-align:left;
+    margin-left: 5%;
  }
 
  .exit{
     text-align:right;
-    margin-right: 10px;
+    margin-right: 5%;
     color:gray;
  }
 
@@ -115,9 +120,9 @@ body {
 @media screen and (max-width: 480px) {
     .portraitWindow{
         padding:0;
-        width:100%;
-        margin-left: 0;
-        margin-right: 0;
+        width:90%;
+        margin-left: 5%;
+        margin-right: 5%;
         
     }
 

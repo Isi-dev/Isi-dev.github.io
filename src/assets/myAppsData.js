@@ -8,7 +8,7 @@ export const MyApps = [
     },
     {
         id:2,
-        image:"",
+        image:"/assets/appImages/breakout.png",
         genre:"Break Out",
         platform:"HTML5",
         link:"/breakout",

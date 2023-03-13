@@ -1,72 +1,113 @@
-.imageStyle{
-    width: 300px;
-    height:300px;
-}
 
 .linkS{
     padding-left: 1.5rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+    width:100%;
     color:white;
     background-color: var(--color-bg-close);
-
 }
 
 .imgS{
     display: grid;
     grid-template-columns: repeat(6, 1fr);
+    width:98%;
+    margin-left: 0.1%;
     padding-top: 1.5rem;
-    gap:1rem;
-    padding-left: 1.2rem;
+    gap:0.5rem; 
+}
+
+.imageStyle{
+    margin-top: 30px;
+    width:300px;
+    height:500px;
 }
 
 .flexing{
     display:flex;
     margin-top: 2px;
+    justify-content: space-between;
+    width: 300px;
 }
 
 .genre{
     margin-left: 0;
 }
 .plat{
-    margin-left: 42%;
+    margin-right: 0;
+}
+
+/* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
+@media screen and (max-width: 1024px) {
+
+    .imgS{
+        grid-template-columns: repeat(4, 1fr); 
+        padding:0;
+        margin-top: 1.5rem;
+        margin-left: 1%;
+    }
+
+    .imageStyle{
+        margin-top: 20px;
+        width:240px;
+        height:390px;
+
+    }
+
+    .flexing{
+        width: 240px;
+    }
 }
 
 
 /* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
-@media screen and (max-width: 1024px) {
-    .imageStyle{
-        width: calc(100vw/2.3);
-        height:300px;
-    }
+@media screen and (max-width: 920px) {
 
     .imgS{
-        grid-template-columns: repeat(2, .1fr); 
+        grid-template-columns: repeat(2, 1fr); 
         padding:0;
-        padding-top: 1.5rem;
-        width:90%;
-        padding-left: 5%;
-        padding-right: 5%;
+        margin-top: 1.5rem;
+        margin-left: 3%;
     }
 
+    .imageStyle{
+        margin-top: 20px;
+        width:340px;
+        height:570px;
+    }
 }
 
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 600px) {
+    
+    .imgS{
+        display: flex;
+        flex-direction: column;
+        
+    }
+    
+    
     .imageStyle{
-        width: 300px;
-        height:300px;
-        padding: .5rem 1rem;        
+        margin: auto;
+        justify-content: center;
+        width:100%;    
     }
 
-    .imgS{
-        display:block;
-        width:80%;
-        margin-left: 10%;
-        margin-right: 10%;
-        padding: 0;
-       
+
+    .flexing{
+        display:flex;
+        margin-top: 0px;
+        justify-content: space-between;
+        width: 350px;
+    }
+    
+    .genre{
+        margin-left: 5%;
+        text-align: center;
+    }
+    .plat{
+        margin-right: 5%;
     }
     
 }
