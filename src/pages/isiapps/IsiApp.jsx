@@ -4,8 +4,8 @@ import './isiApp.css';
 
 const IsiApp = ({ app }) => {
     return (
-        <div>
-            <Link to={app.link}>
+        <div className='appLink'>
+            <Link to={app.link} style={{color:'white'}}>
                 <div>
                     <img src={app.image}
                         alt=''

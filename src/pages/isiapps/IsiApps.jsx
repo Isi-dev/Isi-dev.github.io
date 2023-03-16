@@ -13,12 +13,14 @@ const IsiApps = () => {
       <div id='home' className="linkS">
         <Link to="/#about">Home</Link>
       </div>
-      <div  className="imgS">
-        {
-          MyApps.map((a) =>(
-            <IsiApp key={a.id} app={a} />
-          ))
-        }
+      <div style={{width:'100%'}}>
+        <div className="imgS">
+          {
+            MyApps.map((a) => (
+              <IsiApp key={a.id} app={a} />
+            ))
+          }
+        </div>
       </div>
     </>
   )

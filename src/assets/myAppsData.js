@@ -3,14 +3,14 @@ export const MyApps = [
         id:1,
         image:"",
         genre:"The Rider's Glory",
-        platform:"HTML5",
+        platform:"HTML",
         link:"/riders",
     },
     {
         id:2,
-        image:"/assets/appImages/breakout.png",
+        image:"/assets/appImages/breakout.jpg",
         genre:"Break Out",
-        platform:"HTML5",
+        platform:"HTML",
         link:"/breakout",
     },
     {
@@ -23,9 +23,9 @@ export const MyApps = [
     {
         id:4,
         image:"",
-        genre:"",
-        platform:"",
-        link:"",
+        genre:"Tetris",
+        platform:"HTML",
+        link:"/videos",
     },
     {
         id:5,

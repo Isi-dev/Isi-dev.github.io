@@ -4,6 +4,7 @@ import Ball from './components/Ball'
 import Paddle from './components/Paddle';
 import BreakablePaddleManager from './components/BreakablePaddleManager';
 import { HashLink as Link } from 'react-router-hash-link';
+//import { useNavigate } from 'react-router-dom';
 
 
 
@@ -13,6 +14,7 @@ const BreakOut = () => {
     const restartRef = useRef("null");
     const pauseRef = useRef("null");
     const canvasRef = useRef("null");
+    //const navigate = useNavigate();
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -26,33 +28,68 @@ const BreakOut = () => {
         var breakablePaddleManager = new BreakablePaddleManager();
 
         Game.score = 0;
-        let showHighScore =false;
+        let showHighScore = false;
         let newHighScore = false;
-        let highScore =0;
+        let highScore = 0;
         Game.bonusScoreMax = 500;
         Game.bonusScore = Game.bonusScoreMax;
         Game.life = 10;
         Game.victory = false;
-        if (typeof(Storage) !== "undefined") {
+        if (typeof (Storage) !== "undefined") {
             showHighScore = true;
             highScore = JSON.parse(localStorage.getItem('highScore')) || highScore;
         }
-        Game.handleHighScore = function(){
-            if(showHighScore){
-                if(Game.score > highScore){
+        Game.handleHighScore = function () {
+            if (showHighScore) {
+                if (Game.score > highScore) {
                     newHighScore = true;
                     highScore = Game.score;
                     localStorage.setItem('highScore', JSON.stringify(highScore));
                 }
-                if(newHighScore){
-                    ctx.fillText("NEW HIGH SCORE!",canvas.width / 2, canvas.height / 2 + 60);
-                }else{
-                    ctx.fillText("Highest Score: "+highScore, canvas.width / 2, canvas.height / 2 + 60);
+                if (newHighScore) {
+                    ctx.fillText("NEW HIGH SCORE!", canvas.width / 2, canvas.height / 2 + 60);
+                } else {
+                    ctx.fillText("Highest Score: " + highScore, canvas.width / 2, canvas.height / 2 + 60);
                 }
             }
         }
+
+        //Keyboard inputs
+        canvas.focus();
+        canvas.addEventListener('keydown', event => {
+            event.preventDefault();
+            switch (event.key) {
+                case "Enter":
+                    paddle.vx = 0;
+                    paddle.vy = 0;
+                    break;
+                case "ArrowLeft":
+                    if (paddle.vx >= 0) paddle.vx = -2;
+                    else
+                        paddle.vx -= 2;
+                    break;
+                case "ArrowRight":
+                    if (paddle.vx <= 0) paddle.vx = 2;
+                    else paddle.vx += 2;
+                    break;
+                case "ArrowUp":
+                    if (paddle.vy >= 0) paddle.vy = -2;
+                    else paddle.vy -= 2;
+                    break;
+                case "ArrowDown":
+                    if (paddle.vy <= 0) paddle.vy = 2;
+                    else paddle.vy += 2;
+                    break;
+                // case "Backspace":
+                //     navigate('/isiapps#home');
+                //     break;
+                default:
+                    return;
+            }
+        }, false);
         paddle.setPosition(canvas, canvas.width, canvas.height);
         breakablePaddleManager.setPosition();
+
 
         let requestID;
 
@@ -96,7 +133,7 @@ const BreakOut = () => {
             } else {
                 ctx.font = "40px verdana";
                 ctx.fillStyle = "white";
-                ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2-60);
+                ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 60);
                 ctx.fillText("Score: " + Game.score, canvas.width / 2, canvas.height / 2);
                 Game.handleHighScore();
             }
@@ -115,8 +152,9 @@ const BreakOut = () => {
         };
         render();
 
-        return () => cancelAnimationFrame(requestID);
-
+        return () => {
+            cancelAnimationFrame(requestID);
+        }
 
     }, []);
 
@@ -126,7 +164,7 @@ const BreakOut = () => {
         <div className="aroundCanvas">
             <div className="samePos">
                 <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1' : 'restart2'}>
-                   O
+                    O
                 </div>
                 <p ref={pauseRef} onClick={() => setPause(!pause)} className="pause">
                     {!pause ? "||" : "►"}
@@ -135,7 +173,7 @@ const BreakOut = () => {
                     <div className='exit'>X</div>
                 </Link>
             </div>
-            <canvas id="canvas" ref={canvasRef} className={window.innerHeight > window.innerWidth ? 'portraitWindow' : 'landscapeWindow'} />
+            <canvas id="canvas" ref={canvasRef} tabIndex={-1} className={window.innerHeight > window.innerWidth ? 'portraitWindow' : 'landscapeWindow'} />
         </div>
 
     )

@@ -26,12 +26,12 @@ const About = () => {
                   <h5>Apps</h5>
                 </div>
               </Link>
-              <Link to="/videos">
+              <a href="https://www.youtube.com/channel/UC2JuxDKaZAWamjW9hrmQjFA"  rel="noreferrer" target="_blank">
                 <div className='about__card'>
                   <MdVideoLibrary className='about__icon' />
                   <h5>Videos</h5>
                 </div>
-              </Link>
+              </a>
               <Link to="/art#home">
                 <div className='about__card'>
                   <AiFillPicture className='about__icon' />
