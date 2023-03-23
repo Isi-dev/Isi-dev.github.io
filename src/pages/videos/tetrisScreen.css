@@ -4,7 +4,7 @@ body {
     
  }
 
- .aroundCanvas{
+ .aroundCanvast{
     position: absolute;
     background-color:rgb(27, 45, 59);
     text-align: center;
@@ -14,10 +14,10 @@ body {
     right:0;
  }
 
- .samePos{
+ .samePost{
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
-    background-color: rgb(41, 35, 35);
+    background-color:black;
     width:26%;
     margin-left: 37%;
     margin-right: 37%;
@@ -27,30 +27,30 @@ body {
     cursor: pointer;
  }
 
- .restart1{
+ .restart1t{
     text-align:left;
     
  }
 
- .restart2{
+ .restart2t{
     text-align:left;
     
  }
 
- .exit{
+ .exitt{
     text-align:right;
     color:gray;
     
  }
 
-.portraitWindow{
+.portraitWindowt{
     padding:0;
     width:100%;
     margin-bottom:3%;
     background-color: black;
 }
 
-.landscapeWindow{
+.landscapeWindowt{
     padding:0;
     background-color: black;
     width:26%;
@@ -60,7 +60,7 @@ body {
 
 /* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
 @media screen and (max-width: 1280px) {
-    .portraitWindow{
+    .portraitWindowt{
         padding:0;
         width:70%;
         margin-left: 15%;
@@ -68,7 +68,7 @@ body {
         
     }
     
-    .landscapeWindow{
+    .landscapeWindowt{
         padding:0;
         width:32%;
         margin-left: 34%;
@@ -76,7 +76,7 @@ body {
        
     }
 
-    .samePos{
+    .samePost{
         width:32%;
     margin-left: 34%;
     margin-right: 34%;
@@ -86,7 +86,7 @@ body {
 
 /* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
 @media screen and (max-width: 1024px) {
-    .portraitWindow{
+    .portraitWindowt{
         padding:0;
         width:70%;
         margin-left: 15%;
@@ -94,7 +94,7 @@ body {
         
     }
     
-    .landscapeWindow{
+    .landscapeWindowt{
         padding:0;
         width:30%;
         margin-left: 35%;
@@ -102,7 +102,7 @@ body {
        
     }
 
-    .samePos{
+    .samePost{
         width:30%;
         margin-left: 35%;
         margin-right: 35%;
@@ -112,7 +112,7 @@ body {
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 912px) {
-    .portraitWindow{
+    .portraitWindowt{
         padding:0;
         width:80%;
         margin-left: 10%;
@@ -120,7 +120,7 @@ body {
      
     }
 
-    .samePos{
+    .samePost{
         width:80%;
         margin-left: 10%;
         margin-right: 10%;
@@ -131,7 +131,7 @@ body {
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 768px) {
-    .portraitWindow{
+    .portraitWindowt{
         padding:0;
         width:70%;
         margin-left: 15%;
@@ -139,7 +139,7 @@ body {
      
     }
 
-    .samePos{
+    .samePost{
         width:70%;
         margin-left: 15%;
         margin-right: 15%;
@@ -149,7 +149,7 @@ body {
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 712px) {
-    .portraitWindow{
+    .portraitWindowt{
         padding:0;
         width:84%;
         margin-left: 8%;
@@ -157,7 +157,7 @@ body {
      
     }
 
-    .samePos{
+    .samePost{
         width:84%;
         margin-left: 8%;
         margin-right: 8%;
@@ -167,7 +167,7 @@ body {
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 540px) {
-    .portraitWindow{
+    .portraitWindowt{
         padding:0;
         width:70%;
         margin-left: 15%;
@@ -175,7 +175,7 @@ body {
      
     }
 
-    .samePos{
+    .samePost{
         width:70%;
         margin-left: 15%;
         margin-right: 15%;
@@ -185,18 +185,18 @@ body {
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 480px) {
-    .portraitWindow{
+    .portraitWindowt{
         padding:0;
-        width:80%;
-        margin-left: 10%;
-        margin-right: 10%;
+        width:66%;
+        margin-left: 17%;
+        margin-right: 17%;
         
     }
 
-    .samePos{
-        width:80%;
-        margin-left: 10%;
-        margin-right: 10%;
+    .samePost{
+        width:66%;
+        margin-left: 17%;
+        margin-right: 17%;
      }
 
 }
