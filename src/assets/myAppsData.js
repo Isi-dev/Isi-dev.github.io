@@ -25,7 +25,7 @@ export const MyApps = [
         image:"/assets/appImages/tetris.png",
         genre:"Tetris",
         platform:"HTML",
-        link:"/videos",
+        link:"/videos#topOfGame",
     },
     {
         id:5,

@@ -10,6 +10,7 @@ const Videos = () => {
   const canvasRef = useRef("null");
 
   useEffect(() => {
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.textAlign = "center";
@@ -21,7 +22,7 @@ const Videos = () => {
 
     const pieces = [
       // I-piece    white
-      [[1, 1, 1, 1]],
+      [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
       // L-piece blue
       [[1, 0, 0], [1, 1, 1]],
       // J-piece red
@@ -44,14 +45,12 @@ const Videos = () => {
     let nextPiece = getRandomPiece();
     let currentX = currentPiece.x;
     let currentY = 0;
+    let vx = 0;
     let gameScore = 0;
     let isGameOver = false;
     let lv = 1;
     let numberCleared = 0;
     let merged = false;
-    let flashCount = 0;
-    const flashRows = [];
-    let goDown = false;
     let showHighScore = false;
     let newHighScore = false;
     let highScore = 0;
@@ -91,7 +90,7 @@ const Videos = () => {
         chosenColor = pieceColors[2];
       if (chosenPiece === pieces[0]) {
         posX = 3;
-        posY = -1.5;
+        posY = -3.5;
       }
       if (chosenPiece === pieces[3]) posX = 4;
 
@@ -125,9 +124,7 @@ const Videos = () => {
 
     function drawBoard() {
       board.forEach((row, rowIndex) => {
-        // if(checking===100)console.log('row: '+row,rowIndex);
         row.forEach((cell, colIndex) => {
-          //if(checking===100)console.log('cell :'+cell,colIndex);
           if (cell !== 0) {
             drawCell(colIndex, rowIndex, pieceColors[cell - 1]);
 
@@ -146,6 +143,22 @@ const Videos = () => {
         rotated[col] = [];
         for (let row = 0; row < rows; row++) {
           rotated[col][row] = arr[rows - 1 - row][col];
+        }
+      }
+
+      return rotated;
+    }
+
+    function rotatePieceAntiClockwise(arr) {
+      const rows = arr.length;
+      const cols = arr[0].length;
+
+      // Create a new array with swapped rows and cols
+      const rotated = [];
+      for (let col = 0; col < cols; col++) {
+        rotated[col] = [];
+        for (let row = 0; row < rows; row++) {
+          rotated[col][row] = arr[row][cols - 1 - col];
         }
       }
 
@@ -187,34 +200,23 @@ const Videos = () => {
       let rowsCleared = 0;
       for (let y = boardHeight - 1; y >= 0; y--) {
         if (board[y].every(cell => cell !== 0)) {
-          flashRow(y);
           for (let x = 4; x >= 0; x--) {
             setTimeout(() => { board[y][x] = 0 }, 120 * (4 - x));
           }
           for (let x1 = 5; x1 < boardWidth; x1++) {
             setTimeout(() => { board[y][x1] = 0 }, 120 * (x1 - 5));
           }
-          goDown = true;
+          // goDown = true;
           rowsCleared++;
         }
 
       }
       gameScore += rowsCleared ** 2 * 10 * lv;
       numberCleared += rowsCleared;
-      if (numberCleared >= 30) {
+      if (numberCleared >= 10) {
         lv++;
         numberCleared = 0;
       }
-    }
-
-    function flashRow(row) {
-      flashRows.push(row);
-      setTimeout(() => {
-        const index = flashRows.indexOf(row);
-        if (index > -1) {
-          flashRows.splice(index, 1);
-        }
-      }, 200);
     }
 
     function takeRowsDown() {
@@ -233,38 +235,12 @@ const Videos = () => {
           }
         }
       }
-      setTimeout(() => { goDown = false; }, 800);
-    }
-
-    function flash() {
-      // Draw flashing rows
-      if (flashRows.length === 4)
-        for (let i = 0; i < flashRows.length; i++) {
-          const row = flashRows[i];
-          if (row >= 0 && row < boardHeight) {
-            // Calculate row position
-            const y = row * cellSize;
-
-            // Flashing animation
-            if (flashCount % 2 === 0) {
-              ctx.fillStyle = "white";
-            } else {
-              ctx.fillStyle = "black";
-            }
-            ctx.fillRect(0, y + 100, canvas.width, cellSize);
-          }
-        }
-
-      // Increment flashCount
-      flashCount++;
-      if (flashCount > 5) {
-        flashCount = 0;
-      }
     }
 
     function update() {
       if (!isGameOver) {
-        if (goDown) takeRowsDown();
+        //if (goDown) takeRowsDown();
+        takeRowsDown();
         if (isColliding(currentPiece.piece, currentX, currentY + 1)) {
           mergePiece(currentPiece.piece, currentX, currentY);
           clearRows();
@@ -278,29 +254,27 @@ const Videos = () => {
             currentY = 0;
           }
         } else {
-          // for (var i = 0; i < lv; i++) {
           currentY++;
-          //     if (isColliding(currentPiece.piece, currentX, currentY + 1)) break;
-          // }
+          currentX += vx;
+          if (isColliding(currentPiece.piece, currentX, currentY + 1) || isColliding(currentPiece.piece, currentX + 1, currentY) || isColliding(currentPiece.piece, currentX - 1, currentY))
+            vx = 0;
         }
       }
     }
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // checking++;
-      setInterval(flash, 10);
       if (pauseRef.current.textContent === "||")
         drawBoard();
 
       drawPiece(currentPiece.piece, currentX, currentY, currentPiece.color);
       ctx.fillStyle = 'white';
-      ctx.fillRect(1, 1, 398, 2);
-      ctx.fillRect(1, 100, 399, 2);
-      ctx.fillRect(1, 1, 2, 99);
-      ctx.fillRect(398, 1, 2, 99);
+      //ctx.fillRect(0, 0, 399, 1);
+      ctx.fillRect(0, 100, 400, 2);
+      //ctx.fillRect(0, 0, 2, 99);
+      //ctx.fillRect(398, 0, 2, 99);
       ctx.font = 'bold 15px sans-serif';
-      ctx.fillText('NEXT', 180, 18);
+      ctx.fillText('NEXT', 200, 18);
       ctx.font = 'bold 20px sans-serif';
       ctx.fillText('Lv', 25, 40);
       ctx.fillText('SCORE', 300, 40);
@@ -313,7 +287,7 @@ const Videos = () => {
 
       if (isGameOver) {
         ctx.fillStyle = 'white';
-        ctx.font = 'bold 50px sans-serif';
+        ctx.font = 'bold 40px sans-serif';
         ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
         handleHighScore();
       }
@@ -329,12 +303,11 @@ const Videos = () => {
         currentY = 0;
         numberCleared = 0;
         merged = false;
-        flashCount = 0;
-        goDown = false;
+        // goDown = false;
         newHighScore = false;
         gameScore = 0;
-        for(let reSt = 0; reSt<boardHeight; reSt++){
-          for(let rs=0;rs<boardWidth;rs++)
+        for (let reSt = 0; reSt < boardHeight; reSt++) {
+          for (let rs = 0; rs < boardWidth; rs++)
             board[reSt][rs] = 0;
         }
         currentPiece = getRandomPiece();
@@ -373,14 +346,14 @@ const Videos = () => {
         //Swipe right
         if (startTouchX < endTouchX - swipeLimit) {
           if (!isColliding(currentPiece.piece, currentX + 1, currentY)) {
-            currentX++;
+            vx = 1;
           }
         }
 
         //Swipe left
         if (startTouchX > endTouchX + swipeLimit) {
           if (!isColliding(currentPiece.piece, currentX - 1, currentY)) {
-            currentX--;
+            vx = -1;
           }
 
         }
@@ -395,19 +368,23 @@ const Videos = () => {
 
         //Swipe Up
         if (startTouchY > endTouchY + swipeLimit) {
-          const rotatedPiece = rotatePiece(currentPiece.piece);
-          if (!isColliding(rotatedPiece, currentX, currentY)) {
-            currentPiece.piece = rotatedPiece;
+          if (startTouchX < currentX*cellSize) {
+            const rotatedPiece = rotatePiece(currentPiece.piece);
+            if (!isColliding(rotatedPiece, currentX, currentY)) {
+              currentPiece.piece = rotatedPiece;
+            }
+          }else{
+             const rotatedPiece = rotatePieceAntiClockwise(currentPiece.piece);
+             if (!isColliding(rotatedPiece, currentX, currentY)) {
+              currentPiece.piece = rotatedPiece;
+            }
           }
         }
       }
 
       //Handle clicks
       if (Math.abs(startTouchX - endTouchX) < swipeLimit && Math.abs(startTouchY - endTouchY) < swipeLimit) {
-        const rotatedPiece = rotatePiece(currentPiece.piece);
-        if (!isColliding(rotatedPiece, currentX, currentY)) {
-          currentPiece.piece = rotatedPiece;
-        }
+        vx = 0;
       }
       canvas.removeEventListener("touchend", swipes);
     }
@@ -418,18 +395,23 @@ const Videos = () => {
       if (!isGameOver) {
         if (event.key === 'ArrowLeft') {
           if (!isColliding(currentPiece.piece, currentX - 1, currentY)) {
-            currentX--;
+            if (vx === 1)
+              vx = 0;
+            else vx = -1;
           }
         } else if (event.key === 'ArrowRight') {
           if (!isColliding(currentPiece.piece, currentX + 1, currentY)) {
-            currentX++;
+            if (vx === -1)
+              vx = 0;
+            else vx = 1;
           }
         } else if (event.key === 'ArrowDown') {
+          vx = 0;
           while (!isColliding(currentPiece.piece, currentX, currentY + 1)) {
             currentY++;
           }
         } else if (event.key === 'ArrowUp') {
-          const rotatedPiece = rotatePiece(currentPiece.piece);
+          const rotatedPiece = rotatePieceAntiClockwise(currentPiece.piece);
           if (!isColliding(rotatedPiece, currentX, currentY)) {
             currentPiece.piece = rotatedPiece;
           }
@@ -444,7 +426,7 @@ const Videos = () => {
 
       timeoutId = setTimeout(() => {
         requestID = requestAnimationFrame(render);
-      }, (400 - (lv - 1)*50));
+      }, (400 - (lv - 1) * 50));
 
     };
     render();
@@ -458,19 +440,35 @@ const Videos = () => {
 
   return (
     <>
-      <div className="aroundCanvast">
-        <div className="samePost">
-          <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1t' : 'restart2t'}>
-            O
+      <div className="aroundCanvast" id='topOfGame'>
+        <div className='borders'>
+          <div className="samePost">
+            <div className='info'>i
+              <span className='tooltip-text'>
+                *Swipe up at left of piece to rotate piece clockwise.<br />
+                *Swipe up at right of piece to rotate piece counter-clockwise.<br />
+                *Swipe left to move piece left and right to move piece right.<br />
+                *Swipe Down to instantly place piece where you want.<br />
+                *Tap screen to stop piece from moving left or right.<br/>
+                *Tap O to restart game.<br/>
+                *Tap || to pause game.<br/>
+                *Tap ► to resume game.<br/>
+                *Tap X to exit game.<br/>
+              </span>
+            </div>
+            <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1t' : 'restart2t'}>
+              O
+            </div>
+            <p ref={pauseRef} onClick={() => setPause(!pause)} className="pauset">
+              {!pause ? "||" : "►"}
+            </p>
+            <Link to="/isiapps#home">
+              <div className='exitt' >X</div>
+            </Link>
           </div>
-          <p ref={pauseRef} onClick={() => setPause(!pause)} className="pauset">
-            {!pause ? "||" : "►"}
-          </p>
-          <Link to="/isiapps#home">
-            <div className='exitt'>X</div>
-          </Link>
+          <canvas ref={canvasRef} width="400px" height="900px" tabIndex={-1} className={window.innerHeight > window.innerWidth ? 'portraitWindowt' : 'landscapeWindowt'} />
         </div>
-        <canvas ref={canvasRef} width="400" height="900" tabIndex={-1} className={window.innerHeight > window.innerWidth ? 'portraitWindowt' : 'landscapeWindowt'} />
+
       </div>
     </>
   )

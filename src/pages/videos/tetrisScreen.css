@@ -1,26 +1,31 @@
-body {
-    margin:0;
-    padding:0;
-    
- }
 
  .aroundCanvast{
-    position: absolute;
-    background-color:rgb(27, 45, 59);
-    text-align: center;
+    position:absolute;
+    background-color:black;
     top:0;
-    bottom:0;
+    bottom: 0;
     left:0;
     right:0;
  }
 
- .samePost{
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
+ .borders{
     background-color:black;
     width:26%;
     margin-left: 37%;
     margin-right: 37%;
+ }
+
+ .samePost{
+   margin-top:5px;
+    border: 2px solid;
+    border-bottom: 0px;
+    border-color: white;
+    width:100%;
+    padding: 0.2rem 1rem 0.2rem 1rem;
+    display:flex;
+    justify-content:space-between; 
+    background-color:black;
+    text-align: center;
     color:gray;
     font-size: larger;
     font-weight: bold;
@@ -28,102 +33,90 @@ body {
  }
 
  .restart1t{
-    text-align:left;
+    color:gray;
     
  }
 
  .restart2t{
-    text-align:left;
+    color:gray;
     
  }
 
  .exitt{
-    text-align:right;
+    
     color:gray;
     
  }
 
 .portraitWindowt{
     padding:0;
+    margin:0;
+    border: 2px solid;
+    border-color: white;
     width:100%;
-    margin-bottom:3%;
     background-color: black;
 }
 
 .landscapeWindowt{
     padding:0;
+    border: 2px solid;
+    border-color: white;
+    width:100%;
     background-color: black;
-    width:26%;
-    margin-left: 37%;
-    margin-right: 37%;
+   
 }
+
+.tooltip-text{
+    visibility: hidden;
+    position: absolute;
+    z-index:1;
+    width:250px;
+    color:black;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 5px;
+    padding:5px;
+    top:25px; 
+    text-align: left;
+}
+
+.info:hover .tooltip-text{
+    visibility: visible;
+}
+
+.info .tooltip-text:hover{
+   display: none;
+}
+
 
 /* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
 @media screen and (max-width: 1280px) {
-    .portraitWindowt{
-        padding:0;
-        width:70%;
-        margin-left: 15%;
-        margin-right: 15%;
-        
-    }
-    
-    .landscapeWindowt{
-        padding:0;
-        width:32%;
-        margin-left: 34%;
-        margin-right: 34%;
-       
-    }
 
-    .samePost{
-        width:32%;
-    margin-left: 34%;
-    margin-right: 34%;
+    .borders{
+        width:26%;
+        margin-left: 37%;
+        margin-right: 37%;
      }
 
 }
 
 /* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
 @media screen and (max-width: 1024px) {
-    .portraitWindowt{
-        padding:0;
-        width:70%;
-        margin-left: 15%;
-        margin-right: 15%;
-        
-    }
-    
-    .landscapeWindowt{
-        padding:0;
-        width:30%;
-        margin-left: 35%;
-        margin-right: 35%;
-       
-    }
-
-    .samePost{
-        width:30%;
-        margin-left: 35%;
-        margin-right: 35%;
+    .borders{
+        width:24%;
+        margin-left: 38%;
+        margin-right: 38%;
      }
+    
 
 }
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 912px) {
-    .portraitWindowt{
-        padding:0;
-        width:80%;
-        margin-left: 10%;
-        margin-right: 10%;
-     
-    }
-
-    .samePost{
-        width:80%;
-        margin-left: 10%;
-        margin-right: 10%;
+    .borders{
+        width:58%;
+        margin-left: 21%;
+        margin-right: 21%;
      }
 
 }
@@ -131,51 +124,47 @@ body {
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 768px) {
-    .portraitWindowt{
-        padding:0;
-        width:70%;
-        margin-left: 15%;
-        margin-right: 15%;
-     
-    }
-
-    .samePost{
-        width:70%;
-        margin-left: 15%;
-        margin-right: 15%;
+    .borders{
+        width:54%;
+        margin-left: 23%;
+        margin-right: 23%;
      }
 
 }
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 712px) {
-    .portraitWindowt{
-        padding:0;
-        width:84%;
-        margin-left: 8%;
-        margin-right: 8%;
-     
-    }
-
-    .samePost{
-        width:84%;
-        margin-left: 8%;
-        margin-right: 8%;
+    .borders{
+        width:64%;
+        margin-left: 18%;
+        margin-right: 18%;
      }
 
 }
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
 @media screen and (max-width: 540px) {
-    .portraitWindowt{
-        padding:0;
-        width:70%;
-        margin-left: 15%;
-        margin-right: 15%;
-     
-    }
+    .borders{
+        width:50%;
+        margin-left: 25%;
+        margin-right: 25%;
+     }
 
-    .samePost{
+}
+
+/* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
+@media screen and (max-width: 520px) {
+    .borders{
+        width:80%;
+        margin-left: 10%;
+        margin-right: 10%;
+     }
+
+}
+
+/* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
+@media screen and (max-width: 411px) {
+    .borders{
         width:70%;
         margin-left: 15%;
         margin-right: 15%;
@@ -184,19 +173,23 @@ body {
 }
 
 /* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
-@media screen and (max-width: 480px) {
-    .portraitWindowt{
-        padding:0;
-        width:66%;
-        margin-left: 17%;
-        margin-right: 17%;
-        
-    }
-
-    .samePost{
+@media screen and (max-width: 380px) {
+    .borders{
         width:66%;
         margin-left: 17%;
         margin-right: 17%;
      }
+
+
+}
+
+/* =============== MEDIA QUERIES (SMALL DEVICES) ============== */
+@media screen and (max-width: 280px) {
+    .borders{
+        width:90%;
+        margin-left: 5%;
+        margin-right: 5%;
+     }
+
 
 }
