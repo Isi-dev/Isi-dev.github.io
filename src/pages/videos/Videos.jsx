@@ -45,7 +45,6 @@ const Videos = () => {
     let nextPiece = getRandomPiece();
     let currentX = currentPiece.x;
     let currentY = 0;
-    let vx = 0;
     let gameScore = 0;
     let isGameOver = false;
     let lv = 1;
@@ -255,9 +254,6 @@ const Videos = () => {
           }
         } else {
           currentY++;
-          currentX += vx;
-          if (isColliding(currentPiece.piece, currentX, currentY + 1) || isColliding(currentPiece.piece, currentX + 1, currentY) || isColliding(currentPiece.piece, currentX - 1, currentY))
-            vx = 0;
         }
       }
     }
@@ -346,14 +342,14 @@ const Videos = () => {
         //Swipe right
         if (startTouchX < endTouchX - swipeLimit) {
           if (!isColliding(currentPiece.piece, currentX + 1, currentY)) {
-            vx = 1;
+            currentX++;
           }
         }
 
         //Swipe left
         if (startTouchX > endTouchX + swipeLimit) {
           if (!isColliding(currentPiece.piece, currentX - 1, currentY)) {
-            vx = -1;
+           currentX--;
           }
 
         }
@@ -384,7 +380,7 @@ const Videos = () => {
 
       //Handle clicks
       if (Math.abs(startTouchX - endTouchX) < swipeLimit && Math.abs(startTouchY - endTouchY) < swipeLimit) {
-        vx = 0;
+        //Do nothing
       }
       canvas.removeEventListener("touchend", swipes);
     }
@@ -395,18 +391,13 @@ const Videos = () => {
       if (!isGameOver) {
         if (event.key === 'ArrowLeft') {
           if (!isColliding(currentPiece.piece, currentX - 1, currentY)) {
-            if (vx === 1)
-              vx = 0;
-            else vx = -1;
+            currentX--;
           }
         } else if (event.key === 'ArrowRight') {
           if (!isColliding(currentPiece.piece, currentX + 1, currentY)) {
-            if (vx === -1)
-              vx = 0;
-            else vx = 1;
+            currentX++;
           }
         } else if (event.key === 'ArrowDown') {
-          vx = 0;
           while (!isColliding(currentPiece.piece, currentX, currentY + 1)) {
             currentY++;
           }
@@ -445,15 +436,26 @@ const Videos = () => {
           <div className="samePost">
             <div className='info'>i
               <span className='tooltip-text'>
-                *Swipe up at left of piece to rotate piece clockwise.<br />
-                *Swipe up at right of piece to rotate piece counter-clockwise.<br />
-                *Swipe left to move piece left and right to move piece right.<br />
-                *Swipe Down to instantly place piece where you want.<br />
-                *Tap screen to stop piece from moving left or right.<br/>
+                *Swipe up at left of a piece to rotate the piece clockwise.<br />
+                *Swipe up at right of a piece to rotate the piece counter-clockwise.<br />
+                *Swipe left to move a piece left and right to move a piece right.<br />
+                *Swipe Down to instantly place a piece where you want.<br />
                 *Tap O to restart game.<br/>
                 *Tap || to pause game.<br/>
                 *Tap ► to resume game.<br/>
                 *Tap X to exit game.<br/>
+              </span>
+              <span className='tooltip-text-desktop'>
+                *Press the 'Up Arrow' key to rotate a piece.<br />
+                *Press the 'Left Arrow' key to move a piece left and the 'Right Arrow' key to move a piece right.<br />
+                *Press the 'Down Arrow' key to instantly place a piece where you want.<br />
+                *Left-Click O to restart game.<br/>
+                *Left-Click || to pause game.<br/>
+                *Left-Click ► to resume game.<br/>
+                *Left-Click X to exit game.<br/>
+                *Left-Click the game screen to use the arrow keys on your keyboard.<br/>
+
+
               </span>
             </div>
             <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1t' : 'restart2t'}>

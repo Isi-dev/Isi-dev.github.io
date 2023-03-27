@@ -67,12 +67,17 @@
 }
 
 .tooltip-text{
+display:none;
+
+}
+
+.tooltip-text-desktop{
     visibility: hidden;
     position: absolute;
     z-index:1;
-    width:250px;
+    width:300px;
     color:black;
-    font-size: 14px;
+    font-size: 20px;
     background-color: white;
     border-radius: 5px;
     padding:5px;
@@ -80,12 +85,8 @@
     text-align: left;
 }
 
-.info:hover .tooltip-text{
+.info:hover .tooltip-text-desktop{
     visibility: visible;
-}
-
-.info .tooltip-text:hover{
-   display: none;
 }
 
 
@@ -97,6 +98,33 @@
         margin-left: 37%;
         margin-right: 37%;
      }
+
+     .tooltip-text-desktop{
+        display:none;
+     }
+
+     .tooltip-text{
+        display:block;
+        visibility: hidden;
+        position: absolute;
+        z-index:1;
+        width:250px;
+        color:black;
+        font-size: 14px;
+        background-color: white;
+        border-radius: 5px;
+        padding:5px;
+        top:25px; 
+        text-align: left;
+    }
+    
+    .info:hover .tooltip-text{
+        visibility: visible;
+    }
+    
+    .info .tooltip-text:hover{
+       display: none;
+    }
 
 }
 
