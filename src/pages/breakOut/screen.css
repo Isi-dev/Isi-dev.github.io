@@ -54,7 +54,7 @@ body {
 
  .samePos{
     display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     width:26%;
     margin-left: 37%;
     margin-right: 37%;
@@ -65,17 +65,16 @@ body {
  }
 
  .restart1{
-    text-align:left;
+    color:gray;
     
  }
 
  .restart2{
-    text-align:left;
+    color:gray;
     
  }
 
  .exit{
-    text-align:right;
     color:gray;
     
  }
@@ -95,8 +94,55 @@ body {
     margin-right: 37%;
 }
 
+.tooltip-textb{
+    visibility: hidden;
+    position: absolute;
+    z-index:1;
+    width:250px;
+    color:red;
+    font-size: 14px;
+    background-color: black;
+    border-radius: 5px;
+    padding:5px;
+    top:25px; 
+    text-align: left;
+}
+
+.tooltip-text-desktopb{
+    visibility: hidden;
+    position: absolute;
+    z-index:1;
+    width:300px;
+    color:red;
+    font-size: 20px;
+    background-color: black;
+    border-radius: 5px;
+    padding:5px;
+    top:25px; 
+    text-align: left;
+}
+
+
+
+@media screen and (min-width: 1300px) {  
+    .infob:hover .tooltip-text-desktopb{
+        visibility: visible;
+    }
+}
+
 /* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
 @media screen and (max-width: 1280px) {
+
+
+    .infob:hover .tooltip-textb{
+        visibility: visible;
+    }
+    
+    .infob .tooltip-textb:hover{
+       display: none;
+    }
+
+
     .portraitWindow{
         padding:0;
         width:70%;

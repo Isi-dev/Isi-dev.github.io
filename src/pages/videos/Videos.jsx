@@ -119,8 +119,6 @@ const Videos = () => {
       });
     }
 
-
-
     function drawBoard() {
       board.forEach((row, rowIndex) => {
         row.forEach((cell, colIndex) => {
@@ -200,15 +198,13 @@ const Videos = () => {
       for (let y = boardHeight - 1; y >= 0; y--) {
         if (board[y].every(cell => cell !== 0)) {
           for (let x = 4; x >= 0; x--) {
-            setTimeout(() => { board[y][x] = 0 }, 120 * (4 - x));
+            setTimeout(() => { board[y][x] = 0 }, 100 * (4 - x));
           }
           for (let x1 = 5; x1 < boardWidth; x1++) {
-            setTimeout(() => { board[y][x1] = 0 }, 120 * (x1 - 5));
+            setTimeout(() => { board[y][x1] = 0 }, 100 * (x1 - 5));
           }
-          // goDown = true;
           rowsCleared++;
         }
-
       }
       gameScore += rowsCleared ** 2 * 10 * lv;
       numberCleared += rowsCleared;
@@ -262,13 +258,9 @@ const Videos = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       if (pauseRef.current.textContent === "||")
         drawBoard();
-
       drawPiece(currentPiece.piece, currentX, currentY, currentPiece.color);
       ctx.fillStyle = 'white';
-      //ctx.fillRect(0, 0, 399, 1);
       ctx.fillRect(0, 100, 400, 2);
-      //ctx.fillRect(0, 0, 2, 99);
-      //ctx.fillRect(398, 0, 2, 99);
       ctx.font = 'bold 15px sans-serif';
       ctx.fillText('NEXT', 200, 18);
       ctx.font = 'bold 20px sans-serif';
@@ -278,8 +270,6 @@ const Videos = () => {
       ctx.font = 'bold 25px sans-serif';
       ctx.fillText(gameScore, 300, 70);
       drawPiece(nextPiece.piece, nextPiece.x, nextPiece.y, nextPiece.color);
-
-
 
       if (isGameOver) {
         ctx.fillStyle = 'white';
@@ -299,7 +289,6 @@ const Videos = () => {
         currentY = 0;
         numberCleared = 0;
         merged = false;
-        // goDown = false;
         newHighScore = false;
         gameScore = 0;
         for (let reSt = 0; reSt < boardHeight; reSt++) {
@@ -417,7 +406,7 @@ const Videos = () => {
 
       timeoutId = setTimeout(() => {
         requestID = requestAnimationFrame(render);
-      }, (400 - (lv - 1) * 50));
+      }, (500 - (lv - 1) * 50));
 
     };
     render();
@@ -444,6 +433,7 @@ const Videos = () => {
                 *Tap || to pause game.<br/>
                 *Tap ► to resume game.<br/>
                 *Tap X to exit game.<br/>
+                *Tap this instruction screen to return to game<br/>
               </span>
               <span className='tooltip-text-desktop'>
                 *Press the 'Up Arrow' key to rotate a piece.<br />
@@ -454,8 +444,6 @@ const Videos = () => {
                 *Left-Click ► to resume game.<br/>
                 *Left-Click X to exit game.<br/>
                 *Left-Click the game screen to use the arrow keys on your keyboard.<br/>
-
-
               </span>
             </div>
             <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1t' : 'restart2t'}>

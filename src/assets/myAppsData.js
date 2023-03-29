@@ -8,10 +8,10 @@ export const MyApps = [
     },
     {
         id:2,
-        image:"/assets/appImages/breakout.png",
+        image:"/assets/appImages/bo.png",
         genre:"Break Out",
         platform:"HTML",
-        link:"/breakout",
+        link:"/breakout#home",
     },
     {
         id:3,
@@ -22,7 +22,7 @@ export const MyApps = [
     },
     {
         id:4,
-        image:"/assets/appImages/tetris.png",
+        image:"/assets/appImages/tt.png",
         genre:"Tetris",
         platform:"HTML",
         link:"/videos#topOfGame",

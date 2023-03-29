@@ -67,8 +67,17 @@
 }
 
 .tooltip-text{
-display:none;
-
+    visibility: hidden;
+    position: absolute;
+    z-index:1;
+    width:250px;
+    color:black;
+    font-size: 14px;
+    background-color: white;
+    border-radius: 5px;
+    padding:5px;
+    top:25px; 
+    text-align: left;
 }
 
 .tooltip-text-desktop{
@@ -85,8 +94,12 @@ display:none;
     text-align: left;
 }
 
-.info:hover .tooltip-text-desktop{
-    visibility: visible;
+
+
+@media screen and (min-width: 1300px) {  
+    .info:hover .tooltip-text-desktop{
+        visibility: visible;
+    }
 }
 
 
@@ -99,24 +112,7 @@ display:none;
         margin-right: 37%;
      }
 
-     .tooltip-text-desktop{
-        display:none;
-     }
-
-     .tooltip-text{
-        display:block;
-        visibility: hidden;
-        position: absolute;
-        z-index:1;
-        width:250px;
-        color:black;
-        font-size: 14px;
-        background-color: white;
-        border-radius: 5px;
-        padding:5px;
-        top:25px; 
-        text-align: left;
-    }
+     
     
     .info:hover .tooltip-text{
         visibility: visible;

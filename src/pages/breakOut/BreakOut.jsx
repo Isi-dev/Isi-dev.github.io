@@ -161,8 +161,33 @@ const BreakOut = () => {
 
     return (
 
-        <div className="aroundCanvas">
+        <div className="aroundCanvas" id='home'>
             <div className="samePos">
+            <div className='infob'>i
+              <span className='tooltip-textb'>
+                *Swipe up to move paddle up. This action is greatly restricted.<br />
+                *Swipe right to move paddle right.<br />
+                *Swipe left to move paddle left.<br />
+                *Swipe Down to move paddle down. This action is greatly restricted.<br />
+                *Tap the game screen to stop a moving paddle.<br/>
+                *Tap O to restart game.<br/>
+                *Tap || to pause game.<br/>
+                *Tap ► to resume game.<br/>
+                *Tap X to exit game.<br/>
+                *Tap this instruction screen to return to game<br/>
+              </span>
+              <span className='tooltip-text-desktopb'>
+                *Press the 'Up Arrow' key to move paddle up. This action is greatly restricted.<br />
+                *Press the 'Left Arrow' key to move paddle left and the 'Right Arrow' key to move paddle right.<br />
+                *Press the 'Down Arrow' key to move paddle down. This action is greatly restricted.<br />
+                *Press the 'Enter' key to stop a moving paddle.<br />
+                *Left-Click O to restart game.<br/>
+                *Left-Click || to pause game.<br/>
+                *Left-Click ► to resume game.<br/>
+                *Left-Click X to exit game.<br/>
+                *Left-Click the game screen to use the keys on your keyboard.<br/>
+              </span>
+            </div>
                 <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1' : 'restart2'}>
                     O
                 </div>
