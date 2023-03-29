@@ -429,21 +429,21 @@ const Videos = () => {
                 *Swipe up at right of a piece to rotate the piece counter-clockwise.<br />
                 *Swipe left to move a piece left and right to move a piece right.<br />
                 *Swipe Down to instantly place a piece where you want.<br />
-                *Tap O to restart game.<br/>
-                *Tap || to pause game.<br/>
-                *Tap ► to resume game.<br/>
-                *Tap X to exit game.<br/>
+                *Tap 'O' to restart game.<br/>
+                *Tap '||' to pause game.<br/>
+                *Tap '►' to resume game.<br/>
+                *Tap 'X' to exit game.<br/>
                 *Tap this instruction screen to return to game<br/>
               </span>
               <span className='tooltip-text-desktop'>
                 *Press the 'Up Arrow' key to rotate a piece.<br />
                 *Press the 'Left Arrow' key to move a piece left and the 'Right Arrow' key to move a piece right.<br />
                 *Press the 'Down Arrow' key to instantly place a piece where you want.<br />
-                *Left-Click O to restart game.<br/>
-                *Left-Click || to pause game.<br/>
-                *Left-Click ► to resume game.<br/>
-                *Left-Click X to exit game.<br/>
-                *Left-Click the game screen to use the arrow keys on your keyboard.<br/>
+                *Click 'O' to restart game.<br/>
+                *Click '||' to pause game.<br/>
+                *Click '►' to resume game.<br/>
+                *Click 'X' to exit game.<br/>
+                *Click the game screen to use the arrow keys on your keyboard.<br/>
               </span>
             </div>
             <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1t' : 'restart2t'}>
