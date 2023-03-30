@@ -6,7 +6,7 @@ import Books from './pages/books/Books'
 import IsiApps from './pages/isiapps/IsiApps'
 import Jokes from './pages/jokes/Jokes'
 import Videos from './pages/videos/Videos'
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import RidersGlory from './pages/ridersGlory/RidersGlory'
 import BreakOut from './pages/breakOut/BreakOut'
 
@@ -27,7 +27,6 @@ const App = () => {
           <Route path="riders" element={<RidersGlory />} />
           <Route path="breakout" element={<BreakOut />} />
         </Route>
-        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   )
