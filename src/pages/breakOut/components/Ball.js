@@ -11,7 +11,6 @@ function Ball() {
     this.dy = 4;
     this.rad = 10;
     this.takenOut = 0;
-    console.log("ball")
 
 }
 

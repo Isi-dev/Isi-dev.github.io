@@ -21,7 +21,7 @@ export const JokesHere = [
         body_3: "'To the store,' The boy replied.",
         body_4: "'Bring them let me see,' Sam ordered.",
         body_5: "Sam had a big smile on his face as he examined the canes. He said, 'A cane for each child. But this other one looks scary. It must be for special crimes.'",
-        body_6:"His nephew smiled and said, 'It is for you.'",
+        body_6:"His nephew smiled and said, 'My dad said that it is for you.'",
         body_7: "",
         body_8: "",
         body_9: "",

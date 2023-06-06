@@ -32,12 +32,12 @@ const About = () => {
                   <h5>Videos</h5>
                 </div>
               </a>
-              <Link to="/art#home">
+              <a href="https://www.artpal.com/isijomo"  rel="noreferrer" target="_blank">
                 <div className='about__card'>
                   <AiFillPicture className='about__icon' />
                   <h5>Art</h5>
                 </div>
-              </Link>
+              </a>
               <Link to="/articles#home">
                 <div className='about__card'>
                   <MdOutlineArticle className='about__icon' />

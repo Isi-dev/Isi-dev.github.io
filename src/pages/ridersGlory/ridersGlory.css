@@ -1,0 +1,249 @@
+.selectPlayers{
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.loading{
+    position: absolute;
+    margin: auto;
+    padding: 1%;
+    color: white;
+    width: 35%;
+    left: 40%;
+    top: calc(8.5% * 8);
+}
+
+.jess{
+    position:absolute;
+    padding:2%;
+    color:rgb(255, 192, 231);
+    border:2px solid gray;
+    border-radius: 30px;
+    left:15%;
+    top:35%;
+    cursor: pointer;
+}
+
+.hito{
+    position:absolute;
+    padding:2%;
+    color:rgb(216, 150, 150);
+    border:2px solid gray;
+    border-radius: 30px;
+    left:78%;
+    top:35%;
+    cursor: pointer;
+}
+
+.yosi{
+    position:absolute;
+    padding:2%;
+    color:lightgray;
+    border:2px solid gray;
+    border-radius: 30px;
+    left:48%;
+    top:66%;
+    cursor: pointer;
+}
+
+.selectTime{
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.day{
+    position:absolute;
+    background-color: black;
+    padding:2%;
+    width:7.5%;
+    color:white;
+    border:2px solid gray;
+    border-radius: 100%;
+    left:22%;
+    top:45%;
+    cursor: pointer;
+}
+
+.night{
+    position:absolute;
+    background-color: rgb(153, 209, 247);
+    padding:1%;
+    width:7%;
+    color:black;
+    border:2px solid gray;
+    border-radius: 100%;
+    left:72%;
+    top:45%;
+    cursor: pointer;
+}
+
+.displayStart{
+    position:absolute;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: Black;
+    padding:10px;
+    width:12%;
+    color:white;
+    border:3px solid gray;
+    border-radius: 20px;
+    left:46%;
+    top:45%;
+    cursor: pointer;
+}
+
+.hideStart{
+    display: none;
+}
+
+.goToSelect{
+    position:absolute;
+    font-size: 100%;
+    font-weight: bold;
+    background-color: Black;
+    color:white;
+    padding:1%;
+    border:3px solid gray;
+    border-radius: 20px;
+    margin-left: 40%;
+    top:65%;
+    cursor: pointer;
+}
+
+ .aroundCanvasR{
+    width: 100vw;
+    height:100vh;
+    background-color:black;
+ }
+
+ .samePosR{
+    display:flex;
+    justify-content: space-around;
+    background-color:black;
+    border: 1px solid rgb(56, 56, 56);
+    width:100%;
+    margin:0;
+    padding:0;
+    color:gray;
+    font-size: larger;
+    font-weight: bold;
+    cursor: pointer;
+
+ }
+
+ .restart1R{
+    color:gray;
+    
+ }
+
+ .restart2R{
+    color:gray;
+    
+ }
+
+ .exitR{
+    color:gray;
+    
+ }
+
+.tooltip-textR{
+    visibility: hidden;
+    position: absolute;
+    z-index:1;
+    width:76%;
+    color:black;
+    font-size: 20px;
+    background-color: rgb(0, 225, 255);
+    border-radius: 5px;
+    padding:5px;
+    top:25px; 
+    text-align: left;
+}
+
+.tooltip-text-desktopR{
+    visibility: hidden;
+    position: absolute;
+    z-index:1;
+    width:80%;
+    color:black;
+    font-size: 25px;
+    background-color: rgb(0, 225, 255);
+    border-radius: 5px;
+    padding:5px;
+    top:25px; 
+    text-align: left;
+}
+
+
+@media screen and (min-width: 1300px) {  
+    .lowJumpPressed{
+       display: none;
+    }
+    
+    .lowJumpReleased{
+        display: none;
+    }
+    
+    .highJumpPressed{
+        display: none;
+    }
+    
+    .highJumpReleased{
+        display: none;
+    }
+
+    
+    .infoR:hover .tooltip-text-desktopR{
+        visibility: visible;
+    }
+}
+
+
+/* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
+@media screen and (max-width: 1280px) {
+
+    .lowJumpPressed{
+        display: none;
+     }
+     
+     .lowJumpReleased{
+         display: none;
+     }
+     
+     .highJumpPressed{
+         display: none;
+     }
+     
+     .highJumpReleased{
+         display: none;
+     }
+
+    .infoR:hover .tooltip-textR{
+        visibility: visible;
+    }
+    
+    .infoR .tooltip-textR:hover{
+       display: none;
+    }
+
+}
+
+
+@media (orientation: landscape) {
+	.canvasO {	
+		position:absolute;
+		width:100%;
+		height:90%;
+		background-color:black;
+	}
+}
+
+@media (orientation: portrait) {
+	.canvasO {
+		position:absolute;
+        margin-top: 30%;
+		width:100%;
+        height:40%;
+		background-color:black;
+	}
+}

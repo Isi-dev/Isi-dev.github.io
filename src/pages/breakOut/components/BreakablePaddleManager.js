@@ -1,7 +1,6 @@
 import BreakablePaddle from "./BreakablePaddle";
 
 function BreakablePaddleManager() {
-	console.log("BreakablePaddleManager")
 	this.newLevel = true;
 	this.previousLevel = 0;
 	this.currentLevel = 0;

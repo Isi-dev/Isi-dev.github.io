@@ -4,7 +4,6 @@ import Ball from './components/Ball'
 import Paddle from './components/Paddle';
 import BreakablePaddleManager from './components/BreakablePaddleManager';
 import { HashLink as Link } from 'react-router-hash-link';
-//import { useNavigate } from 'react-router-dom';
 
 
 
@@ -14,7 +13,7 @@ const BreakOut = () => {
     const restartRef = useRef("null");
     const pauseRef = useRef("null");
     const canvasRef = useRef("null");
-    //const navigate = useNavigate();
+
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -163,31 +162,31 @@ const BreakOut = () => {
 
         <div className="aroundCanvas" id='home'>
             <div className="samePos">
-            <div className='infob'>i
-              <span className='tooltip-textb'>
-                *Swipe up to move paddle up. This action is greatly restricted.<br />
-                *Swipe right to move paddle right.<br />
-                *Swipe left to move paddle left.<br />
-                *Swipe Down to move paddle down. This action is greatly restricted.<br />
-                *Tap the game screen to stop a moving paddle.<br/>
-                *Tap 'O' to restart game.<br/>
-                *Tap '||' to pause game.<br/>
-                *Tap '►' to resume game.<br/>
-                *Tap 'X' to exit game.<br/>
-                *Tap this instruction screen to return to game<br/>
-              </span>
-              <span className='tooltip-text-desktopb'>
-                *Press the 'Up Arrow' key to move paddle up. This action is greatly restricted.<br />
-                *Press the 'Left Arrow' key to move paddle left and the 'Right Arrow' key to move paddle right.<br />
-                *Press the 'Down Arrow' key to move paddle down. This action is greatly restricted.<br />
-                *Press the 'Enter' key to stop a moving paddle.<br />
-                *Click 'O' to restart game.<br/>
-                *Click '||' to pause game.<br/>
-                *Click '►' to resume game.<br/>
-                *Click 'X' to exit game.<br/>
-                *Click the game screen to use the keys on your keyboard.<br/>
-              </span>
-            </div>
+                <div className='infob'>i
+                    <span className='tooltip-textb'>
+                        *Swipe up to move paddle up. This action is greatly restricted.<br />
+                        *Swipe right to move paddle right.<br />
+                        *Swipe left to move paddle left.<br />
+                        *Swipe Down to move paddle down. This action is greatly restricted.<br />
+                        *Tap the game screen to stop a moving paddle.<br />
+                        *Tap 'O' to restart game.<br />
+                        *Tap '||' to pause game.<br />
+                        *Tap '►' to resume game.<br />
+                        *Tap 'X' to exit game.<br />
+                        *Tap this instruction screen to return to game<br />
+                    </span>
+                    <span className='tooltip-text-desktopb'>
+                        *Press the 'Up Arrow' key to move paddle up. This action is greatly restricted.<br />
+                        *Press the 'Left Arrow' key to move paddle left and the 'Right Arrow' key to move paddle right.<br />
+                        *Press the 'Down Arrow' key to move paddle down. This action is greatly restricted.<br />
+                        *Press the 'Enter' key to stop a moving paddle.<br />
+                        *Click 'O' to restart game.<br />
+                        *Click '||' to pause game.<br />
+                        *Click '►' to resume game.<br />
+                        *Click 'X' to exit game.<br />
+                        *Click the game screen to use the keys on your keyboard.<br />
+                    </span>
+                </div>
                 <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1' : 'restart2'}>
                     O
                 </div>

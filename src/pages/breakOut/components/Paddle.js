@@ -3,7 +3,6 @@
 
 function Paddle() {
     this.posY = 0;
-    console.log("Paddle");
 
     //Touch inputs
     this.startTouchX = 0;
