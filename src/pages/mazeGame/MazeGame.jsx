@@ -11,6 +11,7 @@ const MazeGame = () => {
     const [currentScreen, setCurrentScreen] = useState("selectLevel");
     const [nextLevel, setNextLevel] = useState("");
     const [gameLevel, setGameLevel] = useState("");
+    const [canPlayLevel, setCanPlayLevel] = useState(0);
     const restartRef = useRef("null");
     const pauseRef = useRef("null");
     const canvasRef = useRef("null");
@@ -27,16 +28,18 @@ const MazeGame = () => {
     const levelRef9 = useRef("null");
     const nextRef = useRef("null");
 
-
     function addDivToDivOfLevels(levelRef, lev) {
-        divOfLevels.push(
-            <div key={lev} ref={levelRef} onClick={() => setGameLevel('level ' + (lev + 1))} className='levelSelect'
-                style={{
-                    top: `calc(8.5% * ${(lev + 1)})`,
-                }}>
-                {gameLevel === 'level ' + (lev + 1) ? "selected" : 'level ' + (lev + 1)}
-            </div>
-        )
+        if (lev <= canPlayLevel) {
+            divOfLevels.push(
+                <div key={lev} ref={levelRef} onClick={() => setGameLevel('level ' + (lev + 1))} className='levelSelect'
+                    style={{
+                        top: `calc(8.5% * ${(lev + 1)})`,
+                    }}>
+                    {gameLevel === 'level ' + (lev + 1) ? "selected" : 'level ' + (lev + 1)}
+                </div>
+            )
+        }
+        // console.log(divOfLevels.length);
     }
 
     addDivToDivOfLevels(levelRef0, 0);
@@ -55,6 +58,8 @@ const MazeGame = () => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
         ctx.textAlign = "center";
+        let enemiesCreated = false;
+
         var img = '/assets/appImages/mazeImages.png';
         var allImages = new Image();
         allImages.src = img;
@@ -175,10 +180,10 @@ const MazeGame = () => {
             [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
@@ -261,20 +266,20 @@ const MazeGame = () => {
             [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
             [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
             [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+            [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1],
+            [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1],
+            [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1],
             [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+            [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
             [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+            [1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+            [1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+            [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+            [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
             [1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
             [1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
             [1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
@@ -356,67 +361,67 @@ const MazeGame = () => {
         ];
         mazes[8] = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
             [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-            [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
+            [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+            [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+            [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 2, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
         ];
         mazes[9] = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1],
-            [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
-            [1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1],
-            [1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
-            [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1],
-            [1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
+            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],
+            [1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],
+            [1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1],
+            [1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1],
+            [1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1],
+            [1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1],
+            [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1],
+            [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
         ];
@@ -488,10 +493,11 @@ const MazeGame = () => {
                 this.bulletinCellY = 0;
                 this.showBullet = false;
                 this.timeToSeeBullet = 0;
+                if (!this.show) this.show = true;
             }
 
-            restart() {    
-                this.show = false; 
+            restart() {
+                this.show = false;
             }
 
             draw() {
@@ -797,22 +803,27 @@ const MazeGame = () => {
                 }
             }
 
-            if (levelNo === 0) enemy[0].reConstruct(13, 11, 0.03, "down", 50);
+            if (levelNo === 0) {
+                enemy[0].reConstruct(13, 11, 0.03, "down", 50);
+                enemiesCreated = true;
+            }
             else if (levelNo === 1) {
                 enemy[0].reConstruct(18, 10, 0.035, "left", 50);
                 enemy[1].reConstruct(16, 27, 0.04, "up", 50);
-
+                enemiesCreated = true;
             }
             else if (levelNo === 2) {
                 enemy[0].reConstruct(17, 15, 0.035, "left", 50);
                 enemy[1].reConstruct(11, 27, 0.03, "up", 50);
                 enemy[2].reConstruct(17, 8, 0.032, "down", 50);
+                enemiesCreated = true;
             }
             else if (levelNo === 3) {
                 enemy[0].reConstruct(2, 9, 0.025, "right", 40);
                 enemy[1].reConstruct(18, 18, 0.03, "left", 55);
                 enemy[2].reConstruct(10, 25, 0.025, "up", 50);
                 enemy[3].reConstruct(18, 3, 0.03, "down", 60);
+                enemiesCreated = true;
             }
             else if (levelNo === 4) {
                 enemy[0].reConstruct(2, 3, 0.03, "right", 50);
@@ -820,6 +831,7 @@ const MazeGame = () => {
                 enemy[2].reConstruct(10, 13, 0.025, "down", 55);
                 enemy[3].reConstruct(17, 26, 0.035, "left", 65);
                 enemy[4].reConstruct(18, 22, 0.035, "up", 50);
+                enemiesCreated = true;
             }
             else if (levelNo === 5) {
                 enemy[0].reConstruct(17, 9, 0.03, "left", 50);
@@ -828,6 +840,7 @@ const MazeGame = () => {
                 enemy[3].reConstruct(10, 9, 0.03, "down", 65);
                 enemy[4].reConstruct(2, 20, 0.03, "down", 45);
                 enemy[5].reConstruct(10, 23, 0.03, "right", 40);
+                enemiesCreated = true;
             }
             else if (levelNo === 6) {
                 enemy[0].reConstruct(3, 4, 0.03, "down", 50);
@@ -837,6 +850,7 @@ const MazeGame = () => {
                 enemy[4].reConstruct(3, 9, 0.03, "right", 45);
                 enemy[5].reConstruct(18, 18, 0.03, "left", 40);
                 enemy[6].reConstruct(4, 26, 0.03, "right", 60);
+                enemiesCreated = true;
             }
             else if (levelNo === 7) {
                 enemy[0].reConstruct(2, 26, 0.03, "up", 40);
@@ -847,30 +861,35 @@ const MazeGame = () => {
                 enemy[5].reConstruct(13, 23, 0.03, "up", 65);
                 enemy[6].reConstruct(18, 3, 0.03, "down", 70);
                 enemy[7].reConstruct(18, 26, 0.03, "left", 75);
+                enemiesCreated = true;
             }
             else if (levelNo === 8) {
-                enemy[0].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[1].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[2].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[3].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[4].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[5].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[6].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[7].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[8].reConstruct(13, 11, 0.03, "down", 50);
+                enemy[0].reConstruct(1, 5, 0.03, "down", 45);
+                enemy[1].reConstruct(15, 5, 0.04, "left", 55);
+                enemy[2].reConstruct(13, 14, 0.03, "up", 50);
+                enemy[3].reConstruct(17, 3, 0.03, "down", 80);
+                enemy[4].reConstruct(18, 22, 0.03, "up", 60);
+                enemy[5].reConstruct(8, 16, 0.03, "right", 65);
+                enemy[6].reConstruct(3, 20, 0.03, "right", 70);
+                enemy[7].reConstruct(18, 26, 0.03, "left", 75);
+                enemy[8].reConstruct(5, 5, 0.03, "down", 40);
+                enemiesCreated = true;
             }
             else if (levelNo === 9) {
-                enemy[0].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[1].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[2].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[3].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[4].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[5].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[6].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[7].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[8].reConstruct(13, 11, 0.03, "down", 50);
-                enemy[9].reConstruct(13, 11, 0.03, "down", 50);
+                enemy[0].reConstruct(1, 4, 0.03, "down", 45);
+                enemy[1].reConstruct(2, 2, 0.03, "right", 55);
+                enemy[2].reConstruct(13, 7, 0.03, "down", 60);
+                enemy[3].reConstruct(18, 7, 0.03, "left", 65);
+                enemy[4].reConstruct(6, 11, 0.03, "right", 70);
+                enemy[5].reConstruct(13, 16, 0.03, "left", 75);
+                enemy[6].reConstruct(2, 20, 0.03, "right", 95);
+                enemy[7].reConstruct(6, 20, 0.03, "up", 85);
+                enemy[8].reConstruct(16, 25, 0.03, "left", 70);
+                enemy[9].reConstruct(18, 20, 0.03, "up", 80);
+                enemiesCreated = true;
             }
+
+            // console.log("Level " + (levelNo + 1) + " Enemy reconstruction complete!");
         }
 
 
@@ -1000,7 +1019,8 @@ const MazeGame = () => {
             if (lev.current != null) {
                 if (lev.current.textContent === "selected") {
                     level[select] = true;
-                    setEnemiesForLevels();
+                    // setEnemiesForLevels();
+                    if (enemiesCreated) enemiesCreated = false;
                     setCurrentScreen("");
                     Game.playScreen = true;
                     setGameLevel("");
@@ -1011,7 +1031,8 @@ const MazeGame = () => {
         function changeLevel(l) {
             level[l] = false;
             level[l + 1] = true;
-            setEnemiesForLevels();
+            // setEnemiesForLevels();
+            if (enemiesCreated) enemiesCreated = false;
         }
 
 
@@ -1022,9 +1043,17 @@ const MazeGame = () => {
         let newHighScore = false;
         let highScores = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         Game.victory = false;
+        let noStorageSupport = false;
         if (typeof (Storage) !== "undefined") {
             showHighScore = true;
-            highScores = JSON.parse(localStorage.getItem('mazeHighScore')) || highScores;
+            highScores = JSON.parse(localStorage.getItem('jezHighScore')) || highScores;
+            let completed = 0;
+            for (let r = 0; r < 10; r++) {
+                if (highScores[r] > 0) completed++;
+            }
+            setCanPlayLevel(completed);
+        }else{
+            noStorageSupport = true;
         }
         Game.handleHighScore = function () {
             if (showHighScore) {
@@ -1034,20 +1063,26 @@ const MazeGame = () => {
                         if (finalScore > highScores[i]) {
                             newHighScore = true;
                             highScores[i] = finalScore;
-                            localStorage.setItem('mazeHighScore', JSON.stringify(highScores));
+                            localStorage.setItem('jezHighScore', JSON.stringify(highScores));
                         }
                     };
                 };
 
-                if (newHighScore) {
-                    ctx.fillText("NEW HIGH SCORE!", canvas.width / 2, canvas.height / 2 + 60);
+                if (newHighScore && !level[9]) {
+                    ctx.fillText("NEW BEST SCORE!", canvas.width / 2, canvas.height / 2);
                 } else {
                     for (var j = 0; j < noLevels; j++) {
                         if (level[j]) {
-                            ctx.fillText("Best Score: " + highScores[j], canvas.width / 2, canvas.height / 2 + 60);
+                            if (!level[9])
+                                ctx.fillText("Best Score: " + highScores[j], canvas.width / 2, canvas.height / 2);
                         };
                     };
                 }
+                let completed = 0;
+                for (let r = 0; r < 10; r++) {
+                    if (highScores[r] > 0) completed++;
+                }
+                setCanPlayLevel(completed);
             }
         }
 
@@ -1056,40 +1091,100 @@ const MazeGame = () => {
         canvas.addEventListener('keydown', event => {
             event.preventDefault();
             switch (event.key) {
-                case "Enter":
+                case " ":
                     player.direction = "";
-                    for (var m = 0; m < noLevels; m++) {
-                        if (level[m]) {
-                            if (mazes[m][player.cellY - 1][player.cellX] !== 1 || mazes[m][player.cellY + 1][player.cellX] !== 1) {
-                                player.x = player.cellX
-                                player.inCellX = 0;
+                    break;
+                case "ArrowLeft":
+                    for (var n = 0; n < noLevels; n++) {
+                        if (level[n]) {
+                            if (mazes[n][player.cellY + 1][player.cellX - 1] !== 1 && player.inCellY > 0.5) {
+                                player.cellY++;
+                                player.y = player.cellY;
+                                player.inCellY = 0;
                             }
-                            if (mazes[m][player.cellY][player.cellX - 1] !== 1 || mazes[m][player.cellY][player.cellX + 1] !== 1) {
-                                player.y = player.cellY
+                            else if (mazes[n][player.cellY][player.cellX - 1] !== 1 && Math.abs(player.inCellY) < 0.5) {
+                                player.y = player.cellY;
+                                player.inCellY = 0;
+                            }
+                            else if (mazes[n][player.cellY - 1][player.cellX - 1] !== 1 && player.inCellY < -0.5) {
+                                player.cellY--;
+                                player.y = player.cellY;
                                 player.inCellY = 0;
                             }
                         }
                     }
-                    break;
-                case "ArrowLeft":
                     if (player.y === player.cellY) {
                         player.direction = "left";
                         player.faceDirection = "left";
                     }
                     break;
                 case "ArrowRight":
+                    for (var m = 0; m < noLevels; m++) {
+                        if (level[m]) {
+                            if (mazes[m][player.cellY + 1][player.cellX + 1] !== 1 && player.inCellY > 0.5) {
+                                player.cellY++;
+                                player.y = player.cellY;
+                                player.inCellY = 0;
+                            }
+                            else if (mazes[m][player.cellY][player.cellX + 1] !== 1 && Math.abs(player.inCellY) < 0.5) {
+                                player.y = player.cellY;
+                                player.inCellY = 0;
+                            }
+                            else if (mazes[m][player.cellY - 1][player.cellX + 1] !== 1 && player.inCellY < -0.5) {
+                                player.cellY--;
+                                player.y = player.cellY;
+                                player.inCellY = 0;
+                            }
+                        }
+                    }
                     if (player.y === player.cellY) {
                         player.direction = "right";
                         player.faceDirection = "right";
                     }
                     break;
                 case "ArrowUp":
+                    for (var P = 0; P < noLevels; P++) {
+                        if (level[P]) {
+                            if (mazes[P][player.cellY - 1][player.cellX + 1] !== 1 && player.inCellX > 0.5) {
+                                player.cellX++;
+                                player.x = player.cellX;
+                                player.inCellX = 0;
+                            }
+                            else if (mazes[P][player.cellY - 1][player.cellX] !== 1 && Math.abs(player.inCellX) < 0.5) {
+                                player.x = player.cellX;
+                                player.inCellX = 0;
+                            }
+                            else if (mazes[P][player.cellY - 1][player.cellX - 1] !== 1 && player.inCellX < -0.5) {
+                                player.cellX--;
+                                player.x = player.cellX;
+                                player.inCellX = 0;
+                            }
+                        }
+                    }
                     if (player.x === player.cellX) {
                         player.direction = "up";
                         player.faceDirection = "up";
                     }
                     break;
                 case "ArrowDown":
+                    for (var o = 0; o < noLevels; o++) {
+                        if (level[o]) {
+                            if (mazes[o][player.cellY + 1][player.cellX + 1] !== 1 && player.inCellX > 0.5) {
+                                player.cellX++;
+                                player.x = player.cellX;
+                                player.inCellX = 0;
+                            }
+                            else if (mazes[o][player.cellY + 1][player.cellX] !== 1 && Math.abs(player.inCellX) < 0.5) {
+                                player.x = player.cellX;
+                                player.inCellX = 0;
+                            }
+                            else if (mazes[o][player.cellY + 1][player.cellX - 1] !== 1 && player.inCellX < -0.5) {
+                                player.cellX--;
+                                player.x = player.cellX;
+                                player.inCellX = 0;
+                            }
+                        }
+                    }
                     if (player.x === player.cellX) {
                         player.direction = "down";
                         player.faceDirection = "down";
@@ -1124,31 +1219,105 @@ const MazeGame = () => {
                 if (Math.abs(startTouchX - endTouchX) >= Math.abs(startTouchY - endTouchY)) {
                     //Swipe right
                     if (startTouchX < endTouchX - swipeLimit) {
+                        //To easily change direction while moving
+                        for (var m = 0; m < noLevels; m++) {
+                            if (level[m]) {
+                                if (mazes[m][player.cellY + 1][player.cellX + 1] !== 1 && player.inCellY > 0.5) {
+                                    player.cellY++;
+                                    player.y = player.cellY;
+                                    player.inCellY = 0;
+                                }
+                                else if (mazes[m][player.cellY][player.cellX + 1] !== 1 && Math.abs(player.inCellY) < 0.5) {
+                                    player.y = player.cellY;
+                                    player.inCellY = 0;
+                                }
+                                else if (mazes[m][player.cellY - 1][player.cellX + 1] !== 1 && player.inCellY < -0.5) {
+                                    player.cellY--;
+                                    player.y = player.cellY;
+                                    player.inCellY = 0;
+                                }
+                            }
+                        }
+                        //Main direction change code
                         if (player.y === player.cellY) {
                             player.direction = "right";
-                            player.faceDirection = "right";
                         }
+                        player.faceDirection = "right";
                     }
 
                     //Swipe left
                     if (startTouchX > endTouchX + swipeLimit) {
+                        for (var n = 0; n < noLevels; n++) {
+                            if (level[n]) {
+                                if (mazes[n][player.cellY + 1][player.cellX - 1] !== 1 && player.inCellY > 0.5) {
+                                    player.cellY++;
+                                    player.y = player.cellY;
+                                    player.inCellY = 0;
+                                }
+                                else if (mazes[n][player.cellY][player.cellX - 1] !== 1 && Math.abs(player.inCellY) < 0.5) {
+                                    player.y = player.cellY;
+                                    player.inCellY = 0;
+                                }
+                                else if (mazes[n][player.cellY - 1][player.cellX - 1] !== 1 && player.inCellY < -0.5) {
+                                    player.cellY--;
+                                    player.y = player.cellY;
+                                    player.inCellY = 0;
+                                }
+                            }
+                        }
                         if (player.y === player.cellY) {
                             player.direction = "left";
-                            player.faceDirection = "left";
                         }
+                        player.faceDirection = "left";
                     }
                 } else {
 
                     //Swipe Down
                     if (startTouchY < endTouchY - swipeLimit) {
+                        for (var o = 0; o < noLevels; o++) {
+                            if (level[o]) {
+                                if (mazes[o][player.cellY + 1][player.cellX + 1] !== 1 && player.inCellX > 0.5) {
+                                    player.cellX++;
+                                    player.x = player.cellX;
+                                    player.inCellX = 0;
+                                }
+                                else if (mazes[o][player.cellY + 1][player.cellX] !== 1 && Math.abs(player.inCellX) < 0.5) {
+                                    player.x = player.cellX;
+                                    player.inCellX = 0;
+                                }
+                                else if (mazes[o][player.cellY + 1][player.cellX - 1] !== 1 && player.inCellX < -0.5) {
+                                    player.cellX--;
+                                    player.x = player.cellX;
+                                    player.inCellX = 0;
+                                }
+                            }
+                        }
                         if (player.x === player.cellX) {
                             player.direction = "down";
-                            player.faceDirection = "down";
                         }
+                        player.faceDirection = "down";
                     }
 
                     //Swipe Up
                     if (startTouchY > endTouchY + swipeLimit) {
+                        for (var P = 0; P < noLevels; P++) {
+                            if (level[P]) {
+                                if (mazes[P][player.cellY - 1][player.cellX + 1] !== 1 && player.inCellX > 0.5) {
+                                    player.cellX++;
+                                    player.x = player.cellX;
+                                    player.inCellX = 0;
+                                }
+                                else if (mazes[P][player.cellY - 1][player.cellX] !== 1 && Math.abs(player.inCellX) < 0.5) {
+                                    player.x = player.cellX;
+                                    player.inCellX = 0;
+                                }
+                                else if (mazes[P][player.cellY - 1][player.cellX - 1] !== 1 && player.inCellX < -0.5) {
+                                    player.cellX--;
+                                    player.x = player.cellX;
+                                    player.inCellX = 0;
+                                }
+                            }
+                        }
                         if (player.x === player.cellX) player.direction = "up";
                         player.faceDirection = "up";
                     }
@@ -1159,18 +1328,6 @@ const MazeGame = () => {
 
                 if (Game.playScreen) {
                     player.direction = "";
-                    for (var m = 0; m < noLevels; m++) {
-                        if (level[m]) {
-                            if (mazes[m][player.cellY - 1][player.cellX] !== 1 || mazes[m][player.cellY + 1][player.cellX] !== 1) {
-                                player.x = player.cellX
-                                player.inCellX = 0;
-                            }
-                            if (mazes[m][player.cellY][player.cellX - 1] !== 1 || mazes[m][player.cellY][player.cellX + 1] !== 1) {
-                                player.y = player.cellY
-                                player.inCellY = 0;
-                            }
-                        }
-                    }
                 }
             }
             canvas.removeEventListener("touchend", swipes);
@@ -1195,6 +1352,7 @@ const MazeGame = () => {
                 player.cellY = 1;
                 player.faceDirection = "down";
                 restartEnemies();
+                enemiesCreated = false;
                 Game.playScreen = false;
                 setCurrentScreen("selectLevel");
                 setNextLevel("");
@@ -1223,13 +1381,14 @@ const MazeGame = () => {
                     player.cellY = 1;
                     player.direction = "";
                     player.faceDirection = "down";
-                    restartEnemies();
+
 
                     //To check if a button press is sometimes
                     //run twice and that happened to be the case.
                     // console.log("GoingToNext");
 
                     if (nextLevel) {
+                        restartEnemies();
                         let activeIndex = -1;
                         for (let i = 0; i < level.length; i++) {
                             if (level[i]) {
@@ -1257,20 +1416,35 @@ const MazeGame = () => {
 
                     if (pauseRef.current.textContent === "||") {
                         //update Stuff
-                        drawMazes();
-                        drawEnemies();
+                        if (!enemiesCreated) {
+                            setEnemiesForLevels();
+                        } else {
+                            if (!Game.victory) {
+                                drawMazes();
+                                drawEnemies();
 
-                        for (var u = 0; u < noLevels; u++) {
-                            if (level[u]) update(mazes[u]);
+                                for (var u = 0; u < noLevels; u++) {
+                                    if (level[u]) update(mazes[u]);
+                                }
+                                updateEnemies(player, Game);
+                                if (!Game.victory && seconds++ >= 60) {
+                                    Game.score--;
+                                    seconds = 0;
+                                }
+
+                                if (Game.score === 0) Game.life = 0;
+                            }
                         }
-                        updateEnemies(player, Game);
-                        if (!Game.victory && seconds++ >= 60) {
-                            Game.score--;
-                            seconds = 0;
-                        }
-                        if (Game.score === 0) Game.life = 0;
 
                     }
+
+                    if(noStorageSupport){
+                        ctx.font = "15px verdana";
+                        ctx.fillStyle = "white";
+                        ctx.fillText("This browser lacks data storage support!", canvas.width / 2, 10);
+                        ctx.fillText("Some game features will not work properly.", canvas.width / 2, 25);
+                    }
+
                     drawPlayer();
 
                     ctx.font = "20px verdana";
@@ -1280,10 +1454,41 @@ const MazeGame = () => {
                     if (Game.victory) {
                         ctx.font = "35px verdana";
                         ctx.fillStyle = "cyan";
-                        ctx.fillText("CONGRATS!", canvas.width / 2, canvas.height / 2 - 60);
-                        ctx.fillText("Score: " + Game.score * 4, canvas.width / 2, canvas.height / 2);
                         Game.handleHighScore();
-                        if (!nextLevel && !level[9]) nextLevel = true;
+                        if (!level[9]) {
+                            ctx.fillText("CONGRATS!", canvas.width / 2, canvas.height / 2 - 120);
+                            ctx.fillText("Score: " + Game.score * 4, canvas.width / 2, canvas.height / 2 - 60);
+                            if (!nextLevel) nextLevel = true;
+                        }
+                        if (level[9]) {
+                            ctx.font = "15px verdana";
+                            ctx.fillStyle = "lightgray";
+                            ctx.fillText("Don successfully evaded the Sisterhood of Jez", canvas.width / 2, 120);
+                            ctx.font = "50px verdana";
+                            ctx.fillStyle = "cyan";
+                            ctx.fillText("CONGRATS!", canvas.width / 2, 200);
+                            ctx.fillStyle = "white";
+                            ctx.font = "20px verdana";
+                            ctx.fillText("You are a Master of Stealth!", canvas.width / 2, 260);
+                            ctx.fillStyle = "pink";
+                            ctx.font = "35px verdana";
+                            ctx.fillText("Best Scores", canvas.width / 2, 320);
+                            ctx.fillStyle = "yellow";
+                            ctx.font = "30px verdana";
+                            for (let i = 0; i < level.length; i++) {
+                                if (i < 9) {
+                                    if (highScores[i] >= 1000) ctx.fillText("Level 0" + (i + 1) + " : " + highScores[i], canvas.width / 2, 360 + i * 40);
+                                    else if (highScores[i] >= 100) ctx.fillText("Level 0" + (i + 1) + " : 0" + highScores[i], canvas.width / 2, 360 + i * 40);
+                                    else ctx.fillText("Level 0" + (i + 1) + " : 00" + highScores[i], canvas.width / 2, 360 + i * 40);
+                                }
+                                else {
+                                    if (highScores[i] >= 1000) ctx.fillText("Level " + (i + 1) + " : " + highScores[i], canvas.width / 2, 360 + i * 40);
+                                    else if (highScores[i] >= 100) ctx.fillText("Level " + (i + 1) + " : 0" + highScores[i], canvas.width / 2, 360 + i * 40);
+                                    else ctx.fillText("Level " + (i + 1) + " : 00" + highScores[i], canvas.width / 2, 360 + i * 40);
+                                }
+                            }
+                        }
+
                     }
 
                 } else {

@@ -72,8 +72,8 @@ class Transmission extends Knowthese {
         this.knowthis[62].setQuestionAndOptions('Load must be shed manually without reference to NCC, RCC or ACC if the frequency falls below', '49.0Hz', '49.5Hz', '49.8Hz');
         this.knowthis[63].setQuestionAndOptions('At what frequency should an operator commence the restoration of load that was taken out due to previously low frequency?', '50.3', '50.0', '50.2');
         this.knowthis[64].setQuestionAndOptions('The high frequency alarm operates at', '51Hz', '50.5Hz', '50.8Hz');
-        this.knowthis[65].setQuestionAndOptions('', '', '', '');
-        this.knowthis[66].setQuestionAndOptions('', '', '', '');
+        this.knowthis[65].setQuestionAndOptions('When a power Island detaches from the rest of the transmission grid system with a collapse of associated generator(s)', 'Partial system collapse', 'Total system collapse', 'Power Island collapse');
+        this.knowthis[66].setQuestionAndOptions('Responsible for coordinating the paralleling operation of re-established Power islands after a system collapse', 'NCC', 'RCC', 'ACC');
         this.knowthis[67].setQuestionAndOptions('', '', '', '');
         this.knowthis[68].setQuestionAndOptions('', '', '', '');
         this.knowthis[69].setQuestionAndOptions('', '', '', '');
