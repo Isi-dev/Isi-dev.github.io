@@ -593,6 +593,7 @@ const MazeGame = () => {
                         // if (this.direction === "up" || this.direction === "down") {
                         //     if (this.bulletCellY - 1 > player.cellY || this.bulletCellY + 1 < player.cellY)
                         this.showBullet = false;
+                        shootAudio.pause();
                         // }
                     }
 
@@ -683,15 +684,18 @@ const MazeGame = () => {
                 this.bulletY = this.bulletinCellY * cellHeight + 8;
 
                 //Check bullet collision with player
-                if (((this.bulletCellY === player.cellY)
+                if ((((this.bulletCellY === player.cellY) && (this.faceDirection === 'up' || this.faceDirection === 'down'))
+                    || ((this.bulletCellY === player.cellY) && (Math.abs(player.inCellY) < 0.9))
                     || ((player.y + 0.3 < player.cellY) && (this.bulletCellY + 1 === player.cellY))
-                    || ((player.y - 0.3 > player.cellY) && (this.bulletCellY - 1 === player.cellY)))
-                    && ((this.bulletCellX === player.cellX)
-                        || ((player.x + 0.5 < player.cellX) && (this.bulletCellX + 1 === player.cellX))
-                        || ((player.x - 0.5 > player.cellX) && (this.bulletCellX - 1 === player.cellX)))) {
+                    || ((player.y - 0.2 > player.cellY) && (this.bulletCellY - 1 === player.cellY)))
+                    && (((this.bulletCellX === player.cellX) && (this.faceDirection === 'left' || this.faceDirection === 'right'))
+                        || ((this.bulletCellX === player.cellX) && (player.inCellX < 0.5))
+                        || ((player.x + 0.4 < player.cellX) && (this.bulletCellX + 1 === player.cellX))
+                        || ((player.x - 0.4 > player.cellX) && (this.bulletCellX - 1 === player.cellX)))) {
                     // console.log("Saw player!")
                     if (!this.showBullet) {
                         this.showBullet = true;
+                        shootAudio.play();
                         this.wait = this.waitMax;
                         game.score -= 100;
                     }
@@ -889,6 +893,7 @@ const MazeGame = () => {
                 enemiesCreated = true;
             }
 
+            gameAudio.play();
             // console.log("Level " + (levelNo + 1) + " Enemy reconstruction complete!");
         }
 
@@ -1035,7 +1040,8 @@ const MazeGame = () => {
             if (enemiesCreated) enemiesCreated = false;
         }
 
-
+        var gameAudio = new Audio('/assets/sounds/aoh.mp3');
+        var shootAudio = new Audio('/assets/sounds/gunShoot.mp3');
         Game.score = 300;
         Game.life = 1;
         Game.playScreen = false;
@@ -1052,12 +1058,12 @@ const MazeGame = () => {
                 if (highScores[r] > 0) completed++;
             }
             setCanPlayLevel(completed);
-        }else{
+        } else {
             noStorageSupport = true;
         }
         Game.handleHighScore = function () {
             if (showHighScore) {
-                let finalScore = Game.score * 4;
+                let finalScore = Game.score * 4 + 28;
                 for (var i = 0; i < noLevels; i++) {
                     if (level[i]) {
                         if (finalScore > highScores[i]) {
@@ -1339,6 +1345,10 @@ const MazeGame = () => {
 
             if (restartRef.current.className === 'restart1Maze') {
                 setPause(false);
+                if (!gameAudio.paused || gameAudio.currentTime) {
+                    gameAudio.pause();
+                    gameAudio.currentTime = 0;
+                }
                 Game.score = 300;
                 seconds = 0;
                 newHighScore = false;
@@ -1388,6 +1398,10 @@ const MazeGame = () => {
                     // console.log("GoingToNext");
 
                     if (nextLevel) {
+                        if (!gameAudio.paused || gameAudio.currentTime) {
+                            gameAudio.pause();
+                            gameAudio.currentTime = 0;
+                        }
                         restartEnemies();
                         let activeIndex = -1;
                         for (let i = 0; i < level.length; i++) {
@@ -1420,6 +1434,7 @@ const MazeGame = () => {
                             setEnemiesForLevels();
                         } else {
                             if (!Game.victory) {
+                                if (gameAudio.paused) gameAudio.play();
                                 drawMazes();
                                 drawEnemies();
 
@@ -1436,9 +1451,13 @@ const MazeGame = () => {
                             }
                         }
 
+
+
+                    } else {
+                        if (!gameAudio.paused) gameAudio.pause();
                     }
 
-                    if(noStorageSupport){
+                    if (noStorageSupport) {
                         ctx.font = "15px verdana";
                         ctx.fillStyle = "white";
                         ctx.fillText("This browser lacks data storage support!", canvas.width / 2, 10);
@@ -1457,7 +1476,7 @@ const MazeGame = () => {
                         Game.handleHighScore();
                         if (!level[9]) {
                             ctx.fillText("CONGRATS!", canvas.width / 2, canvas.height / 2 - 120);
-                            ctx.fillText("Score: " + Game.score * 4, canvas.width / 2, canvas.height / 2 - 60);
+                            ctx.fillText("Score: " + (Game.score * 4 + 28), canvas.width / 2, canvas.height / 2 - 60);
                             if (!nextLevel) nextLevel = true;
                         }
                         if (level[9]) {
@@ -1492,6 +1511,10 @@ const MazeGame = () => {
                     }
 
                 } else {
+                    if (!gameAudio.paused) {
+                        gameAudio.pause();
+                        gameAudio.currentTime = 0;
+                    }
                     ctx.font = "40px verdana";
                     ctx.fillStyle = "red";
                     ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 30);
@@ -1520,6 +1543,10 @@ const MazeGame = () => {
         render();
 
         return () => {
+            if (!gameAudio.paused || gameAudio.currentTime) {
+                gameAudio.pause();
+                gameAudio.currentTime = 0;
+            }
             clearInterval(intervalId);
             cancelAnimationFrame(requestID);
         }

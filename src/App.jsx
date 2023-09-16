@@ -10,6 +10,7 @@ import RidersGlory from './pages/ridersGlory/RidersGlory'
 import BreakOut from './pages/breakOut/BreakOut'
 import Electric from './pages/electricEng/Electric'
 import MazeGame from './pages/mazeGame/MazeGame'
+import WhatsTheWord from './pages/whatsTheWord/WhatsTheWord'
 // import FileConverter from './pages/fileConvert/FileConverter'
 
 
@@ -29,7 +30,7 @@ const App = () => {
           <Route path="riders" element={<RidersGlory />} />
           <Route path="breakout" element={<BreakOut />} />
           <Route path="mazegame" element={<MazeGame />} />
-          {/* <Route path="fileconvert" element={<FileConverter />} /> */}
+          <Route path="wordgame" element={<WhatsTheWord />} />
         </Route>
       </Routes>
     </BrowserRouter>

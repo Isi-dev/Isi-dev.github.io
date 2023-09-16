@@ -4,7 +4,7 @@ import Knowthese  from "./Knowthese";
 
 class Transmission extends Knowthese {
     constructor(canvas) {
-        super(canvas, 70);
+        super(canvas, 141);
     }
     setQuestionsAndOptions() {
         this.knowthis[0].setQuestionAndOptions('Transmission of electricity in Nigeria in 2020', 'TCN', 'PHED', 'NEPA');
@@ -18,7 +18,7 @@ class Transmission extends Knowthese {
         this.knowthis[8].setQuestionAndOptions('Actions and the transfer of responsibilities during a complete loss of communication in the transmission grid system', 'Operational procedure 2', 'Operational procedure 1', 'Operational procedure 4');
         this.knowthis[9].setQuestionAndOptions('System restoration after a collapse', 'Operational procedure 6', 'Operational procedure 4', 'Operational procedure 5');
         this.knowthis[10].setQuestionAndOptions('Voltage control on the transmission grid system', 'Operational procedure 4', 'Operational procedure 5', 'Operational procedure 6');
-        this.knowthis[11].setQuestionAndOptions('The Main Interconnected System shall be operated under normal and outage conditions so that in the event of a planned or fault outage of a grid equipment, the following shall be prevented from occurring: loss of supply, unacceptable high or low voltage, system instability, unacceptable overloading of apparatus, and a permanent change in the system frequency below ___ ', '49.8Hz', '49.0Hz', '48.7Hz');
+        this.knowthis[11].setQuestionAndOptions('The Main Interconnected System shall be operated under normal and outage conditions so that in the event of a planned or fault outage of a grid equipment, the following shall be prevented from occurring: a permanent change in the system frequency below ___ ', '49.8Hz', '49.0Hz', '48.7Hz');
         this.knowthis[12].setQuestionAndOptions('Which of the following is acceptable for supply to groups with demand less than 300MW during a planned outage?', 'Loss of supply', 'System instability', 'Overloading of apparatus');
         this.knowthis[13].setQuestionAndOptions('In order to meet the security standards under operational procedure 1, the merit order of power dispatch shall be __', 'Suspended', 'Enforced', 'Changed');
         this.knowthis[14].setQuestionAndOptions('Responsible for scheduling and dispatch of generation output instructions to meet the demand on the Transmission Grid System and maintain the frequency within satisfactory limits.', 'National Control Center', 'Regional Control Center', 'Area Control Center');
@@ -48,7 +48,7 @@ class Transmission extends Knowthese {
         this.knowthis[38].setQuestionAndOptions('Automatic operation report', 'OF100', 'OF105', 'OF102');
         this.knowthis[39].setQuestionAndOptions('Application for protection guarantee', 'OF1', 'OF2', 'OF4');
         this.knowthis[40].setQuestionAndOptions('Hourly reading sheet', 'OF58', 'OF56', 'OF53');
-        this.knowthis[41].setQuestionAndOptions('Work permit tag (OF means "Operating Form")', 'OF6', 'OF7', 'OF8');
+        this.knowthis[41].setQuestionAndOptions('Work permit tag', 'OF6', 'OF7', 'OF8');
         this.knowthis[42].setQuestionAndOptions('Station Guarantee Tag', 'OF8', 'OF6', 'OF7');
         this.knowthis[43].setQuestionAndOptions('Work & Test permit tag', 'OF7', 'OF6', 'OF8');
         this.knowthis[44].setQuestionAndOptions('Danger sign for work and test permit/sign tag', 'OF15', 'OF16', 'OF17');
@@ -74,9 +74,80 @@ class Transmission extends Knowthese {
         this.knowthis[64].setQuestionAndOptions('The high frequency alarm operates at', '51Hz', '50.5Hz', '50.8Hz');
         this.knowthis[65].setQuestionAndOptions('When a power Island detaches from the rest of the transmission grid system with a collapse of associated generator(s)', 'Partial system collapse', 'Total system collapse', 'Power Island collapse');
         this.knowthis[66].setQuestionAndOptions('Responsible for coordinating the paralleling operation of re-established Power islands after a system collapse', 'NCC', 'RCC', 'ACC');
-        this.knowthis[67].setQuestionAndOptions('', '', '', '');
-        this.knowthis[68].setQuestionAndOptions('', '', '', '');
-        this.knowthis[69].setQuestionAndOptions('', '', '', '');
+        this.knowthis[67].setQuestionAndOptions('In the event of a forced outage of a grid equipment, the following shall be prevented: Loss of supply, a permanent change in frequency below 49.8Hz, System instability', 'true', 'false', 'partly true');
+        this.knowthis[68].setQuestionAndOptions('In the event of a forced outage of a grid equipment, the following shall be prevented: Unacceptable high or low voltage conditions, Unacceptable oveloading of apparatus, System faults', 'partly true', 'true', 'false');
+        this.knowthis[69].setQuestionAndOptions('Operational event recording or log entry include the following reports:', 'Disturbance, Observation & Event/fault analysis', 'Disturbance & Observation only', 'Disturbance only');
+        this.knowthis[70].setQuestionAndOptions('Recording of operational incidents should be', 'faithful, accurate, prompt & complete', 'clear, concise, accurate & diplomatic', 'prompt, faithful, diplomatic & complete');
+        this.knowthis[71].setQuestionAndOptions('An approved body of Rules to create safe conditions for work and protect equipment from damage', 'Standard Protection Code', 'Grid Protection Code', 'Work Protection Code');
+        this.knowthis[72].setQuestionAndOptions('An equipment that is capable of delivering energy by being either dynamically alive, or charged can be said to be', 'alive', 'powerful', 'energetic');
+        this.knowthis[73].setQuestionAndOptions('An equipment that is isolated but not de-energized can be considered alive because it contains stored energy', 'True', 'False', 'Partly true');
+        this.knowthis[74].setQuestionAndOptions('All apparatus which the holder of a protection guarantee is authorized to approach or touch', 'Apparatus covered', 'Apparatus for work', 'Apparatus involved');
+        this.knowthis[75].setQuestionAndOptions('The specific apparatus on which specified work (test) is allowed', 'Apparatus on which work & test is authorized', 'Apparatus on which only work is authorized', 'Apparatus covered');
+        this.knowthis[76].setQuestionAndOptions('Meeting specifications or generally accepted standards of quality', 'Approved', 'Authorized', 'Accepted');
+        this.knowthis[77].setQuestionAndOptions('A partially qualified operator who is instructed or delegated to perform specified operations at an unattended station', 'Agent', 'Apprentice', 'Assistant');
+        this.knowthis[78].setQuestionAndOptions('All equipment pertaining to the generation, transmission, distribution and the use of power', 'Apparatus', 'Devices', 'Machines');
+        this.knowthis[79].setQuestionAndOptions('A person or group of persons responsible for approving and accepting apparatus or equipment for service', 'Commissioning Authority', 'Controlling Authority', 'Approving Authority');
+        this.knowthis[80].setQuestionAndOptions('A person who has operating control of specific apparatus or equipment', 'Controlling Authority', 'Operating Authority', 'Work Authority');
+        this.knowthis[81].setQuestionAndOptions('That appointed person who is responsible for preparing, establishing, and making effective Protection Guarantees or Hold-offs', 'Issuing Authority', 'Operating Authority', 'Controlling Authority');
+        this.knowthis[82].setQuestionAndOptions('That person responsible for or in-charge of specific work', 'Work Authority', 'Controlling Authority', 'Approving Authority');
+        this.knowthis[83].setQuestionAndOptions('Possessing or provided with specific authority or responsibility', 'Authorized', 'Approved', 'Empowered');
+        this.knowthis[84].setQuestionAndOptions('The control which is exercised by the controlling authority to operate apparatus or to order subordinate stations or agents to perform operations in a specified manner', 'Operating Control', 'Issuing Control', 'Targeted Control');
+        this.knowthis[85].setQuestionAndOptions('Isolated and physically removed from any source of possible re-connection', 'Obviously Isolated', 'Visibly Isolated', 'Firmly Isolated');
+        this.knowthis[86].setQuestionAndOptions('A qualified and authorized operating representative in charge of and responsible for the operation of specific apparatus', 'Operator', 'Agent', 'Controller');
+        this.knowthis[87].setQuestionAndOptions('Accepted as satisfactory in reference to experience, education ,personal competency, physical fitness and familiarity with rules, procedures, apparatus and dangers involved in work and operation', 'Qualified', 'Competent', 'Capable');
+        this.knowthis[88].setQuestionAndOptions('A permit-holder who is responsible for only the safety aspect of the work in matters relating to the protection guarantee rules', 'Safety Supervisor', 'Safety Personnel', 'Safety Man');
+        this.knowthis[89].setQuestionAndOptions('Isolated and grounded or earthed (in the electrical sense)', 'De-energized', 'Decoupled', 'Disjointed');
+        this.knowthis[90].setQuestionAndOptions('Isolated and also at rest; not spring loaded; at atmospheric pressure; free from poisonous, suffocating or explosive gases; at temperatures which are not harmful to humans', 'De-energized', 'Isolated', 'Normalized');
+        this.knowthis[91].setQuestionAndOptions('A form used to apply for any protection guarantee from the controlling authority', 'Application', 'Form A', 'Form 10');
+        this.knowthis[92].setQuestionAndOptions('A form of protection prohibiting the operation of apparatus such as switches, valves, gates etc., and is for the protection of equipment or service only', 'Caution Tag', 'Hold-Off Tag', 'Station Guarantee');
+        this.knowthis[93].setQuestionAndOptions('The control exercised by the controlling Authority to issue instructions in broad outline to a station, which may exercise its judgment on the proper method of carrying out such instructions', 'Supervisory Control', 'Remote Control', 'Direct Control');
+        this.knowthis[94].setQuestionAndOptions('A station that may be operated from a remote point', 'supervisory controlled Station', 'Remote Controlled Station', 'Direct Controlled Station');
+        this.knowthis[95].setQuestionAndOptions('Grounding switches; grounding claps, valves; stop-gates', 'De-energizing Devices', 'Earthing Devices', 'Isolating Devices');
+        this.knowthis[96].setQuestionAndOptions('A recognized territory under the jurisdiction of an Assistant General Manager', 'Region', 'District', 'Area');
+        this.knowthis[97].setQuestionAndOptions('A metallic plate or rod buried or driven into the ground, or an extended conducting body connected to such plate or rod', 'Ground', 'Metallic System', 'Plate');
+        this.knowthis[98].setQuestionAndOptions('Metallically connected to ground', 'Earthed', 'Floated', 'Solidly Linked');
+        this.knowthis[99].setQuestionAndOptions('Covered, shielded, fenced, enclosed or otherwise protected by means of suitable covers, barriers, rails or screens, mats or platforms, a person etc.', 'Guarded', 'Blocked', 'Healed');
+        this.knowthis[100].setQuestionAndOptions('A limited type of protection, which prohibits the re-energizing of apparatus in the proximity of which men are working and with which they might inadvertently make contact', 'Hold-Off', 'Caution Tag', 'Station Guarantee');
+        this.knowthis[101].setQuestionAndOptions('Physically disconnected or separated from sources of dynamic energy which in the electrical sense shall mean when separated by devices, the contacts of which are clearly visible', 'Isolated', 'Obviously Isolated', 'Fully Isolated');
+        this.knowthis[102].setQuestionAndOptions('In cases where isolating contacts are nor readily visible, what must be carried out to confirm isolation?', 'Potential Test', 'Energy Test', 'Power Test');
+        this.knowthis[103].setQuestionAndOptions('Apparatus or switchgear which is used to separate equipment from energy sources', 'Isolating Device', 'De-energizing device', 'Seperation Device');
+        this.knowthis[104].setQuestionAndOptions('A formal guarantee of protection, which carries with it an assurance that the Rules respecting issuance have been fulfilled', 'Protection Guarantee', 'Safety Guarantee', 'Work Guarantee');
+        this.knowthis[105].setQuestionAndOptions('Work-permits, work-and-test permits, and station guarantees', 'Protection Guarantees', 'Safety Guarantees', 'Work Guarantees');
+        this.knowthis[106].setQuestionAndOptions('Prescribed standards of procedure and conduct', 'Rules', 'Guides', 'Advice');
+        this.knowthis[107].setQuestionAndOptions('A form of protection, which with the approval of the man-in-charge of the apparatus, the employee provides for himself', 'Self Protection', 'Work Permit', 'Station Guarantee');
+        this.knowthis[108].setQuestionAndOptions('A station which co-ordinates, directs, and issues a work permit or a work and test permit', 'Master Station', 'Assisting Station', 'Independent Station');
+        this.knowthis[109].setQuestionAndOptions('A station which through voluntary co-operation, or by acting on instructions from superiors, issues a station guarantee', 'Assisting Station', 'Independent assisting station', 'Subordinate assisting station');
+        this.knowthis[110].setQuestionAndOptions('A station which exercises operating control over the apparatus on which it issues a station guarantee', 'Independent assisting station', 'Subordinate assisting station', 'Dependent assisting station');
+        this.knowthis[111].setQuestionAndOptions('A station which does not exercise operating control over the apparatus on which it issues a station guarantee', 'Subordinate assisting station', 'Dependent assisting station', 'Reliant assisting station');
+        this.knowthis[112].setQuestionAndOptions('A type of protection guarantee which carries with it assurance that specified isolating devices or de-energizing devices, or both, are in a specified guaranteed position and that they will remain in that position until the holder surrenders it, in conformity with the rules', 'OF4', 'OF2', 'OF3');
+        this.knowthis[113].setQuestionAndOptions('The definite and final giving up of the right of the protection afforded by a protection guarantee', 'Surrender', 'Submit', 'Return');
+        this.knowthis[114].setQuestionAndOptions('A form of protection guarantee issued by a master station to a qualified person or safety supervisor under which specific work is authorized on specified apparatus', 'Work Permit', 'Station Guarantee', 'OF3');
+        this.knowthis[115].setQuestionAndOptions('The apparatus covered by a work and test permit may be made alive by, or at the request of the permit holder for tests which are specifically authorized under the work and test permit and with the approval of controlling Authority', 'True', 'false', 'Partly True');
+        this.knowthis[116].setQuestionAndOptions('The three sections of the Standard Protection Code are', 'OF11, OF12, Protection Guarantees', 'OF10, OF11, OF12', 'Hold-Off, Guarantees, Safety Rules');
+        this.knowthis[117].setQuestionAndOptions('Changes relating to the Transmission Grid System Transmission Apparatus and Generator Plant', 'Operational procedure 8', 'Operational procedure 9', 'Operational procedure 7');
+        this.knowthis[118].setQuestionAndOptions('The back-up control box contains a Telephone directory for ACCs and Power Stations', 'True', 'False', 'Partly true');
+        this.knowthis[119].setQuestionAndOptions('Nomenclature for the Transmission Grid System', 'Operational procedure 7', 'Operational procedure 9', 'Operational procedure 10');
+        this.knowthis[120].setQuestionAndOptions('The back-up control box contains System diagrams for the Transmission Grid Interconnected System', 'True', 'False', 'Partly true');
+        this.knowthis[121].setQuestionAndOptions('An outage which has been arranged with the NCC as declared necessary by the Generators and TSP to prevent failure of plant or apparatus concerned.', 'Urgent Outage', 'Planned Outage', 'Emergency Outage');
+        this.knowthis[122].setQuestionAndOptions('The back-up control box contains Generation instruction sheets', 'True', 'False', 'Partly true');
+        this.knowthis[123].setQuestionAndOptions('Back Up National Control Centre', 'Operational procedure 9', 'Operational procedure 11', 'Operational procedure 10');
+        this.knowthis[124].setQuestionAndOptions('The back-up control box contains Standard running arrangements for the transmission Grid system', 'True', 'False', 'Partly true');
+        this.knowthis[125].setQuestionAndOptions('An outage which has been arranged with the NCC System Planning Department and is included on the annual maintenance programme', 'Planned Outage', 'Forced Outage', 'Urgent Outage');
+        this.knowthis[126].setQuestionAndOptions('Plant or Apparatus which fails to return from a plant outage on time will become a/an', 'Urgent Outage', 'Forced Outage', 'Emergency Outage');
+        this.knowthis[127].setQuestionAndOptions('An outage of plant or apparatus, which has been tripped by protection operation or operational error.', 'Forced Outage', 'Planned Outage', 'Urgent Outage');
+        this.knowthis[128].setQuestionAndOptions('Generation and Transmission Outage Planning', 'Operational procedure 10', 'Operational procedure 9', 'Operational procedure 12');
+        this.knowthis[129].setQuestionAndOptions('Market Operator Information Procedure', 'Operational procedure 14', 'Operational procedure 12', 'Operational procedure 10');
+        this.knowthis[130].setQuestionAndOptions('An outage of plant or apparatus which has been taken out of service by manual operation to prevent danger to life, damage to plants or apparatus, or due to loss of protection.', 'Emergency Outage', 'Planned Outage', 'Urgent Outage');
+        this.knowthis[131].setQuestionAndOptions('Forced Outage Management and Reporting', 'Operational procedure 11', 'Operational procedure 13', 'Operational procedure 12');
+        this.knowthis[132].setQuestionAndOptions('Transmission Offtake Allocation Procedure', 'Operational procedure 13', 'Operational procedure 11', 'Operational procedure 14');
+        this.knowthis[133].setQuestionAndOptions('Authorization of Operators', 'Operational procedure 12', 'Operational procedure 9', 'Operational procedure 11');
+        this.knowthis[134].setQuestionAndOptions('', '', '', '');
+        this.knowthis[135].setQuestionAndOptions('', '', '', '');
+        this.knowthis[136].setQuestionAndOptions('', '', '', '');
+        this.knowthis[137].setQuestionAndOptions('', '', '', '');
+        this.knowthis[138].setQuestionAndOptions('', '', '', '');
+        this.knowthis[139].setQuestionAndOptions('', '', '', '');
+        this.knowthis[140].setQuestionAndOptions('', '', '', '');
     }
 }
 

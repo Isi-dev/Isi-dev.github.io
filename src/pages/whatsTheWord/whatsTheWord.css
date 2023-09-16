@@ -1,0 +1,127 @@
+.aroundCanvasWord {
+    position: absolute;
+    background-color: black;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+}
+
+.samePosWord {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    background-color: black;
+    width: 30%;
+    margin-top: 90%;
+    margin-bottom: 0;
+    margin-left: 35%;
+    margin-right: 35%;
+    color: gray;
+    font-size: larger;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.restart1Word {
+    color: gray;
+
+}
+
+.restart2Word {
+    color: gray;
+
+}
+
+.exitWord {
+    color: gray;
+
+}
+
+.portraitWord {
+    border: none;
+    background-color: rgb(224, 231, 236);
+}
+
+.landscapeWord {
+    padding: 0;
+    background-color: rgb(22, 41, 56);
+    width: 30%;
+    height: 80%;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.tooltip-textWord {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    width: 70%;
+    color: rgb(22, 41, 56);
+    font-size: 14px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    bottom: 25px;
+    text-align: left;
+}
+
+.tooltip-text-desktopWord {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    width: 20%;
+    color: rgb(22, 41, 56);
+    font-size: 20px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    top: 25px;
+    text-align: left;
+}
+
+
+
+@media screen and (min-width: 1300px) {
+    .infoWord:hover .tooltip-text-desktopWord {
+        visibility: visible;
+    }
+}
+
+/* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
+@media screen and (max-width: 1280px) {
+
+    .samePosWord {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .infoWord:hover .tooltip-textWord {
+        visibility: visible;
+    }
+
+    .infoWord .tooltip-textWord:hover {
+        display: none;
+    }
+
+
+    .portraitWord {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+
+    }
+
+    .landscapeWord {
+        padding: 0;
+        width: 32%;
+        margin-left: 34%;
+        margin-right: 34%;
+
+    }
+}

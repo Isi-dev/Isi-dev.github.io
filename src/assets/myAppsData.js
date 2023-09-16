@@ -15,10 +15,10 @@ export const MyApps = [
     },
     {
         id:3,
-        image:"/assets/appImages/brainGame.png",
-        genre:"Brain Exercise Game",
-        platform:"Android",
-        link:"https://play.google.com/store/apps/details?id=com.tHN.game.android",
+        image:"",
+        genre:"What's the Word?",
+        platform:"HTML",
+        link:"/wordgame#home",
     },
     {
         id:4,
@@ -43,10 +43,10 @@ export const MyApps = [
     },
     {
         id:7,
-        image:"",
-        genre:"Gas in the Building",
-        platform:"HTML",
-        link:"/mazegame#home",
+        image:"/assets/appImages/brainGame.png",
+        genre:"Brain Exercise Game",
+        platform:"Android",
+        link:"https://play.google.com/store/apps/details?id=com.tHN.game.android",
     },
     {
         id:8,

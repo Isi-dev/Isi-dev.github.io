@@ -31,7 +31,7 @@ Option.prototype.draw = function (ctx, width, height) {
     ctx.rect(this.posX, this.posY + this.vy, width, height);
     ctx.stroke();
     ctx.fill();
-    ctx.font = "20px Arial";
+    ctx.font = "18px Arial";
     ctx.fillStyle = "black";
     wrapText(ctx, this.text, this.posX + width / 2, this.posY + this.vy + height / 2, width-10, height/8);
 }
