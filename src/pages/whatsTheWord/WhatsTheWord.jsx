@@ -92,6 +92,10 @@ const WhatsTheWord = () => {
                 if (typeof (Storage) !== "undefined") {
                     this.currentWordSetIndex = JSON.parse(localStorage.getItem('startFromLast')) || this.currentWordSetIndex;
                 }
+
+                //For testing
+                // this.currentWordSetIndex = 58;
+
                 this.show = true;
                 this.droppedInLock = false;
                 this.hint = '';
@@ -295,7 +299,6 @@ const WhatsTheWord = () => {
                 this.letterSpace = this.noOfLocks < 8 ? squareSize * this.noOfLocks + spacing * (this.noOfLocks - 1) : squareSize * 7 + spacing * 6;
                 this.firstLetterXPos = canvas.width / 2 - this.letterSpace / 2;
                 this.hint = this.wordSets[this.currentWordSetIndex].hint;
-                //this.audio.load('/assets/wordSound/avid.mp3');
                 this.audio = new Audio(this.wordSets[this.currentWordSetIndex].audio);
                 this.lockPositions = [];
                 this.keyPositions = [];
@@ -434,7 +437,10 @@ const WhatsTheWord = () => {
             },
             update() {
                 if (this.posY >= 0) this.posY -= 0.45;
-                if (this.posY < escapee.posY + smallerSquareSize) this.gameOver = true;
+                if (this.posY < escapee.posY + smallerSquareSize && !this.gameOver){
+                    lockKey.audio.play();
+                    this.gameOver = true;
+                } 
             },
             draw() {
                 context.fillStyle = 'red';
