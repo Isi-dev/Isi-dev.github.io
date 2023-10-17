@@ -13,8 +13,13 @@ const WhatsTheWord = () => {
     useEffect(() => {
         const canvas = canvasRef.current;
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        if (window.innerHeight > window.innerWidth) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        } else {
+            canvas.width = 480;
+            canvas.height = 800;
+        }
         const context = canvas.getContext("2d");
         context.textAlign = "center";
 
@@ -23,6 +28,10 @@ const WhatsTheWord = () => {
         const squareSize = canvas.width / 8;
         const squareHeight = canvas.height / 13.3;
         const smallerSquareSize = canvas.width / 12;
+        const escapeeWidth = canvas.width / 12;
+        const escapeeHeight = canvas.height / 10;
+        const catcherWidth = canvas.width / 12;
+        const catcherHeight = canvas.height / 8;
         const smallerSquareHeight = canvas.height / 20;
         const spaceBtwLockAndKeyX = canvas.width / 48;
         const spaceBtwLockAndKeyY = canvas.height / 80;
@@ -31,6 +40,18 @@ const WhatsTheWord = () => {
         const spacing = canvas.width / 64;
         const hintStart = canvas.height / 2 + squareHeight;
         const hintTextSize = canvas.height / 30;
+        const canvasLeftBorder = canvas.getBoundingClientRect().left;
+        const canvasTopBorder = canvas.getBoundingClientRect().top;
+        const correctMouseX = canvas.width / canvas.getBoundingClientRect().width;
+        const correctMouseY = canvas.height / canvas.getBoundingClientRect().height;
+
+        var img = '/assets/appImages/whatsDword.png';
+        var allImages = new Image();
+        allImages.src = img;
+        let showImages = false;
+        allImages.onload = function () {
+            showImages = true;
+        };
 
         class Lock {
             constructor(letter, pos) {
@@ -180,7 +201,8 @@ const WhatsTheWord = () => {
                 }
             }
 
-            handleTouchEnd() {
+
+            leaveTouchScreenOrMouse() {
                 for (var i = 0; i < this.noOfLocks; i++) {
                     if (this.key[i].active) {
                         for (var j = 0; j < this.noOfLocks; j++) {
@@ -240,33 +262,42 @@ const WhatsTheWord = () => {
                 }
             }
 
+            handleTouchEnd() {
+                this.leaveTouchScreenOrMouse();
+            }
+
             handleMouseDown(event) {
                 event.preventDefault();
-                const mousePosX = event.clientX - canvas.getBoundingClientRect().left;
-                const mousePosY = event.clientY - canvas.getBoundingClientRect().top;
-                const x = this.posX;
-                const y = this.posY;
+                const mousePosX = (event.clientX - canvasLeftBorder) * correctMouseX;
+                const mousePosY = (event.clientY - canvasTopBorder) * correctMouseY;
+                for (var i = 0; i < this.noOfLocks; i++) {
+                    const x = this.key[i].posX;
+                    const y = this.key[i].posY;
 
-                if (
-                    mousePosX >= x && mousePosX <= x + this.size &&
-                    mousePosY >= y && mousePosY <= y + this.size
-                ) {
-                    this.active = true;
-                }
+                    if (
+                        mousePosX >= x && mousePosX <= x + smallerSquareSize &&
+                        mousePosY >= y && mousePosY <= y + smallerSquareHeight
+                    ) {
+                        this.key[i].active = true;
+                        break;
+                    }
+                };
             }
 
             handleMouseMove(event) {
-                if (this.active === false) return;
                 event.preventDefault();
-                const mousePosX = event.clientX - canvas.getBoundingClientRect().left;
-                const mousePosY = event.clientY - canvas.getBoundingClientRect().top;
-                this.posX = mousePosX - this.size / 2;
-                this.posY = mousePosY - this.size / 2;
+                const mousePosX = (event.clientX - canvasLeftBorder) * correctMouseX;
+                const mousePosY = (event.clientY - canvasTopBorder) * correctMouseY;
+                for (var i = 0; i < this.noOfLocks; i++) {
+                    if (this.key[i].active) {
+                        this.key[i].posX = mousePosX - smallerSquareSize / 2;
+                        this.key[i].posY = mousePosY - smallerSquareSize / 2;
+                    }
+                }
             }
 
             handleMouseUp() {
-                if (this.active === false) return;
-                this.active = false;
+                this.leaveTouchScreenOrMouse();
             }
 
             addDragControl(canvas) {
@@ -371,24 +402,32 @@ const WhatsTheWord = () => {
         }
 
         var escapee = {
-            posX: canvas.width / 2 - smallerSquareSize / 2,
+            posX: canvas.width / 2 - escapeeWidth / 2,
             posY: canvas.height,
-            speed: 0.5,
+            speed: 1,
+            standImage: false,
+            animationDelay: 0,
+            currentSprite: 0,
             preScore: 0,
             score: typeof (Storage) !== "undefined" ? JSON.parse(localStorage.getItem('lastScore')) !== null ? JSON.parse(localStorage.getItem('lastScore')) : 0 : 0,
 
             restart() {
                 this.posY = canvas.height;
+                if (this.standImage) this.standImage = false;
+                this.animationDelay = 0;
+                this.currentSprite = 0;
                 this.preScore = 0;
             },
             update() {
                 if (this.posY >= gate.gateHeight) this.posY -= this.speed;
                 else {
                     if (gate.closed) {
+                        if (!this.standImage) this.standImage = true;
                         if (this.preScore > -21) this.preScore -= 0.1;
                     } else {
                         if (this.posY > -squareSize) {
                             this.posY -= this.speed;
+                            if (this.standImage) this.standImage = false;
                             if (this.preScore < 20) this.preScore += 0.1;
                         }
 
@@ -409,8 +448,19 @@ const WhatsTheWord = () => {
                 }
             },
             draw() {
-                context.fillStyle = 'blue';
-                context.fillRect(this.posX, this.posY, smallerSquareSize, smallerSquareSize);
+                if (showImages) {
+                    if (this.standImage) {
+                        context.drawImage(allImages, 0, 0, 40, 80, this.posX, this.posY, escapeeWidth, escapeeHeight);
+                    } else {
+                        context.drawImage(allImages, 40 * this.currentSprite + 40, 0, 40, 80, this.posX, this.posY, escapeeWidth, escapeeHeight);
+                        if (this.animationDelay++ % 4 === 0) this.currentSprite = ++this.currentSprite % 11;
+
+                    }
+
+                } else {
+                    context.fillStyle = 'blue';
+                    context.fillRect(this.posX, this.posY, escapeeWidth, escapeeHeight);
+                }
             },
             drawScore() {
                 context.fillStyle = 'yellow';
@@ -424,11 +474,15 @@ const WhatsTheWord = () => {
             distToEscapee: typeof (Storage) !== "undefined" ? JSON.parse(localStorage.getItem('theDistToEscapee')) !== null ? JSON.parse(localStorage.getItem('theDistToEscapee')) : 0 : 0,
             posY: typeof (Storage) !== "undefined" && JSON.parse(localStorage.getItem('theDistToEscapee')) !== null && JSON.parse(localStorage.getItem('theDistToEscapee')) > 0 ?
                 canvas.height + JSON.parse(localStorage.getItem('theDistToEscapee')) : canvas.height + squareSize,
+            animationDelay: 0,
+            currentSprite: 0,
             gameOver: false,
             restart() {
-                console.log(this.distToEscapee)
+                // console.log(this.distToEscapee)
                 if (this.gameOver) {
                     this.distToEscapee = 0;
+                    this.animationDelay = 0;
+                    this.currentSprite = 0;
                     this.gameOver = false;
                 }
                 if (this.distToEscapee === 0)
@@ -436,15 +490,26 @@ const WhatsTheWord = () => {
                 else this.posY = canvas.height + this.distToEscapee;
             },
             update() {
-                if (this.posY >= 0) this.posY -= 0.45;
-                if (this.posY < escapee.posY + smallerSquareSize && !this.gameOver){
+                if (this.posY >= 0) this.posY -= 0.8;
+                if (this.posY < escapee.posY + smallerSquareHeight/2.5 && !this.gameOver) {
                     lockKey.audio.play();
                     this.gameOver = true;
-                } 
+                }
             },
             draw() {
-                context.fillStyle = 'red';
-                context.fillRect(this.posX, this.posY, squareSize, squareSize);
+
+                if (showImages) {
+                    if (this.gameOver) {
+                        context.drawImage(allImages, 0, 100, 40, 100, this.posX, this.posY, catcherWidth, catcherHeight);
+                    } else {
+                        context.drawImage(allImages, 40 * this.currentSprite + 40, 100, 40, 100, this.posX, this.posY, catcherWidth, catcherHeight);
+                        if (this.animationDelay++ % 10 === 0) this.currentSprite = ++this.currentSprite % 9;
+
+                    }
+                } else {
+                    context.fillStyle = 'red';
+                    context.fillRect(this.posX, this.posY, squareSize, squareSize);
+                }
             }
         }
 
@@ -490,11 +555,11 @@ const WhatsTheWord = () => {
             context.fillRect(0, canvas.height, canvas.width, -smallerSquareHeight);
 
             escapee.drawScore();
-            if (catcher.gameOver){
+            if (catcher.gameOver) {
                 context.fillStyle = 'red';
                 context.font = `bold ${textSize2}px Arial`;
                 context.fillText('Game Over!', canvas.width / 2, canvas.height / 2);
-            } 
+            }
 
 
             requestID = requestAnimationFrame(render);
@@ -510,15 +575,13 @@ const WhatsTheWord = () => {
 
     return (
         <div className="aroundCanvasWord" id='home'>
-            <canvas ref={canvasRef} className='portraitWord' />
             <div className="samePosWord">
                 <div className='infoWord'>i
                     <span className='tooltip-textWord'>
-                        *Swipe up to move forward.<br />
-                        *Swipe right to move right or stop moving left.<br />
-                        *Swipe left to move left or stop moving right.<br />
-                        *Swipe Down to slow down or stop moving forward.<br />
-                        *Tap the game screen to stop moving.<br />
+                        *Jane attempts to escape from the agent of ignorance.<br />
+                        *Her only obstacles are password protected gates.<br />
+                        *Use the hints to figure out the password for each gate.<br />
+                        *Drag the letters with a finger and place them in the correct position to open the gates.<br />
                         *Tap 'O' to restart game.<br />
                         *Tap '||' to pause game.<br />
                         *Tap '►' to resume game.<br />
@@ -526,15 +589,14 @@ const WhatsTheWord = () => {
                         *Tap this instruction screen to return to game<br />
                     </span>
                     <span className='tooltip-text-desktopWord'>
-                        *Press the 'Up Arrow' key to move forward.<br />
-                        *Press the 'Left Arrow' key to move left or stop moving right and the 'right Arrow' key to move right or stop moving left.<br />
-                        *Press the 'Down Arrow' key to slow down or stop moving forward.<br />
-                        *Press the 'Enter' key to stop moving.<br />
+                        *Jane attempts to escape from the agent of ignorance.<br />
+                        *Her only obstacles are password protected gates.<br />
+                        *Use the hints to figure out the password for each gate.<br />
+                        *Drag the letters by left clicking a letter, holding and moving the left mouse button and release to place them in the correct position to open the gates.<br />
                         *Click 'O' to restart game.<br />
                         *Click '||' to pause game.<br />
                         *Click '►' to resume game.<br />
                         *Click 'X' to exit game.<br />
-                        *Click the game screen to use the keys on your keyboard.<br />
                     </span>
                 </div>
                 <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1Word' : 'restart2Word'}>
@@ -547,7 +609,7 @@ const WhatsTheWord = () => {
                     <div className='exitWord'>X</div>
                 </Link>
             </div>
-
+            <canvas ref={canvasRef} className={window.innerHeight > window.innerWidth ? 'portraitWord' : 'landscapeWord'} />
         </div>
     )
 }
