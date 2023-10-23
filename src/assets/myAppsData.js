@@ -15,7 +15,7 @@ export const MyApps = [
     },
     {
         id:3,
-        image:"",
+        image:"/assets/appImages/whatsTheWord.png",
         genre:"What's the Word?",
         platform:"HTML",
         link:"/wordgame#home",
