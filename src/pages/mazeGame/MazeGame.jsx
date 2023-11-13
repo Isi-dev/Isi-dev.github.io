@@ -9,6 +9,7 @@ const MazeGame = () => {
     const [pause, setPause] = useState(false);
     const [restart, setRestart] = useState("");
     const [currentScreen, setCurrentScreen] = useState("selectLevel");
+    const [replayLevel, setReplayLevel] = useState("");
     const [nextLevel, setNextLevel] = useState("");
     const [gameLevel, setGameLevel] = useState("");
     const [canPlayLevel, setCanPlayLevel] = useState(0);
@@ -26,6 +27,7 @@ const MazeGame = () => {
     const levelRef7 = useRef("null");
     const levelRef8 = useRef("null");
     const levelRef9 = useRef("null");
+    const replayRef = useRef("null");
     const nextRef = useRef("null");
 
     function addDivToDivOfLevels(levelRef, lev) {
@@ -88,6 +90,7 @@ const MazeGame = () => {
             level[i] = false;
         };
 
+        let replayLevel = false;
         let nextLevel = false;
 
 
@@ -1365,10 +1368,12 @@ const MazeGame = () => {
                 enemiesCreated = false;
                 Game.playScreen = false;
                 setCurrentScreen("selectLevel");
+                setReplayLevel("");
                 setNextLevel("");
                 for (var i = 0; i < noLevels; i++) {
                     if (level[i]) level[i] = false;
                 };
+                if (replayLevel) replayLevel = false;
                 if (nextLevel) nextLevel = false;
 
                 player.direction = "";
@@ -1418,6 +1423,43 @@ const MazeGame = () => {
                     }
 
                     setNextLevel("");
+
+                    setCurrentScreen("");
+                }
+            }
+
+            if (replayRef.current != null) {
+                if (replayRef.current.textContent === "selected") {
+                    Game.score = 300;
+                    seconds = 0;
+                    newHighScore = false;
+                    Game.life = 1;
+                    Game.victory = false;
+                    player.x = 1;
+                    player.y = 1;
+                    player.inCellX = 0;
+                    player.inCellY = 0;
+                    player.cellX = 1;
+                    player.cellY = 1;
+                    player.direction = "";
+                    player.faceDirection = "down";
+
+
+                    //To check if a button press is sometimes
+                    //run twice and that happened to be the case.
+                    // console.log("GoingToNext");
+
+                    if (replayLevel) {
+                        if (!gameAudio.paused || gameAudio.currentTime) {
+                            gameAudio.pause();
+                            gameAudio.currentTime = 0;
+                        }
+                        restartEnemies();
+                        if (enemiesCreated) enemiesCreated = false;
+                        replayLevel = false;
+                    }
+
+                    setReplayLevel("");
 
                     setCurrentScreen("");
                 }
@@ -1518,6 +1560,10 @@ const MazeGame = () => {
                     ctx.font = "40px verdana";
                     ctx.fillStyle = "red";
                     ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2 - 30);
+                    if (!replayLevel) {
+                        replayLevel = true;
+                        setCurrentScreen("replayLevel")
+                    }
                     // ctx.fillText("Score: " + Game.score, canvas.width / 2, canvas.height / 2);
                     // Game.handleHighScore();
                 }
@@ -1602,6 +1648,9 @@ const MazeGame = () => {
             }
             {
                 currentScreen === 'nextLevel' && <div ref={nextRef} onClick={() => setNextLevel('Next Level')} className='next'>{nextLevel === 'Next Level' ? "selected" : "Next Level"}</div>
+            }
+            {
+                currentScreen === 'replayLevel' && <div ref={replayRef} onClick={() => setReplayLevel('Replay Level')} className='next'>{replayLevel === 'Replay Level' ? "selected" : "Replay Level"}</div>
             }
         </div>
     )

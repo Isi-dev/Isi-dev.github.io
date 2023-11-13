@@ -115,7 +115,7 @@ const WhatsTheWord = () => {
                 }
 
                 //For testing
-                // this.currentWordSetIndex = 85;
+                //   this.currentWordSetIndex = 126;
 
                 this.show = true;
                 this.droppedInLock = false;
@@ -404,7 +404,7 @@ const WhatsTheWord = () => {
         var escapee = {
             posX: canvas.width / 2 - escapeeWidth / 2,
             posY: canvas.height,
-            speed: 1,
+            speed: 2,
             standImage: false,
             animationDelay: 0,
             currentSprite: 0,
@@ -423,12 +423,12 @@ const WhatsTheWord = () => {
                 else {
                     if (gate.closed) {
                         if (!this.standImage) this.standImage = true;
-                        if (this.preScore > -21) this.preScore -= 0.1;
+                        if (this.preScore > -11) this.preScore -= 0.1;
                     } else {
                         if (this.posY > -squareSize) {
                             this.posY -= this.speed;
                             if (this.standImage) this.standImage = false;
-                            if (this.preScore < 20) this.preScore += 0.1;
+                            if (this.preScore < 10) this.preScore += 0.2;
                         }
 
                         // if (lockKey.show && this.posY < gateHigh + gateHeight - smallerSquareSize) lockKey.show = false;
@@ -453,7 +453,7 @@ const WhatsTheWord = () => {
                         context.drawImage(allImages, 0, 0, 40, 80, this.posX, this.posY, escapeeWidth, escapeeHeight);
                     } else {
                         context.drawImage(allImages, 40 * this.currentSprite + 40, 0, 40, 80, this.posX, this.posY, escapeeWidth, escapeeHeight);
-                        if (this.animationDelay++ % 4 === 0) this.currentSprite = ++this.currentSprite % 11;
+                        if (this.animationDelay++ % 3 === 0) this.currentSprite = ++this.currentSprite % 11;
 
                     }
 
@@ -534,12 +534,13 @@ const WhatsTheWord = () => {
             context.clearRect(0, 0, canvas.width, canvas.height);
             gate.draw();
 
-            escapee.draw();
-            catcher.draw();
+           
 
             if (pauseRef.current.textContent === "||") {
                 //update Stuff
                 gate.open();
+                escapee.draw();
+                catcher.draw();
                 if (!catcher.gameOver) {
                     escapee.update();
                     catcher.update();

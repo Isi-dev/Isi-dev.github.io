@@ -8,9 +8,11 @@ import Videos from './pages/videos/Videos'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import RidersGlory from './pages/ridersGlory/RidersGlory'
 import BreakOut from './pages/breakOut/BreakOut'
-import Electric from './pages/electricEng/Electric'
 import MazeGame from './pages/mazeGame/MazeGame'
 import WhatsTheWord from './pages/whatsTheWord/WhatsTheWord'
+import LongShot from './pages/longShot/LongShot'
+import BorderForce from './pages/borderForce/BorderForce'
+import Electric from './pages/electricEng/Electric'
 // import FileConverter from './pages/fileConvert/FileConverter'
 
 
@@ -31,6 +33,8 @@ const App = () => {
           <Route path="breakout" element={<BreakOut />} />
           <Route path="mazegame" element={<MazeGame />} />
           <Route path="wordgame" element={<WhatsTheWord />} />
+          <Route path="longshot" element={<LongShot />} />
+          <Route path="borderForce" element={<BorderForce />} />
         </Route>
       </Routes>
     </BrowserRouter>
