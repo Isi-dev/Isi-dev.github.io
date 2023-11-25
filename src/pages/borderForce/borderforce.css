@@ -38,20 +38,6 @@
 
 }
 
-.levelSelectbf {
-    position: absolute;
-    margin: auto;
-    padding: 1%;
-    background-color: black;
-    color: white;
-    width: 25%;
-    border: 2px solid gray;
-    border-Radius: 5rem;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    cursor: pointer;
-}
-
 .nextbf{
     position: absolute;
     margin: auto;
@@ -67,18 +53,18 @@
     cursor: pointer;
 }
 
-.portraitWindowbf {
+.portraitbf {
     border: none;
     padding: 0;
     background-color: black;
 }
 
-.landscapeWindowbf {
+.landscapebf {
     border:solid 1 black;
     padding: 0;
     background-color: black;
     width: 30%;
-    height:96%;
+    height:95%;
     margin-left: 35%;
     margin-right: 35%;
 }
@@ -120,7 +106,7 @@
     
     }
     
-    .info:hover .tooltip-text-desktopbf {
+    .infobf:hover .tooltip-text-desktopbf {
         visibility: visible;
     }
 }
@@ -141,7 +127,7 @@
         visibility: visible;
     }
 
-    .infobf .tooltip-text:hover {
+    .infobf .tooltip-textbf:hover {
         display: none;
     }
 
