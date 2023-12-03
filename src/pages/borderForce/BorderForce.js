@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './borderforce.css';
+import BfThoughts from './bfThoughts';
 import { HashLink as Link } from 'react-router-hash-link';
 
 
@@ -51,7 +52,7 @@ const BorderForce = () => {
             showHighScore = true;
             highScores = JSON.parse(localStorage.getItem('bfHighScore')) || highScores;
             console.log(highScores);
-        } 
+        }
 
         let handleHighScore = function () {
             if (showHighScore) {
@@ -69,12 +70,12 @@ const BorderForce = () => {
 
                 if (newHighScore) {
                     ctx.fillText("NEW BEST PERFORMANCE!", canvas.width / 2, canvas.height / 2 + canvas.height / 10);
-                    ctx.fillText('Score:' + player.score + ', shots:' + player.roundsFired + ', rank:' + performanceRank, canvas.width / 2, canvas.height / 2 + canvas.height / 5);
-                } else{
+                    ctx.fillText('Score:' + player.score + ', shots:' + player.roundsFired + ', rank:' + performanceRank, canvas.width / 2, canvas.height / 2 + canvas.height / 6.67);
+                } else {
                     ctx.fillText('Score:' + player.score + ', shots:' + player.roundsFired + ', rank:' + performanceRank, canvas.width / 2, canvas.height / 2 + canvas.height / 10);
-                    if(highScores[0] > 0)ctx.fillText('(BEST) Score:' + highScores[0] + ', shots:' + highScores[1] + ', rank:' + highScores[3], canvas.width / 2, canvas.height / 2 + canvas.height / 5);
+                    if (highScores[0] > 0) ctx.fillText('(BEST) Score:' + highScores[0] + ', shots:' + highScores[1] + ', rank:' + highScores[3], canvas.width / 2, canvas.height / 2 + canvas.height / 6.67);
                 }
-            }else{
+            } else {
                 ctx.fillStyle = 'black';
                 ctx.font = `bold ${textSize}px Arial`;
                 ctx.fillText('Score:' + player.score + ', shots:' + player.roundsFired + ', rank:' + performanceRank, canvas.width / 2, canvas.height / 2 + canvas.height / 10);
@@ -86,8 +87,8 @@ const BorderForce = () => {
         let shootDestroyAudio = new Audio('/assets/sounds/gunShotLow.mp3');
         let bigExplosionAudio = new Audio('/assets/sounds/bigExplosion.wav');
         let bigExplosionAudioTank = new Audio('/assets/sounds/bigExplosion.wav');
-        let smallExplosionAudio = new Audio('/assets/sounds/lowExplosion.mp3');
-        let smallExplosionAudioRam = new Audio('/assets/sounds/lowExplosion.mp3');
+        let smallExplosionAudio = new Audio('/assets/sounds/smExplosionLow.wav');
+        let smallExplosionAudioRam = new Audio('/assets/sounds/smExplosionLow.wav');
         let bulletExplosionAudio = new Audio('/assets/sounds/smallExplosion.wav');
         let rocketAudio = new Audio('/assets/sounds/rocketShoot.wav');
         let tankAudio = new Audio('/assets/sounds/tankShoot.wav');
@@ -106,6 +107,109 @@ const BorderForce = () => {
             rocketAudio.pause();
             tankAudio.pause();
         }
+
+        //organise thought
+        let wordNum = 0;
+        let wordsSet = '';
+        let wordsWidth = canvas.width / 1.2;
+        let wordsSpacingY = canvas.height / 30;
+
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+
+            //To centralize text vertically
+            var wordLength = context.measureText(text);
+            var noOfLines = parseInt(wordLength.width / maxWidth);
+            var yAdjust = noOfLines * lineHeight / 2;
+            y -= yAdjust;
+
+            //Wrap text: To send part of the text to the next line when it exceeds 
+            //a certain width
+            var words = text.split(' ');
+            var line = '';
+
+            for (var n = 0; n < words.length; n++) {
+                var testLine = line + words[n] + ' ';
+                var metrics = context.measureText(testLine);
+                var testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    context.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                }
+                else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, x, y);
+        }
+
+        function thought(words, startNum, endNum) {
+            if (wordNum === startNum) {
+                wordsSet = words.saying;
+                const audio = new Audio(words.audio);
+                if (audio != null) audio.play();
+            }
+            if (wordNum === endNum) wordsSet = '';
+        }
+
+        function thoughts() {
+            wordNum++;
+            ctx.textAlign = "center";
+            ctx.fillStyle = 'white';
+            ctx.font = `${textSize}px Arial`;
+            wrapText(ctx, wordsSet, canvas.width / 2, canvas.height / 2, wordsWidth, wordsSpacingY)
+            if (game.gameOver) {
+                if (player.life === 0) {
+                    thought(BfThoughts[0], 110, 190);
+                    thought(BfThoughts[1], 210, 350);
+                    thought(BfThoughts[2], 410, 550);
+                    thought(BfThoughts[3], 610, 750);
+                } else {
+                    thought(BfThoughts[0], 110, 200);
+                    thought(BfThoughts[1], 210, 350);
+                    thought(BfThoughts[2], 400, 550);
+                }
+            }
+            else {
+                thought(BfThoughts[7], 320, 380);
+                thought(BfThoughts[8], 390, 480);
+                thought(BfThoughts[9], 490, 600);
+                thought(BfThoughts[10], 700, 900);
+                thought(BfThoughts[11], 1000, 1100);
+                thought(BfThoughts[12], 1120, 1250);
+                thought(BfThoughts[13], 1260, 1380);
+                thought(BfThoughts[14], 1420, 1550);
+
+                thought(BfThoughts[15], 2000, 2100);
+                thought(BfThoughts[16], 2110, 2200);
+                thought(BfThoughts[17], 2210, 2320);
+                thought(BfThoughts[18], 2400, 2510);
+                thought(BfThoughts[19], 2540, 2680);
+                thought(BfThoughts[20], 2685, 2800);
+                thought(BfThoughts[21], 2805, 3000);
+                thought(BfThoughts[22], 3005, 3140);
+                thought(BfThoughts[23], 3240, 3390);
+                thought(BfThoughts[24], 3400, 3550);
+                thought(BfThoughts[25], 3700, 4000);
+                thought(BfThoughts[26], 4050, 4250);
+                thought(BfThoughts[27], 4400, 4600);
+                thought(BfThoughts[28], 4601, 4795);
+                thought(BfThoughts[29], 4800, 4950);
+                thought(BfThoughts[30], 4955, 5150);
+
+
+                thought(BfThoughts[31], 5350, 5500);
+
+
+
+
+
+
+            }
+
+        }
+
+
 
 
         var gunAngle = 0;
@@ -232,6 +336,9 @@ const BorderForce = () => {
                 player.performance = 0;
                 gunAngle = 0;
 
+                wordNum = 0;
+                wordsSet = '';
+
                 bullets = [];
                 enemies = [];
                 bulletLadyZ = [];
@@ -304,8 +411,8 @@ const BorderForce = () => {
                 bullets.forEach((bullet) => {
                     ctx.fillStyle = 'gray';
                     ctx.fillRect(bullet.x, bullet.y, bullet.size, bullet.size);
-                    bullet.x += Math.sin((bullet.angle * Math.PI) / 180) * 20; // Move the bullet in the direction it's facing
-                    bullet.y -= Math.cos((bullet.angle * Math.PI) / 180) * 20;
+                    bullet.x += Math.sin((bullet.angle * Math.PI) / 180) * 30; // Move the bullet in the direction it's facing
+                    bullet.y -= Math.cos((bullet.angle * Math.PI) / 180) * 30;
                     if (bullet.x < 0 || bullet.y < 0 || bullet.x > canvas.width) bullets.splice(bullets.indexOf(bullet), 1);
 
                     // Check for collisions with enemies
@@ -324,11 +431,13 @@ const BorderForce = () => {
                                 enemies.splice(index, 1);
                                 if (enemy.enemyMake === 'robot') {
                                     createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 5, 50, 0, 1, 1, 0.04);
-                                    smallExplosionAudio.play();
+                                    const explode = new Audio('/assets/sounds/smExplosionLow.wav');
+                                    explode.play();
                                 }
                                 if (enemy.enemyMake === 'ram') {
                                     createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 7, 100, 0.5, 1, 1, 0.05);
-                                    smallExplosionAudioRam.play();
+                                    const explode = new Audio('/assets/sounds/smExplosionLow.wav');
+                                    explode.play();
                                 }
                                 if (!destroyerSuccessful && enemy.enemyMake === 'destroyer') {
                                     createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 4, 500, 0, 1, .5, 0.01);
@@ -576,11 +685,13 @@ const BorderForce = () => {
                             enemies.splice(index, 1);
                             if (enemy.enemyMake === 'robot') {
                                 createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 5, 50, 0, 1, 1, 0.04);
-                                smallExplosionAudio.play();
+                                const explode = new Audio('/assets/sounds/smExplosionLow.wav');
+                                explode.play();
                             }
                             if (enemy.enemyMake === 'ram') {
                                 createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 7, 100, 0.5, 1, 1, 0.05);
-                                smallExplosionAudioRam.play();
+                                const explode = new Audio('/assets/sounds/smExplosionLow.wav');
+                                explode.play();
                             }
                             if (!game.gameOver) player.life -= 5;
 
@@ -603,11 +714,13 @@ const BorderForce = () => {
                                 if (enemy.power-- === 0 && !enemy.hit) {
                                     if (enemy.enemyMake === 'robot') {
                                         createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height, 5, 50, 0, 1, 1, 0.04);
-                                        smallExplosionAudio.play();
+                                        const explode = new Audio('/assets/sounds/smExplosionLow.wav');
+                                        explode.play();
                                     }
                                     if (enemy.enemyMake === 'ram') {
                                         createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height, 7, 100, 0.5, 1, 1, 0.05);
-                                        smallExplosionAudioRam.play();
+                                        const explode = new Audio('/assets/sounds/smExplosionLow.wav');
+                                        explode.play();
                                     }
                                     if (enemy.enemyMake === 'destroyer') {
                                         createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height, 4, 500, 0, 1, .5, 0.01);
@@ -627,7 +740,10 @@ const BorderForce = () => {
                         // if (enemy.enemyMake === 'destroyer') destroyerSuccessful = true;
                         if (!game.gameOver) {
                             if (++successfulInvaders >= 30) {
+                                wordNum = 0;
+                                wordsSet = '';
                                 game.gameOver = true;
+
                             }
                         }
                         // console.log(successfulInvaders);
@@ -696,8 +812,10 @@ const BorderForce = () => {
                     }
                 }
 
-                if (player.life <= 0) {
+                if (player.life <= 0 && !game.gameOver) {
                     player.life = 0;
+                    wordNum = 0;
+                    wordsSet = '';
                     game.gameOver = true;
                 }
 
@@ -738,6 +856,8 @@ const BorderForce = () => {
                 //Show total invaders
                 ctx.fillText(successfulInvaders, canvas.width - player.width, canvas.height / 12);
 
+                thoughts();
+
             } else {
                 ctx.fillStyle = 'black';
                 ctx.textAlign = "center";
@@ -752,6 +872,8 @@ const BorderForce = () => {
                 ctx.fillText('Rank : ' + performanceRank, canvas.width / 2, canvas.height / 2 + canvas.height / 5);
                 pauseAudio();
             }
+
+
 
 
             requestID = requestAnimationFrame(gameLoop);
@@ -769,7 +891,7 @@ const BorderForce = () => {
             //For Shooting
             // startTouchX = e.changedTouches[0].clientX;
             // startTouchY = e.changedTouches[0].clientY;
-            if (!game.gameOver) {
+            if (!game.gameOver && game.enemyCreationTime > 200) {
 
                 const touch = e.touches[0];
                 const gunX = canvas.width / 2;
@@ -802,7 +924,7 @@ const BorderForce = () => {
         canvas.addEventListener('touchmove', (e) => {
             e.preventDefault();
             // Gun rotation
-            if (!game.gameOver && initialTouchX !== null) {
+            if (!game.gameOver && initialTouchX !== null && game.enemyCreationTime > 200) {
 
                 const { pageX } = e.touches[0];
 
@@ -821,7 +943,7 @@ const BorderForce = () => {
         });
 
         const handleMouseDown = (e) => {
-            if (!game.gameOver) {
+            if (!game.gameOver && game.enemyCreationTime > 200) {
                 player.roundsFired++;
                 shootAudio.play();
                 recoilEffect = 3;
@@ -846,7 +968,7 @@ const BorderForce = () => {
             const gunX = canvas.width / 2;
             const deltaX = mousePosX - gunX;
             const deltaY = canvas.height - mousePosY;
-            if (!game.gameOver)
+            if (!game.gameOver && game.enemyCreationTime > 200)
                 gunAngle = (Math.atan2(deltaX, deltaY) * 180) / Math.PI;
         }
 
@@ -866,7 +988,7 @@ const BorderForce = () => {
         setId = setInterval(() => {
             // console.log("Set Interval here bro!");
             if (game.totalEnemies >= 1000) {
-                player.performance = ((player.score*9) / player.roundsFired + player.life / 200) * 100 - (successfulInvaders / 30 + blocksDestroyed / 576) * 100;
+                player.performance = ((player.score * 9) / player.roundsFired + player.life / 200) * 100 - (successfulInvaders / 30 + blocksDestroyed / 576) * 100;
                 if (player.performance >= 900) performanceRank = 'Legendary!';
                 else if (player.performance >= 800) performanceRank = 'Outstanding!';
                 else if (player.performance >= 700) performanceRank = 'Excellent!';
