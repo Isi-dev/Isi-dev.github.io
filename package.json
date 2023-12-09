@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "buffer": "^6.0.3",
+    "dexie": "^3.2.4",
     "docx": "^8.0.4",
     "emailjs-com": "^3.2.0",
     "file-saver": "^2.0.5",

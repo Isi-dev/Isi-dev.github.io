@@ -139,4 +139,5 @@ const WordSet = [
   { correctWord: ['A', 'N', 'T', 'I', 'D', 'I', 'S', 'E', 'S', 'T', 'A', 'B', 'L', 'I', 'S', 'H', 'M', 'E', 'N', 'T', 'A', 'R', 'I', 'A', 'N', 'I', 'S', 'M'], scrambledWord: ['N', 'N', 'T', 'M', 'D', 'S', 'S', 'R', 'S', 'T', 'T', 'B', 'L', 'N', 'S', 'H', 'M', 'E', 'I', 'A', 'A', 'E', 'I', 'A', 'A', 'I', 'I', 'I'], hint: 'hint: (Opposition to withdrawing government support for a religion. Maxwell is against _.)', audio: '/assets/wordSound/antidisestablishmentarianism.mp3' }
 ];
 
+
 export default WordSet;
