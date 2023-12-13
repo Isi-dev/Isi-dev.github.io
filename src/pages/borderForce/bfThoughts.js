@@ -5,7 +5,7 @@ const BfThoughts = [
     //Thoughts begin
     //If player's life goes to zero
     { id: 1, saying: 'Finally!', audio: '/assets/donsThoughts/finally.wav', image: '/assets/appImages/borderForceSprite.png' },
-    { id: 2, saying: 'My battles are over.', audio: '/assets/donsThoughts/battles.wav', image: '' },
+    { id: 2, saying: 'My battles are over.', audio: '/assets/donsThoughts/battles.wav', image: '/assets/appImages/whatsDword.png' },
     { id: 3, saying: 'I am glad I lived.', audio: '/assets/donsThoughts/lived.wav', image: '' },
     { id: 4, saying: "it's time to leave.", audio: '/assets/donsThoughts/leave.wav', image: '' },
 
@@ -55,7 +55,7 @@ const BfThoughts = [
 ];
 
 
-const DB_NAME = 'bfDataBase';
+const DB_NAME = 'borderForceDB';
 const DB_VERSION = 1;
 const OBJECT_STORE_NAME = 'thoughts';
 
@@ -88,8 +88,8 @@ function addThoughtsToDatabase(db, thoughts) {
     return Promise.all(thoughts.map(async (thought) => {
         try {
             // Fetch audio and image data as array buffers
-            // const audioArrayBuffer = await fetch(thought.audio).then(response => response.arrayBuffer());
-            const audioDataURL = await fetch(thought.audio).then(response => response.blob()).then(blob => URL.createObjectURL(blob));
+            const audioArrayBuffer = await fetch(thought.audio).then(response => response.arrayBuffer());
+            // const audioDataURL = await fetch(thought.audio).then(response => response.blob()).then(blob => URL.createObjectURL(blob));
             const imageArrayBuffer = await fetch(thought.image).then(response => response.arrayBuffer());
 
             // Start a read-write transaction on the thoughts object store
@@ -107,8 +107,8 @@ function addThoughtsToDatabase(db, thoughts) {
                     const request = objectStore.add({
                         id: thought.id,
                         saying: thought.saying,
-                        audio: audioDataURL,  // Store audio as data URL
-                        // audio: audioArrayBuffer,
+                        // audio: audioDataURL,  // Store audio as data URL
+                        audio: audioArrayBuffer,
                         image: imageArrayBuffer,
                     });
 
@@ -147,6 +147,8 @@ function loadThoughtsFromDatabase(db) {
             const thoughts = event.target.result;
 
             const thoughtsWithImages = thoughts.map((thought) => {
+                const audioBlob = new Blob([thought.audio]);
+                thought.audioURL = URL.createObjectURL(audioBlob);
                 const imageBlob = new Blob([thought.image], { type: 'image/*' }); // Adjust type based on your image format
                 thought.imageURL = URL.createObjectURL(imageBlob);
                 return thought;

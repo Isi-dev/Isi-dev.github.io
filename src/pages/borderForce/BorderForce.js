@@ -6,6 +6,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 
 
 const BorderForce = () => {
+
     const canvasRef = useRef(null);
     const [pause, setPause] = useState(false);
     const [restart, setRestart] = useState("");
@@ -14,45 +15,54 @@ const BorderForce = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        var BfThoughts = [];
         //Wait for data to store in database and load
+        var BfThoughts = [];
+        let setId;
+        let requestID;
+
         const fetchData = async () => {
             try {
-                await BfThoughtsFromDBPromise;
-                setLoading(false); // Set loading to false when data is loaded
-                BfThoughtsFromDBPromise.then((thoughts) => {
-                    BfThoughts = Array.from(thoughts);
-                });
+                const thoughts = await BfThoughtsFromDBPromise;
+                // Set loading to false when data is loaded
+                
+                BfThoughts = Array.from(thoughts);
+                setLoading(false);
+
+                // initializeComponent(BfThoughts, setId, requestID, canvas);
+                setTimeout(() => {
+                    initializeComponent();
+                }, 0);
+                
             } catch (error) {
                 console.error(error);
                 setLoading(false); // Set loading to false in case of an error
             }
         };
 
-        // fetchData();
+        fetchData();
 
-
-        const initializeComponent = async () => {
-            await fetchData(); // Wait for BfThoughtsFromDBPromise to fully load
-
-
-
-
+        const initializeComponent = () => {
+            // console.log(BfThoughts);
             const canvas = canvasRef.current;
-
-            if (canvas) {
-                if (window.innerHeight > window.innerWidth) {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                } else {
-                    canvas.width = 480;
-                    canvas.height = 800;
-                }
-
+    
+            if (!canvas) {
+                console.error('Canvas element not found.');
+                return;
             }
-
+    
+    
+            if (window.innerHeight > window.innerWidth) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            } else {
+                canvas.width = 480;
+                canvas.height = 800;
+            }
+    
+    
+    
             const ctx = canvas.getContext('2d');
-
+    
             // var img = '/assets/appImages/borderForceSprite.png';
             var allImages = new Image();
             // allImages.src = img;
@@ -60,18 +70,19 @@ const BorderForce = () => {
             if (BfThoughts && BfThoughts.length > 0) {
                 allImages.src = BfThoughts[0].imageURL;
             } else {
-                console.error('BfThoughts is empty or undefined');
+                console.log("Local storage not accessible.");
+                allImages.src = '/assets/appImages/borderForceSprite.png';
             }
             let showImages = false;
             allImages.onload = function () {
                 showImages = true;
             };
-
+    
             allImages.onerror = function () {
                 console.error('Error loading image from database');
             };
-
-
+    
+    
             //Touch inputs
             // let startTouchX = 0;
             // let startTouchY = 0;
@@ -80,20 +91,20 @@ const BorderForce = () => {
             const correctMouseY = canvas.height / canvas.getBoundingClientRect().height;
             const canvasLeftBorder = canvas.getBoundingClientRect().left;
             const correctMouseX = canvas.width / canvas.getBoundingClientRect().width;
-
+    
             var game = { totalEnemies: 0, enemyCreationTime: 600, gameOver: false };
             var player = { x: canvas.width / 2 - canvas.width / 9.6, y: canvas.height - canvas.height / 16, width: canvas.width / 4.8, height: canvas.height / 20, life: 200, score: 0, performance: 0, roundsFired: 0 };
-
+    
             let showHighScore = false;
             let newHighScore = false;
             let highScores = [0, 0, 0, '-'];
-
+    
             if (typeof (Storage) !== "undefined") {
                 showHighScore = true;
                 highScores = JSON.parse(localStorage.getItem('bfHighScore')) || highScores;
                 // console.log(highScores);
             }
-
+    
             let handleHighScore = function () {
                 if (showHighScore) {
                     if (player.score >= highScores[0] && player.performance > highScores[2] && !newHighScore) {
@@ -104,10 +115,10 @@ const BorderForce = () => {
                         localStorage.setItem('bfHighScore', JSON.stringify(highScores));
                         newHighScore = true;
                     }
-
+    
                     ctx.fillStyle = 'black';
                     ctx.font = `${textSize0}px Arial`;
-
+    
                     if (newHighScore) {
                         ctx.fillText("NEW BEST PERFORMANCE!", canvas.width / 2, canvas.height / 2 + canvas.height / 10);
                         ctx.fillText('Score:' + player.score + ', shots:' + player.roundsFired + ', rank:' + performanceRank, canvas.width / 2, canvas.height / 2 + canvas.height / 6.67);
@@ -121,19 +132,20 @@ const BorderForce = () => {
                     ctx.fillText('Score:' + player.score + ', shots:' + player.roundsFired + ', rank:' + performanceRank, canvas.width / 2, canvas.height / 2 + canvas.height / 10);
                 }
             }
-
-            let shootAudio = new Audio(BfThoughts[31].audio);
-            let shootDestroyAudioZig = new Audio(BfThoughts[32].audio);
-            let shootDestroyAudio = new Audio(BfThoughts[32].audio);
-            let bigExplosionAudio = new Audio(BfThoughts[33].audio);
-            let bigExplosionAudioTank = new Audio(BfThoughts[33].audio);
-            let smallExplosionAudio = new Audio(BfThoughts[34].audio);
-            let smallExplosionAudioRam = new Audio(BfThoughts[34].audio);
-            let bulletExplosionAudio = new Audio(BfThoughts[35].audio);
-            let rocketAudio = new Audio(BfThoughts[36].audio);
-            let tankAudio = new Audio(BfThoughts[37].audio);
-
-
+    
+            let shootAudio = new Audio(BfThoughts[31].audioURL);
+            // shootAudio.src = BfThoughts[31].audioURL;
+            let shootDestroyAudioZig = new Audio(BfThoughts[32].audioURL);
+            let shootDestroyAudio = new Audio(BfThoughts[32].audioURL);
+            let bigExplosionAudio = new Audio(BfThoughts[33].audioURL);
+            let bigExplosionAudioTank = new Audio(BfThoughts[33].audioURL);
+            let smallExplosionAudio = new Audio(BfThoughts[34].audioURL);
+            let smallExplosionAudioRam = new Audio(BfThoughts[34].audioURL);
+            let bulletExplosionAudio = new Audio(BfThoughts[35].audioURL);
+            let rocketAudio = new Audio(BfThoughts[36].audioURL);
+            let tankAudio = new Audio(BfThoughts[37].audioURL);
+    
+    
             //pause sounds
             function pauseAudio() {
                 shootAudio.pause();
@@ -147,26 +159,26 @@ const BorderForce = () => {
                 rocketAudio.pause();
                 tankAudio.pause();
             }
-
+    
             //organise thought
             let wordNum = 0;
             let wordsSet = '';
             let wordsWidth = canvas.width / 1.2;
             let wordsSpacingY = canvas.height / 30;
-
+    
             function wrapText(context, text, x, y, maxWidth, lineHeight) {
-
+    
                 //To centralize text vertically
                 var wordLength = context.measureText(text);
                 var noOfLines = parseInt(wordLength.width / maxWidth);
                 var yAdjust = noOfLines * lineHeight / 2;
                 y -= yAdjust;
-
+    
                 //Wrap text: To send part of the text to the next line when it exceeds 
                 //a certain width
                 var words = text.split(' ');
                 var line = '';
-
+    
                 for (var n = 0; n < words.length; n++) {
                     var testLine = line + words[n] + ' ';
                     var metrics = context.measureText(testLine);
@@ -182,16 +194,16 @@ const BorderForce = () => {
                 }
                 context.fillText(line, x, y);
             }
-
+    
             function thought(words, startNum, endNum) {
                 if (wordNum === startNum) {
                     wordsSet = words.saying;
-                    const audio = new Audio(words.audio);
+                    const audio = new Audio(words.audioURL);
                     if (audio != null) audio.play();
                 }
                 if (wordNum === endNum) wordsSet = '';
             }
-
+    
             function thoughts() {
                 wordNum++;
                 ctx.textAlign = "center";
@@ -200,14 +212,14 @@ const BorderForce = () => {
                 wrapText(ctx, wordsSet, canvas.width / 2, canvas.height / 2, wordsWidth, wordsSpacingY)
                 if (game.gameOver) {
                     if (player.life === 0) {
-                        thought(BfThoughts[0], 110, 190);
-                        thought(BfThoughts[1], 210, 350);
-                        thought(BfThoughts[2], 410, 550);
-                        thought(BfThoughts[3], 610, 750);
+                        thought(BfThoughts[0], 310, 390);
+                        thought(BfThoughts[1], 410, 550);
+                        thought(BfThoughts[2], 610, 750);
+                        thought(BfThoughts[3], 810, 950);
                     } else {
-                        thought(BfThoughts[0], 110, 200);
-                        thought(BfThoughts[1], 210, 350);
-                        thought(BfThoughts[2], 400, 550);
+                        thought(BfThoughts[0], 310, 400);
+                        thought(BfThoughts[1], 410, 550);
+                        thought(BfThoughts[2], 600, 750);
                     }
                 }
                 else {
@@ -219,7 +231,7 @@ const BorderForce = () => {
                     thought(BfThoughts[12], 1120, 1250);
                     thought(BfThoughts[13], 1260, 1380);
                     thought(BfThoughts[14], 1420, 1550);
-
+    
                     thought(BfThoughts[15], 2000, 2100);
                     thought(BfThoughts[16], 2110, 2200);
                     thought(BfThoughts[17], 2210, 2320);
@@ -236,32 +248,32 @@ const BorderForce = () => {
                     thought(BfThoughts[28], 4601, 4795);
                     thought(BfThoughts[29], 4800, 4950);
                     thought(BfThoughts[30], 4955, 5150);
-
-
+    
+    
                     thought(BfThoughts[38], 5350, 5500);
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
                 }
-
+    
             }
-
-
-
-
+    
+    
+    
+    
             var gunAngle = 0;
             const setGunAngle = function (newAngle) {
                 gunAngle += newAngle;
                 // console.log(gunAngle)
             }
-
+    
             const textSize0 = canvas.width / 20;
             const textSize = canvas.width / 16;
             const textSize2 = canvas.width / 8;
-
+    
             let bullets = [];
             let enemies = [];
             let bulletLadyZ = [];
@@ -278,20 +290,20 @@ const BorderForce = () => {
             let successfulInvaders = 0;
             let blocksDestroyed = 0;
             let performanceRank = '-';
-
-
-
+    
+    
+    
             const blockSize = canvas.width / 48;
             const wallY = canvas.height - canvas.height / 4.7;
             let wall = [];
-
+    
             //Build wall
             for (let bh = 0; bh < 12; bh++) {
                 for (let bx = 0; bx < 48; bx++) {
                     wall.push({ size: blockSize, x: bx * blockSize, y: wallY + bh * blockSize, destroyed: false });
                 }
             }
-
+    
             // Player's gun
             const gunWidth = canvas.width / 12;
             const gunHeight = canvas.height / 4;
@@ -301,11 +313,11 @@ const BorderForce = () => {
             let gunFireX = 0, gunFireY = 0, gunFireSize = canvas.height / 8;
             let fireImageNo = 1;
             let createEnemy = true;
-
+    
             //Create explosion effect
             // Define the explosion particles
             let particles = [];
-
+    
             // Create a particle class
             class Particle {
                 constructor(x, y, radius, color, velocity, alpha, alphaDecline) {
@@ -317,7 +329,7 @@ const BorderForce = () => {
                     this.alphaDecline = alphaDecline;
                     this.alpha = alpha;
                 }
-
+    
                 draw() {
                     ctx.save();
                     ctx.globalAlpha = this.alpha;
@@ -327,7 +339,7 @@ const BorderForce = () => {
                     ctx.fill();
                     ctx.restore();
                 }
-
+    
                 update() {
                     this.x += this.velocity.x;
                     this.y += this.velocity.y;
@@ -335,8 +347,8 @@ const BorderForce = () => {
                     this.alpha -= this.alphaDecline;
                 }
             }
-
-
+    
+    
             // Create an explosion function
             function createExplosion(x, y, rad, numParticles, speedFactor1, speedFactor2, alpha, alphaDecline) {
                 for (let i = 0; i < numParticles; i++) {
@@ -356,29 +368,29 @@ const BorderForce = () => {
                     particles.push(new Particle(x, y, radius, color, velocity, alpha, alphaDecline));
                 }
             }
-
-
-
-
-
+    
+    
+    
+    
+    
             // Game loop
             const gameLoop = () => {
-
+    
                 //Restart stuff
                 if (restartRef.current.className === 'restart1bf') {
                     game.totalEnemies = 0;
                     game.enemyCreationTime = 600;
                     game.gameOver = false;
-
+    
                     player.life = 200;
                     player.roundsFired = 0;
                     player.score = 0;
                     player.performance = 0;
                     gunAngle = 0;
-
+    
                     wordNum = 0;
                     wordsSet = '';
-
+    
                     bullets = [];
                     enemies = [];
                     bulletLadyZ = [];
@@ -393,7 +405,7 @@ const BorderForce = () => {
                     successfulInvaders = 0;
                     blocksDestroyed = 0;
                     performanceRank = '-';
-
+    
                     wall = [];
                     //Build wall
                     for (let bh = 0; bh < 12; bh++) {
@@ -401,28 +413,28 @@ const BorderForce = () => {
                             wall.push({ size: blockSize, x: bx * blockSize, y: wallY + bh * blockSize, destroyed: false });
                         }
                     }
-
+    
                     recoilEffect = 0; recoilEffectX = 0; recoilEffectY = 0; count = 0;
                     showGunFire = false;
                     fireImageNo = 1;
                     createEnemy = true;
-
+    
                     particles = [];
-
+    
                     pauseAudio();
-
-
+    
+    
                     setPause(false);
                     setRestart(false);
                 }
-
+    
                 //update and draw stuff
-
-
+    
+    
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
                 if (pauseRef.current.textContent === "||") {
-
+    
                     if (recoilEffect !== 0) {
                         if (count++ > 5) {
                             if (recoilEffectX !== 0)
@@ -433,7 +445,7 @@ const BorderForce = () => {
                             recoilEffect = 0;
                         }
                     }
-
+    
                     // Draw wall
                     wall.forEach((block) => {
                         if (!block.destroyed) {
@@ -444,9 +456,9 @@ const BorderForce = () => {
                                 ctx.fillRect(block.x, block.y, block.size, block.size);
                             }
                         }
-
+    
                     });
-
+    
                     // Draw bullets
                     bullets.forEach((bullet) => {
                         ctx.fillStyle = 'gray';
@@ -454,7 +466,7 @@ const BorderForce = () => {
                         bullet.x += Math.sin((bullet.angle * Math.PI) / 180) * 30; // Move the bullet in the direction it's facing
                         bullet.y -= Math.cos((bullet.angle * Math.PI) / 180) * 30;
                         if (bullet.x < 0 || bullet.y < 0 || bullet.x > canvas.width) bullets.splice(bullets.indexOf(bullet), 1);
-
+    
                         // Check for collisions with enemies
                         enemies.forEach((enemy, index) => {
                             if (
@@ -471,12 +483,12 @@ const BorderForce = () => {
                                     enemies.splice(index, 1);
                                     if (enemy.enemyMake === 'robot') {
                                         createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 5, 50, 0, 1, 1, 0.04);
-                                        const explode = new Audio(BfThoughts[34].audio);
+                                        const explode = new Audio(BfThoughts[34].audioURL);
                                         explode.play();
                                     }
                                     if (enemy.enemyMake === 'ram') {
                                         createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 7, 100, 0.5, 1, 1, 0.05);
-                                        const explode = new Audio(BfThoughts[34].audio);
+                                        const explode = new Audio(BfThoughts[34].audioURL);
                                         explode.play();
                                     }
                                     if (!destroyerSuccessful && enemy.enemyMake === 'destroyer') {
@@ -513,9 +525,9 @@ const BorderForce = () => {
                             bulletTank.y = canvas.height;
                             bullets.splice(bullets.indexOf(bullet), 1);
                         }
-
+    
                     });
-
+    
                     // Draw enemies
                     enemies.forEach((enemy, index) => {
                         if (showImages) {
@@ -523,7 +535,7 @@ const BorderForce = () => {
                                 if (destroyerSuccessful && enemy.vy === 4) {
                                     if (enemy.y < enemy.height * 2 || enemy.y > canvas.height - enemy.height * 2) {
                                         ctx.drawImage(allImages, 400, 160, 70, 120, enemy.x, enemy.y, enemy.width, enemy.height);
-
+    
                                     } else {
                                         ctx.drawImage(allImages, 300, 160, 70, 120, enemy.x, enemy.y, enemy.width, enemy.height);
                                         if (!game.gameOver && bulletLDFreq++ >= 10) {
@@ -534,7 +546,7 @@ const BorderForce = () => {
                                             bulletLDFreq = 0;
                                         }
                                     }
-
+    
                                     bulletEvil.forEach((bullet) => {
                                         ctx.fillStyle = 'gray';
                                         if (!game.gameOver) ctx.fillRect(bullet.x, bullet.y, bullet.size, bullet.size);
@@ -551,16 +563,16 @@ const BorderForce = () => {
                                             if (!game.gameOver) player.life -= 1;
                                             bulletEvil.splice(bulletEvil.indexOf(bullet), 1);
                                         }
-
-
+    
+    
                                         if (bullet.y >= canvas.height) bulletEvil.splice(bulletEvil.indexOf(bullet), 1);
                                     });
-
+    
                                 } else {
                                     ctx.drawImage(allImages, 350, 0, 80, 150, enemy.x, enemy.y, enemy.width, enemy.height);
                                 }
                             }
-
+    
                             if (enemy.enemyMake === 'tank') {
                                 ctx.drawImage(allImages, 100, 150, 150, 200, enemy.x, enemy.y, enemy.width, enemy.height);
                                 if (enemy.y >= enemy.moveTo) {
@@ -575,7 +587,7 @@ const BorderForce = () => {
                                     if (bulletTank.y < canvas.height) {
                                         ctx.fillStyle = 'gray';
                                         if (!game.gameOver) ctx.fillRect(bulletTank.x, bulletTank.y, bulletTank.width, bulletTank.height);
-
+    
                                         if (
                                             ((player.x > bulletTank.x &&
                                                 player.x < bulletTank.x + bulletTank.width) || (player.x < bulletTank.x && player.x + player.width > bulletTank.x)) &&
@@ -589,7 +601,7 @@ const BorderForce = () => {
                                             recoilEffectY = recoilEffect;
                                             if (!game.gameOver) player.life -= 10;
                                         }
-
+    
                                         wall.forEach((block) => {
                                             if (!block.destroyed) {
                                                 if (
@@ -603,7 +615,7 @@ const BorderForce = () => {
                                                     block.destroyed = true;
                                                     blocksDestroyed++;
                                                     if (bulletTank.power-- === 0) {
-
+    
                                                         createExplosion(bulletTank.x + bulletTank.width / 2, bulletTank.y + bulletTank.height / 2, 2, 20, 0, 1, .5, 0.04);
                                                         bulletExplosionAudio.play();
                                                         bulletTank.y = canvas.height;
@@ -612,8 +624,8 @@ const BorderForce = () => {
                                                 }
                                             }
                                         });
-
-
+    
+    
                                     }
                                 }
                             }
@@ -634,7 +646,7 @@ const BorderForce = () => {
                                                 ctx.fillRect(bulletRPG.x, bulletRPG.y, bulletRPG.width, bulletRPG.height);
                                             if (bulletRPG.x < canvas.width / 2) bulletRPG.x++;
                                             bulletRPG.y += 6;
-
+    
                                             if (
                                                 ((player.x > bulletRPG.x &&
                                                     player.x < bulletRPG.x + bulletRPG.width) || (player.x < bulletRPG.x && player.x + player.width > bulletRPG.x)) &&
@@ -654,22 +666,22 @@ const BorderForce = () => {
                             }
                             if (enemy.enemyMake === 'robot') {
                                 ctx.drawImage(allImages, 250, 0, 40, 50, enemy.x, enemy.y, enemy.width, enemy.height);
-
+    
                             }
                             if (enemy.enemyMake === 'ram') {
                                 ctx.drawImage(allImages, 300, 0, 40, 100, enemy.x, enemy.y, enemy.width, enemy.height);
-
+    
                             }
-
+    
                             if (enemy.enemyMake === 'ladyZigzag') {
                                 ctx.drawImage(allImages, 450, 0, 50, 120, enemy.x, enemy.y, enemy.width, enemy.height);
-
+    
                                 if (enemy.y > enemy.height * 1.5) {
                                     enemy.x += enemy.vx;
                                     if (enemy.x <= canvas.width / 3.7 || enemy.x >= canvas.width - canvas.width / 3.7) enemy.vx = - enemy.vx;
-
+    
                                     if (enemy.y >= enemy.moveTo - 2) enemy.vy = - enemy.vy;
-
+    
                                 }
                                 if (enemy.y <= enemy.height * 1.5 - 4 && enemy.vy < 0) enemy.vy = - enemy.vy;
                                 if (enemy.x > canvas.width / 2 - canvas.width / 9.6 && enemy.x < canvas.width / 2 + canvas.width / 9.6) {
@@ -681,7 +693,7 @@ const BorderForce = () => {
                                         bulletLFreq = 0;
                                     }
                                 }
-
+    
                                 bulletLadyZ.forEach((bullet) => {
                                     ctx.fillStyle = 'gray';
                                     if (!game.gameOver) ctx.fillRect(bullet.x, bullet.y, bullet.size, bullet.size);
@@ -697,18 +709,18 @@ const BorderForce = () => {
                                         if (!game.gameOver) player.life -= 1;
                                         bulletLadyZ.splice(bulletLadyZ.indexOf(bullet), 1);
                                     }
-
-
+    
+    
                                     if (bullet.y >= canvas.height) bulletLadyZ.splice(bulletLadyZ.indexOf(bullet), 1);
                                 });
                             }
-
-
+    
+    
                         } else {
                             ctx.fillStyle = 'black';
                             ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
                         }
-
+    
                         //All enemies move to their y position to commence attack
                         if (enemy.y < enemy.moveTo) enemy.y += enemy.vy;
                         if (enemy.enemyMake === 'robot' || enemy.enemyMake === 'ram') {
@@ -725,19 +737,19 @@ const BorderForce = () => {
                                 enemies.splice(index, 1);
                                 if (enemy.enemyMake === 'robot') {
                                     createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 5, 50, 0, 1, 1, 0.04);
-                                    const explode = new Audio(BfThoughts[34].audio);
+                                    const explode = new Audio(BfThoughts[34].audioURL);
                                     explode.play();
                                 }
                                 if (enemy.enemyMake === 'ram') {
                                     createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 7, 100, 0.5, 1, 1, 0.05);
-                                    const explode = new Audio(BfThoughts[34].audio);
+                                    const explode = new Audio(BfThoughts[34].audioURL);
                                     explode.play();
                                 }
                                 if (!game.gameOver) player.life -= 5;
-
+    
                             }
                         }
-
+    
                         // Check for collisions with wall
                         wall.forEach((block) => {
                             if (!block.destroyed) {
@@ -754,12 +766,12 @@ const BorderForce = () => {
                                     if (enemy.power-- === 0 && !enemy.hit) {
                                         if (enemy.enemyMake === 'robot') {
                                             createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height, 5, 50, 0, 1, 1, 0.04);
-                                            const explode = new Audio(BfThoughts[34].audio);
+                                            const explode = new Audio(BfThoughts[34].audioURL);
                                             explode.play();
                                         }
                                         if (enemy.enemyMake === 'ram') {
                                             createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height, 7, 100, 0.5, 1, 1, 0.05);
-                                            const explode = new Audio(BfThoughts[34].audio);
+                                            const explode = new Audio(BfThoughts[34].audioURL);
                                             explode.play();
                                         }
                                         if (enemy.enemyMake === 'destroyer') {
@@ -773,9 +785,9 @@ const BorderForce = () => {
                         });
                         if (enemy.hit) {
                             enemies.splice(enemies.indexOf(enemy), 1);
-
+    
                         }
-
+    
                         if (enemy.y >= canvas.height) {
                             // if (enemy.enemyMake === 'destroyer') destroyerSuccessful = true;
                             if (!game.gameOver) {
@@ -783,15 +795,15 @@ const BorderForce = () => {
                                     wordNum = 0;
                                     wordsSet = '';
                                     game.gameOver = true;
-
+    
                                 }
                             }
                             // console.log(successfulInvaders);
                             enemies.splice(enemies.indexOf(enemy), 1);
                         }
-
+    
                     });
-
+    
                     // Draw gun
                     ctx.save();
                     ctx.translate(canvas.width / 2, canvas.height);
@@ -807,13 +819,13 @@ const BorderForce = () => {
                         else {
                             ctx.drawImage(allImages, 0, 300, 60, 100, -gunImageWidth / 2, -gunHeight, gunImageWidth, gunHeight);
                         }
-
+    
                     } else {
                         ctx.fillStyle = 'green';
                         ctx.fillRect(-gunWidth / 2, -gunHeight, gunWidth, gunHeight);
                     }
                     ctx.restore();
-
+    
                     if (!destroyerSuccessful) {
                         invaderBlocksDestroyed = 0;
                         wall.forEach((block) => {
@@ -827,22 +839,22 @@ const BorderForce = () => {
                                     }
                                 }
                             }
-
+    
                         });
                         if (invaderBlocksDestroyed === 60) {
                             destroyerSuccessful = true;
                         }
                     }
-
-
-
+    
+    
+    
                     if (showGunFire) {
                         gunFireX = canvas.width / 2 - canvas.height / 16 + gunHeight * Math.sin((gunAngle * Math.PI) / 180);
                         gunFireY = canvas.height - canvas.height / 16 - gunHeight * Math.cos((gunAngle * Math.PI) / 180);
                         ctx.drawImage(allImages, 70 + 50 * fireImageNo, 0, 50, 50, gunFireX, gunFireY, gunFireSize, gunFireSize);
                         showGunFire = false;
                     }
-
+    
                     for (let i = 0; i < particles.length; i++) {
                         particles[i].update();
                         particles[i].draw();
@@ -851,14 +863,14 @@ const BorderForce = () => {
                             i--;
                         }
                     }
-
+    
                     if (player.life <= 0 && !game.gameOver) {
                         player.life = 0;
                         wordNum = 0;
                         wordsSet = '';
                         game.gameOver = true;
                     }
-
+    
                     if (game.gameOver) {
                         ctx.font = `${textSize2}px Arial`;
                         ctx.fillStyle = 'red';
@@ -867,7 +879,7 @@ const BorderForce = () => {
                         ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 3);
                         handleHighScore();
                     }
-
+    
                     if (game.enemyCreationTime < 200) {
                         ctx.font = `${textSize2}px Arial`;
                         ctx.fillStyle = 'red';
@@ -879,25 +891,25 @@ const BorderForce = () => {
                         ctx.fillText('You saved a Nation.', canvas.width / 2, canvas.height / 2 + canvas.height / 20);
                         handleHighScore();
                     }
-
-
+    
+    
                     //Show player life
                     ctx.fillStyle = 'green';
                     ctx.fillRect(player.width / 3, canvas.height - player.height, player.life / 2, canvas.height / 80);
-
+    
                     ctx.font = `${textSize}px Arial`;
                     ctx.fillStyle = 'red';
                     //Show player score
                     ctx.fillText(player.score, canvas.width - player.width, canvas.height - player.height / 1.5);
-
+    
                     //Show total attackers
                     ctx.fillText(game.totalEnemies, player.width / 3, canvas.height / 12);
-
+    
                     //Show total invaders
                     ctx.fillText(successfulInvaders, canvas.width - player.width, canvas.height / 12);
-
+    
                     thoughts();
-
+    
                 } else {
                     ctx.fillStyle = 'black';
                     ctx.textAlign = "center";
@@ -912,19 +924,19 @@ const BorderForce = () => {
                     ctx.fillText('Rank : ' + performanceRank, canvas.width / 2, canvas.height / 2 + canvas.height / 5);
                     pauseAudio();
                 }
-
-
-
-
+    
+    
+    
+    
                 requestID = requestAnimationFrame(gameLoop);
-
+    
                 // console.log("game loop here bro!");
             };
-
-
-
+    
+    
+    
             let initialTouchX = null; // Store the initial touch X position
-
+    
             // Handle touch events for gun rotation and shooting
             canvas.addEventListener('touchstart', (e) => {
                 e.preventDefault();
@@ -932,7 +944,7 @@ const BorderForce = () => {
                 // startTouchX = e.changedTouches[0].clientX;
                 // startTouchY = e.changedTouches[0].clientY;
                 if (!game.gameOver && game.enemyCreationTime > 200) {
-
+    
                     const touch = e.touches[0];
                     const gunX = canvas.width / 2;
                     const deltaX = touch.clientX - gunX;
@@ -946,28 +958,28 @@ const BorderForce = () => {
                     const bulletSize = canvas.width / 48;
                     const bulletX = canvas.width / 2 - bulletSize / 2 + gunHeight * Math.sin((gunAngle * Math.PI) / 180);
                     const bulletY = canvas.height - gunHeight * Math.cos((gunAngle * Math.PI) / 180);
-
+    
                     bullets.push({ size: bulletSize, x: bulletX, y: bulletY, angle: gunAngle });
-
+    
                     if (!showGunFire) {
                         fireImageNo = ++fireImageNo % 3;
                         showGunFire = true;
                     }
-
+    
                 }
-
+    
                 //Begin changing gun direction
                 const { pageX } = e.touches[0];
                 initialTouchX = pageX; // Store the initial touch position
             });
-
+    
             canvas.addEventListener('touchmove', (e) => {
                 e.preventDefault();
                 // Gun rotation
                 if (!game.gameOver && initialTouchX !== null && game.enemyCreationTime > 200) {
-
+    
                     const { pageX } = e.touches[0];
-
+    
                     // Calculate the angle based on the difference between initial and current touch positions
                     const deltaX = pageX - initialTouchX;
                     const angle = Math.atan(deltaX, gunHeight);
@@ -976,12 +988,12 @@ const BorderForce = () => {
                     initialTouchX = pageX;
                 }
             });
-
+    
             canvas.addEventListener('touchend', (e) => {
                 initialTouchX = null; // Reset the initial touch position on touchend
-
+    
             });
-
+    
             const handleMouseDown = (e) => {
                 if (!game.gameOver && game.enemyCreationTime > 200) {
                     player.roundsFired++;
@@ -992,16 +1004,16 @@ const BorderForce = () => {
                     const bulletSize = canvas.width / 48;
                     const bulletX = canvas.width / 2 - bulletSize / 2 + gunHeight * Math.sin((gunAngle * Math.PI) / 180);
                     const bulletY = canvas.height - gunHeight * Math.cos((gunAngle * Math.PI) / 180);
-
+    
                     bullets.push({ size: bulletSize, x: bulletX, y: bulletY, angle: gunAngle });
-
+    
                     if (!showGunFire) {
                         fireImageNo = ++fireImageNo % 3;
                         showGunFire = true;
                     }
                 }
             }
-
+    
             const handleMouseMove = (e) => {
                 const mousePosX = (e.clientX - canvasLeftBorder) * correctMouseX;
                 const mousePosY = (e.clientY - canvasTopBorder) * correctMouseY;
@@ -1011,20 +1023,20 @@ const BorderForce = () => {
                 if (!game.gameOver && game.enemyCreationTime > 200)
                     gunAngle = (Math.atan2(deltaX, deltaY) * 180) / Math.PI;
             }
-
+    
             // const handleMouseUp = () => {
-
+    
             // }
-
+    
             canvas.addEventListener('mousedown', handleMouseDown);
             canvas.addEventListener('mousemove', handleMouseMove);
             // canvas.addEventListener('mouseup', handleMouseUp);
-
+    
             // Initialize the game
             gameLoop();
-
+    
             // Create enemies
-
+    
             setId = setInterval(() => {
                 // console.log("Set Interval here bro!");
                 if (game.totalEnemies >= 1000) {
@@ -1037,32 +1049,32 @@ const BorderForce = () => {
                     else if (player.performance >= 100) performanceRank = 'Poor';
                     else performanceRank = 'Bad';
                 }
-
+    
                 // console.log(performance);
-
+    
                 let selectEnemy = Math.random();
-
+    
                 if (game.totalEnemies < 500)
                     selectEnemy = .1;
-
+    
                 if (game.totalEnemies >= 500 && game.totalEnemies < 1000) {
                     if (selectEnemy < .5) selectEnemy = .1;
                     else selectEnemy = .4;
                 }
-
+    
                 if (game.totalEnemies >= 1000 && game.totalEnemies < 1500) {
                     if (selectEnemy < .3) selectEnemy = .1;
                     else if (selectEnemy >= .3 && selectEnemy < .5) selectEnemy = .4;
                     else selectEnemy = .7;
                 }
-
+    
                 if (game.totalEnemies >= 1500 && game.totalEnemies < 2000) {
                     if (selectEnemy < .3) selectEnemy = .1;
                     else if (selectEnemy >= .3 && selectEnemy < .5) selectEnemy = .4;
                     else if (selectEnemy >= .5 && selectEnemy < .7) selectEnemy = .7;
                     else selectEnemy = .8;
                 }
-
+    
                 if (game.totalEnemies >= 2000 && game.totalEnemies < 2500) {
                     if (selectEnemy < .3) selectEnemy = .1;
                     else if (selectEnemy >= .3 && selectEnemy < .5) selectEnemy = .4;
@@ -1070,7 +1082,7 @@ const BorderForce = () => {
                     else if (selectEnemy >= .7 && selectEnemy < .8) selectEnemy = .6;
                     else selectEnemy = .8;
                 }
-
+    
                 let enemyType = 'robot';
                 let resilience = 3;
                 let speedX = 0;
@@ -1078,7 +1090,7 @@ const BorderForce = () => {
                 let moveYLimit = canvas.height - canvas.height / 16;
                 let enemyWidth = canvas.width / 12;
                 let enemyHeight = canvas.height / 16;
-
+    
                 if (selectEnemy >= .3 && selectEnemy < .5) {
                     enemyHeight = canvas.height / 8;
                     enemyType = 'ram';
@@ -1106,7 +1118,7 @@ const BorderForce = () => {
                         moveYLimit = canvas.height;
                     }
                 }
-
+    
                 if (selectEnemy >= .7 && selectEnemy < .8) {
                     enemyWidth = canvas.width / 9.6;
                     enemyHeight = canvas.height / 6.7;
@@ -1143,21 +1155,21 @@ const BorderForce = () => {
                     moveYLimit = 0;
                 }
                 let enemyY = -enemyHeight;
-
+    
                 createEnemy = true;
-
+    
                 enemies.forEach((enemy) => {
                     if ((selectEnemy >= .5 && selectEnemy < .7 && enemy.enemyMake === 'destroyer') ||
                         (selectEnemy >= .7 && selectEnemy < .8 && enemy.enemyMake === 'ladyZigzag') ||
                         (selectEnemy >= .8 && selectEnemy < .9 && enemy.enemyMake === 'rpg') ||
                         (selectEnemy >= .9 && enemy.enemyMake === 'tank'))
                         createEnemy = false;
-
+    
                     if (game.gameOver && selectEnemy < .5 && (enemy.enemyMake === 'robot' || enemy.enemyMake === 'ram')) createEnemy = false;
                 });
-
+    
                 if (pauseRef.current.textContent === "||") {
-
+    
                     if (createEnemy && game.enemyCreationTime >= 200) {
                         enemies.push({ enemyMake: enemyType, power: resilience, x: enemyX, y: enemyY, width: enemyWidth, height: enemyHeight, vx: speedX, vy: speedY, moveTo: moveYLimit, hit: false });
                         game.totalEnemies++;
@@ -1165,76 +1177,77 @@ const BorderForce = () => {
                             game.enemyCreationTime -= 10;
                         }
                     }
-
+    
                 }
             }, game.enemyCreationTime);
-
+    
         };
-        let setId;
-        let requestID;
-        initializeComponent();
-
+    
 
         return () => {
             // canvas.removeEventListener('touchstart');
             // canvas.removeEventListener('touchmove');
-            cancelAnimationFrame(requestID);
-            clearInterval(setId);
+
+                cancelAnimationFrame(requestID);
+                clearInterval(setId);
         };
     }, []);
 
+    
     if (loading) {
-        return (<div><canvas
-            ref={canvasRef} className={window.innerHeight > window.innerWidth ? 'portraitbf' : 'landscapebf'}
-
-            style={{ backgroundColor: 'lightgray' }}
-        ></canvas>
-            <p>Loading...</p>
-        </div>
+        return (
+            <>
+            <div>
+                <p style={{ textalign: 'center' }}>Loading...</p>
+            </div>
+            </>
         );
     }
 
-    return (
-        <div className="aroundCanvasbf" id='home'>
-            <div className="samePosbf">
-                <div className='infobf'>i
-                    <span className='tooltip-textbf'>
-                        *Your task is to defend a country's border against an invading army.<br />
-                        *Tap screen to shoot in the direction you tap.<br />
-                        *Move finger to any side of the screen to rotate your gun.<br />
-                        *Tap 'O' to restart game.<br />
-                        *Tap '||' to pause game.<br />
-                        *Tap '►' to resume game.<br />
-                        *Tap 'X' to exit game.<br />
-                        *Tap this instruction screen to return to game<br />
-                    </span>
-                    <span className='tooltip-text-desktopbf'>
-                        *Your task is to defend a country's border against an invading army.<br />
-                        *Left click the left mouse button to shoot in the direction of your cursor.<br />
-                        *Move your mouse to aim the gun at any direction.<br />
-                        *Click 'O' to restart game.<br />
-                        *Click '||' to pause game.<br />
-                        *Click '►' to resume game.<br />
-                        *Click 'X' to exit game.<br />
-                    </span>
-                </div>
-                <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1bf' : 'restart2bf'}>
-                    O
-                </div>
-                <p ref={pauseRef} onClick={() => setPause(!pause)} className="pausebf">
-                    {!pause ? "||" : "►"}
-                </p>
-                <Link to="/isiapps#home">
-                    <div className='exitbf'>X</div>
-                </Link>
-            </div>
-            <canvas
-                ref={canvasRef} className={window.innerHeight > window.innerWidth ? 'portraitbf' : 'landscapebf'}
+    else {
 
-                style={{ backgroundColor: 'lightgray' }}
-            ></canvas>
-        </div>
-    );
+        return (
+            <div className="aroundCanvasbf" id='home'>
+                <div className="samePosbf">
+                    <div className='infobf'>i
+                        <span className='tooltip-textbf'>
+                            *Your task is to defend a country's border against an invading army.<br />
+                            *Tap screen to shoot in the direction you tap.<br />
+                            *Move finger to any side of the screen to rotate your gun.<br />
+                            *Tap 'O' to restart game.<br />
+                            *Tap '||' to pause game.<br />
+                            *Tap '►' to resume game.<br />
+                            *Tap 'X' to exit game.<br />
+                            *Tap this instruction screen to return to game<br />
+                        </span>
+                        <span className='tooltip-text-desktopbf'>
+                            *Your task is to defend a country's border against an invading army.<br />
+                            *Left click the left mouse button to shoot in the direction of your cursor.<br />
+                            *Move your mouse to aim the gun at any direction.<br />
+                            *Click 'O' to restart game.<br />
+                            *Click '||' to pause game.<br />
+                            *Click '►' to resume game.<br />
+                            *Click 'X' to exit game.<br />
+                        </span>
+                    </div>
+                    <div ref={restartRef} onClick={() => setRestart(true)} className={restart ? 'restart1bf' : 'restart2bf'}>
+                        O
+                    </div>
+                    <p ref={pauseRef} onClick={() => setPause(!pause)} className="pausebf">
+                        {!pause ? "||" : "►"}
+                    </p>
+                    <Link to="/isiapps#home">
+                        <div className='exitbf'>X</div>
+                    </Link>
+                </div>
+                <canvas
+                    ref={canvasRef} className={window.innerHeight > window.innerWidth ? 'portraitbf' : 'landscapebf'}
+
+                    style={{ backgroundColor: 'lightgray' }}
+                ></canvas>
+            </div>
+        );
+    }
 };
 
 export default BorderForce;
