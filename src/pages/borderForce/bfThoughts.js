@@ -51,6 +51,73 @@ const BfThoughts = [
     { id: 38, saying: "7", audio: '/assets/sounds/tankShoot.wav', image: '' }, //37 Tank shots
 
     { id: 39, saying: "War has taken alot away from us.", audio: '/assets/donsThoughts/alot.wav', image: '' }, //38
+    { id: 40, saying: "Consider the toll on human lives:", audio: '/assets/donsThoughts/considerToll.wav', image: '' }, 
+    { id: 41, saying: "the diversion of resources from education, healthcare, and infrastructure", audio: '/assets/donsThoughts/resourcesEdu.wav', image: '' }, 
+    { id: 42, saying: "the destruction of property and ecosystems", audio: '/assets/donsThoughts/desEco.wav', image: '' }, 
+    { id: 43, saying: "supply chain disruptions accelerating inflation rates,", audio: '/assets/donsThoughts/supTions.wav', image: '' },
+    { id: 44, saying: "and the psychological scars that last for a lifetime.", audio: '/assets/donsThoughts/psyLife.wav', image: '' },
+
+    { id: 45, saying: "A few years ago,", audio: '/assets/donsThoughts/yearsF.wav', image: '' },//44
+    { id: 46, saying: "a lad who had lost both parents to war,", audio: '/assets/donsThoughts/warParent.wav', image: '' },
+    { id: 47, saying: "asked me if anything can be done to prevent its reoccurrence.", audio: '/assets/donsThoughts/warPrev.wav', image: '' },
+    { id: 48, saying: "I just stared at him.", audio: '/assets/donsThoughts/himStair.wav', image: '' },
+    { id: 49, saying: "I could not lie, nor increase the weight of his grief.", audio: '/assets/donsThoughts/griefWei.wav', image: '' },
+
+    { id: 50, saying: "There's been without a doubt a reduction in the frequency and duration of war,", audio: '/assets/donsThoughts/freDu.wav', image: '' },
+    { id: 51, saying: "but advances in weapons technology has ballooned the death toll and destruction.", audio: '/assets/donsThoughts/deaDest.wav', image: '' },
+    { id: 52, saying: "Human aggression, with its innate quest for dominance, ", audio: '/assets/donsThoughts/aggDominance.wav', image: '' },
+    { id: 53, saying: "keep flaming the embers of war.", audio: '/assets/donsThoughts/embFlame.wav', image: '' },
+    { id: 54, saying: "As long as there exists power hungry entities,", audio: '/assets/donsThoughts/powHungry.wav', image: '' },
+    { id: 55, saying: "intolerance of ideological differences,", audio: '/assets/donsThoughts/ideoIntolerance.wav', image: '' },
+    { id: 56, saying: "religious fundamentalism,", audio: '/assets/donsThoughts/relFund.wav', image: '' },
+    { id: 57, saying: "historical grievances,", audio: '/assets/donsThoughts/histGrief.wav', image: '' },
+    { id: 58, saying: "territorial disputes,", audio: '/assets/donsThoughts/territoryDisputes.wav', image: '' },
+    { id: 59, saying: "and empire building,", audio: '/assets/donsThoughts/empBuilding.wav', image: '' },
+    { id: 60, saying: "there will never be an end to war.", audio: '/assets/donsThoughts/warEnd.wav', image: '' },
+
+    { id: 61, saying: "I generally disapprove of armed conflicts,", audio: '/assets/donsThoughts/armDisapprove.wav', image: '' },
+    { id: 62, saying: "particularly wars of conquest.", audio: '/assets/donsThoughts/conqWar.wav', image: '' },
+    { id: 63, saying: "But we cannot preserve our freedoms without fighting for it in a world marred by a legacy of subjugation", audio: '/assets/donsThoughts/subjugationMar.wav', image: '' },
+    { id: 64, saying: "Just as self-defense is the logical response to various forms of assault,", audio: '/assets/donsThoughts/assaultForms.wav', image: '' },
+    { id: 65, saying: "warfare remains the practical answer to tyranny, terrorism, and invasions.", audio: '/assets/donsThoughts/warPrac.wav', image: '' },
+
+    { id: 66, saying: "Nonviolent strategies have been touted as an alternative.", audio: '/assets/donsThoughts/nonVio.wav', image: '' },
+    { id: 67, saying: "But they have only been used to bring about social change;", audio: '/assets/donsThoughts/socChange.wav', image: '' },
+    { id: 68, saying: "ending discrimination, marginalization, or segregation.", audio: '/assets/donsThoughts/discrim.wav', image: '' },
+    { id: 69, saying: "I do endorse their use,", audio: '/assets/donsThoughts/endor.wav', image: '' },
+    { id: 70, saying: "as long as a government hasn't turned its guns on the people.", audio: '/assets/donsThoughts/govtG.wav', image: '' },
+
+    { id: 71, saying: "Well, my memory sometimes fails me.", audio: '/assets/donsThoughts/memFa.wav', image: '' },
+    { id: 72, saying: "I now recall a research which revealed that the nonviolent campaigns in the last century,", audio: '/assets/donsThoughts/resear.wav', image: '' },
+    { id: 73, saying: "were twice more successful at toppling tyrannical regimes,", audio: '/assets/donsThoughts/succTop.wav', image: '' },
+    { id: 74, saying: "than violent insurgencies.", audio: '/assets/donsThoughts/vioGen.wav', image: '' },
+    { id: 75, saying: "The pacifist would feel vindicated by this finding.", audio: '/assets/donsThoughts/pacVin.wav', image: '' },
+    { id: 76, saying: "But except they are certain of rewards in an afterlife,", audio: '/assets/donsThoughts/wardRe.wav', image: '' },
+    { id: 77, saying: "embracing their position, or that of the conscientious objector,", audio: '/assets/donsThoughts/posCons.wav', image: '' },
+    { id: 78, saying: "will be the doom of a nation,", audio: '/assets/donsThoughts/naDoom.wav', image: '' },
+    { id: 79, saying: "in the event of internatiional aggression.", audio: '/assets/donsThoughts/intAggs.wav', image: '' },
+
+    { id: 80, saying: "Having worked as a mercenary since the age of 22,", audio: '/assets/donsThoughts/mercW.wav', image: '' },
+    { id: 81, saying: "I have been fortunate to have escaped serious injuries,", audio: '/assets/donsThoughts/escInju.wav', image: '' },
+    { id: 82, saying: "while accumulating considerable wealth.", audio: '/assets/donsThoughts/consWeal.wav', image: '' },
+    { id: 83, saying: "This war marks a distinct chapter for me.", audio: '/assets/donsThoughts/disChap.wav', image: '' },
+    { id: 84, saying: "I volunteered to defend a critical border access point to a country on the brink of collapse", audio: '/assets/donsThoughts/bordCol.wav', image: '' },
+    { id: 85, saying: "due to military aggression from an expansionist nation.", audio: '/assets/donsThoughts/milAggEx.wav', image: '' },
+    { id: 86, saying: "Ammunition is depleted, and Western support has waned.", audio: '/assets/donsThoughts/ammDep.wav', image: '' },
+    { id: 87, saying: "The allies have indeed acted commendably.", audio: '/assets/donsThoughts/commAll.wav', image: '' },
+    { id: 88, saying: "They have their own issues to grapple with.", audio: '/assets/donsThoughts/grapIss.wav', image: '' },
+
+    { id: 89, saying: "The guys who defended the outposts outside these walls did a good job.", audio: '/assets/donsThoughts/outpoGuy.wav', image: '' },
+    { id: 90, saying: "But it's safe to assume that they are all dead from the swam of kamikaze robots approaching me.", audio: '/assets/donsThoughts/kamikaze.wav', image: '' },
+    { id: 91, saying: "With this gun, and a supply of around 10 thousand rounds, ", audio: '/assets/donsThoughts/gunRounds.wav', image: '' },
+    { id: 92, saying: "I will do my best to halt the offensive.", audio: '/assets/donsThoughts/offHalt.wav', image: '' },
+
+    //When rounds are exhausted
+    { id: 93, saying: "I exhausted my rounds. ", audio: '/assets/donsThoughts/exhRounds.wav', image: '' },
+    { id: 94, saying: "I could have been less wasteful.", audio: '/assets/donsThoughts/lesWaste.wav', image: '' },//93
+
+    //Added Sound
+    { id: 95, saying: "8", audio: '/assets/sounds/sm2Explosion.wav', image: '' }, //secoond robot explosion
 
 ];
 
