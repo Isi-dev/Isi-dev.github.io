@@ -1,9 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react'
 import './whatsTheWord.css'
 import WordsFromDBPromise from './components/wordSet';
-
 import { HashLink as Link } from 'react-router-hash-link';
-import BfThoughtsFromDBPromise from '../borderForce/bfThoughts';
+import ImagesFromDBPromise from '../borderForce/imagesToOffline';
 
 const WhatsTheWord = () => {
     const [pause, setPause] = useState(false);
@@ -16,15 +15,15 @@ const WhatsTheWord = () => {
     useEffect(() => {
         let requestID;
         var WordSet = [];
-        var BfThoughts = [];
+        var ImagesOffline = [];
 
         const fetchData = async () => {
             try {
                 const words = await WordsFromDBPromise;          
                 WordSet = Array.from(words);
 
-                const thoughts = await BfThoughtsFromDBPromise;
-                BfThoughts = Array.from(thoughts);
+                const imagesOffline = await ImagesFromDBPromise;
+                ImagesOffline = Array.from(imagesOffline);
 
                 setLoading(false);
 
@@ -78,8 +77,8 @@ const WhatsTheWord = () => {
             const correctMouseY = canvas.height / canvas.getBoundingClientRect().height;
 
             var allImages = new Image();
-            if (BfThoughts && BfThoughts.length > 0) {
-                allImages.src = BfThoughts[1].imageURL;
+            if (ImagesOffline && ImagesOffline.length > 0) {
+                allImages.src = ImagesOffline[1].imageURL;
             } else {
                 console.log("Local storage not accessible.");
                 allImages.src = '/assets/appImages/whatsDword.png';

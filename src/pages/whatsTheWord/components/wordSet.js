@@ -142,7 +142,7 @@ const WordSet = [
 ];
 
 
-const DB_NAME = 'wordsDataBase';
+const DB_NAME = 'wordsDatBase';
 const DB_VERSION = 1;
 const OBJECT_STORE_NAME = 'words';
 

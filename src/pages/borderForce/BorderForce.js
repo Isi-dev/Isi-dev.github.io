@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import './borderforce.css';
 import BfThoughtsFromDBPromise from './bfThoughts';
 import { HashLink as Link } from 'react-router-hash-link';
+import ImagesFromDBPromise from './imagesToOffline';
 
 
 
@@ -17,15 +18,18 @@ const BorderForce = () => {
     useEffect(() => {
         //Wait for data to store in database and load
         var BfThoughts = [];
+        var ImagesOffline = [];
         let setId;
         let requestID;
 
         const fetchData = async () => {
             try {
                 const thoughts = await BfThoughtsFromDBPromise;
-                // Set loading to false when data is loaded
-
                 BfThoughts = Array.from(thoughts);
+
+                const imagesOffline = await ImagesFromDBPromise;
+                ImagesOffline = Array.from(imagesOffline);
+
                 setLoading(false);
 
                 // initializeComponent(BfThoughts, setId, requestID, canvas);
@@ -67,8 +71,8 @@ const BorderForce = () => {
             var allImages = new Image();
             // allImages.src = img;
             // allImages.src = BfThoughts[0].image;
-            if (BfThoughts && BfThoughts.length > 0) {
-                allImages.src = BfThoughts[0].imageURL;
+            if (ImagesOffline && ImagesOffline.length > 0) {
+                allImages.src = ImagesOffline[0].imageURL;
             } else {
                 console.log("Local storage not accessible.");
                 allImages.src = '/assets/appImages/borderForceSprite.png';
@@ -1025,7 +1029,7 @@ const BorderForce = () => {
                 //For Shooting
                 // startTouchX = e.changedTouches[0].clientX;
                 // startTouchY = e.changedTouches[0].clientY;
-                if (!game.gameOver && game.enemyCreationTime > 100) {
+                if (!game.gameOver && game.enemyCreationTime >= 100) {
 
                     const touch = e.touches[0];
                     const gunX = canvas.width / 2;
@@ -1058,7 +1062,7 @@ const BorderForce = () => {
             canvas.addEventListener('touchmove', (e) => {
                 e.preventDefault();
                 // Gun rotation
-                if (!game.gameOver && initialTouchX !== null && game.enemyCreationTime > 100) {
+                if (!game.gameOver && initialTouchX !== null && game.enemyCreationTime >= 100) {
 
                     const { pageX } = e.touches[0];
 
@@ -1077,7 +1081,7 @@ const BorderForce = () => {
             });
 
             const handleMouseDown = (e) => {
-                if (!game.gameOver && game.enemyCreationTime > 100) {
+                if (!game.gameOver && game.enemyCreationTime >= 100) {
                     player.roundsFired++;
                     shootAudio.play();
                     recoilEffect = 3;
@@ -1157,7 +1161,7 @@ const BorderForce = () => {
                     else selectEnemy = .8;
                 }
 
-                if (game.totalEnemies >= 1000 && game.totalEnemies < 1500) {
+                if (game.totalEnemies >= 1000 && game.totalEnemies < 1250) {
                     if (selectEnemy < .3) selectEnemy = .1;
                     else if (selectEnemy >= .3 && selectEnemy < .5) selectEnemy = .4;
                     else if (selectEnemy >= .5 && selectEnemy < .7) selectEnemy = .7;
@@ -1208,7 +1212,7 @@ const BorderForce = () => {
                     resilience = 1;
                     speedX = -4;
                     speedY = 2;
-                    if (game.totalEnemies >= 2500)
+                    if (game.totalEnemies >= 1250)
                         enemyX = canvas.width - canvas.width / 3.7;
                     else {
                         if (Math.random() < .5) enemyX = canvas.width - canvas.width / 3.7;
