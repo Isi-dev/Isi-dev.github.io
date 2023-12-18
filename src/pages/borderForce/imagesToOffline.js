@@ -7,7 +7,7 @@ const ImagesArray = [
 
 
 
-const DB_NAME = 'imagesDatBase';
+const DB_NAME = 'imagesDataBase';
 const DB_VERSION = 1;
 const OBJECT_STORE_NAME = 'images';
 

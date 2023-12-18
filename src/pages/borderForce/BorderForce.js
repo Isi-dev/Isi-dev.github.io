@@ -96,7 +96,7 @@ const BorderForce = () => {
             const canvasLeftBorder = canvas.getBoundingClientRect().left;
             const correctMouseX = canvas.width / canvas.getBoundingClientRect().width;
 
-            var game = { totalEnemies: 0, enemyCreationTime: 500, gameOver: false };
+            var game = { totalEnemies: 0, presentEnemies: 0, enemyCreationTime: 500, gameOver: false, victory: false };
             var player = { x: canvas.width / 2 - canvas.width / 9.6, y: canvas.height - canvas.height / 16, width: canvas.width / 4.8, height: canvas.height / 20, life: 200, score: 0, performance: 0, roundsFired: 0 };
 
             let showHighScore = false;
@@ -233,96 +233,100 @@ const BorderForce = () => {
                     }
                 }
                 else {
-                    thought(BfThoughts[7], 320, 380);
-                    thought(BfThoughts[8], 390, 480);
-                    thought(BfThoughts[9], 490, 600);
-                    thought(BfThoughts[10], 700, 900);
-                    thought(BfThoughts[11], 1000, 1100);
-                    thought(BfThoughts[12], 1120, 1250);
-                    thought(BfThoughts[13], 1260, 1380);
-                    thought(BfThoughts[14], 1420, 1550);
-
-                    thought(BfThoughts[15], 2000, 2100);
-                    thought(BfThoughts[16], 2110, 2200);
-                    thought(BfThoughts[17], 2210, 2320);
-                    thought(BfThoughts[18], 2400, 2510);
-                    thought(BfThoughts[19], 2540, 2680);
-                    thought(BfThoughts[20], 2685, 2800);
-                    thought(BfThoughts[21], 2805, 3000);
-                    thought(BfThoughts[22], 3005, 3140);
-                    thought(BfThoughts[23], 3240, 3390);
-                    thought(BfThoughts[24], 3400, 3550);
-                    thought(BfThoughts[25], 3700, 4000);
-                    thought(BfThoughts[26], 4050, 4250);
-                    thought(BfThoughts[27], 4400, 4600);
-                    thought(BfThoughts[28], 4601, 4795);
-                    thought(BfThoughts[29], 4800, 4950);
-                    thought(BfThoughts[30], 4955, 5150);
-
-                    thought(BfThoughts[38], 5350, 5500);
-                    thought(BfThoughts[39], 5510, 5650);
-                    thought(BfThoughts[40], 5670, 5960);
-                    thought(BfThoughts[41], 5970, 6120);
-                    thought(BfThoughts[42], 6130, 6300);
-                    thought(BfThoughts[43], 6320, 6500);
-
-                    thought(BfThoughts[44], 7000, 7100);
-                    thought(BfThoughts[45], 7110, 7250);
-                    thought(BfThoughts[46], 7260, 7450);
-                    thought(BfThoughts[47], 7470, 7570);
-                    thought(BfThoughts[48], 7580, 7760);
-
-                    thought(BfThoughts[49], 7980, 8230);
-                    thought(BfThoughts[50], 8240, 8485);
-                    thought(BfThoughts[51], 8510, 8670);
-                    thought(BfThoughts[52], 8690, 8800);
-                    thought(BfThoughts[53], 8835, 8990);
-                    thought(BfThoughts[54], 9000, 9150);
-                    thought(BfThoughts[55], 9155, 9240);
-                    thought(BfThoughts[56], 9260, 9350);
-                    thought(BfThoughts[57], 9355, 9450);
-                    thought(BfThoughts[58], 9455, 9550);
-                    thought(BfThoughts[59], 9555, 9690);
-
-                    thought(BfThoughts[60], 9900, 10040);
-                    thought(BfThoughts[61], 10040, 10170);
-                    thought(BfThoughts[62], 10185, 10500);
-                    thought(BfThoughts[63], 10550, 10800);
-                    thought(BfThoughts[64], 10810, 11050);
-
-                    thought(BfThoughts[65], 11300, 11500);
-                    thought(BfThoughts[66], 11510, 11690);
-                    thought(BfThoughts[67], 11695, 11950);
-                    thought(BfThoughts[68], 11960, 12060);
-                    thought(BfThoughts[69], 12070, 12300);
-
-                    thought(BfThoughts[70], 13000, 13150);
-                    thought(BfThoughts[71], 13160, 13420);
-                    thought(BfThoughts[72], 13430, 13620);
-                    thought(BfThoughts[73], 13621, 13740);
-                    thought(BfThoughts[74], 13760, 13940);
-                    thought(BfThoughts[75], 13960, 14130);
-                    thought(BfThoughts[76], 14140, 14360);
-                    thought(BfThoughts[77], 14370, 14470);
-                    thought(BfThoughts[78], 14472, 14600);
-
-                    thought(BfThoughts[79], 15000, 15180);
-                    thought(BfThoughts[80], 15195, 15350);
-                    thought(BfThoughts[81], 15370, 15500);
-                    thought(BfThoughts[82], 15560, 15710);
-                    thought(BfThoughts[83], 15735, 16000);
-                    thought(BfThoughts[84], 16005, 16200);
-                    thought(BfThoughts[85], 16210, 16400);
-                    thought(BfThoughts[86], 16450, 16580);
-                    thought(BfThoughts[87], 16600, 16750);
-
-                    thought(BfThoughts[88], 17500, 17750);
-                    thought(BfThoughts[89], 17760, 18020);
-                    thought(BfThoughts[90], 18200, 18400);
-                    thought(BfThoughts[91], 18410, 18550);
+                    if (game.victory) {
 
 
+                    } else {
+                        thought(BfThoughts[7], 320, 380);
+                        thought(BfThoughts[8], 390, 480);
+                        thought(BfThoughts[9], 490, 600);
+                        thought(BfThoughts[10], 700, 900);
+                        thought(BfThoughts[11], 1000, 1100);
+                        thought(BfThoughts[12], 1120, 1250);
+                        thought(BfThoughts[13], 1260, 1380);
+                        thought(BfThoughts[14], 1420, 1550);
 
+                        thought(BfThoughts[15], 2000, 2100);
+                        thought(BfThoughts[16], 2110, 2200);
+                        thought(BfThoughts[17], 2210, 2320);
+                        thought(BfThoughts[18], 2400, 2510);
+                        thought(BfThoughts[19], 2540, 2680);
+                        thought(BfThoughts[20], 2685, 2800);
+                        thought(BfThoughts[21], 2805, 3000);
+                        thought(BfThoughts[22], 3005, 3140);
+                        thought(BfThoughts[23], 3240, 3390);
+                        thought(BfThoughts[24], 3400, 3550);
+                        thought(BfThoughts[25], 3700, 4000);
+                        thought(BfThoughts[26], 4050, 4250);
+                        thought(BfThoughts[27], 4400, 4600);
+                        thought(BfThoughts[28], 4601, 4795);
+                        thought(BfThoughts[29], 4800, 4950);
+                        thought(BfThoughts[30], 4955, 5150);
+
+                        thought(BfThoughts[38], 5350, 5500);
+                        thought(BfThoughts[39], 5510, 5650);
+                        thought(BfThoughts[40], 5670, 5960);
+                        thought(BfThoughts[41], 5970, 6120);
+                        thought(BfThoughts[42], 6130, 6300);
+                        thought(BfThoughts[43], 6320, 6500);
+
+                        thought(BfThoughts[44], 7000, 7100);
+                        thought(BfThoughts[45], 7110, 7250);
+                        thought(BfThoughts[46], 7260, 7450);
+                        thought(BfThoughts[47], 7470, 7570);
+                        thought(BfThoughts[48], 7580, 7760);
+
+                        thought(BfThoughts[49], 7980, 8230);
+                        thought(BfThoughts[50], 8240, 8485);
+                        thought(BfThoughts[51], 8510, 8670);
+                        thought(BfThoughts[52], 8690, 8800);
+                        thought(BfThoughts[53], 8835, 8990);
+                        thought(BfThoughts[54], 9000, 9150);
+                        thought(BfThoughts[55], 9155, 9240);
+                        thought(BfThoughts[56], 9260, 9350);
+                        thought(BfThoughts[57], 9355, 9450);
+                        thought(BfThoughts[58], 9455, 9550);
+                        thought(BfThoughts[59], 9555, 9690);
+
+                        thought(BfThoughts[60], 9900, 10040);
+                        thought(BfThoughts[61], 10040, 10170);
+                        thought(BfThoughts[62], 10185, 10500);
+                        thought(BfThoughts[63], 10550, 10800);
+                        thought(BfThoughts[64], 10810, 11050);
+
+                        thought(BfThoughts[65], 11300, 11500);
+                        thought(BfThoughts[66], 11510, 11690);
+                        thought(BfThoughts[67], 11695, 11950);
+                        thought(BfThoughts[68], 11960, 12060);
+                        thought(BfThoughts[69], 12070, 12300);
+
+                        thought(BfThoughts[70], 13000, 13150);
+                        thought(BfThoughts[71], 13160, 13420);
+                        thought(BfThoughts[72], 13430, 13620);
+                        thought(BfThoughts[73], 13621, 13740);
+                        thought(BfThoughts[74], 13760, 13940);
+                        thought(BfThoughts[75], 13960, 14130);
+                        thought(BfThoughts[76], 14140, 14360);
+                        thought(BfThoughts[77], 14370, 14470);
+                        thought(BfThoughts[78], 14472, 14600);
+
+                        thought(BfThoughts[79], 15000, 15180);
+                        thought(BfThoughts[80], 15195, 15350);
+                        thought(BfThoughts[81], 15370, 15500);
+                        thought(BfThoughts[82], 15560, 15710);
+                        thought(BfThoughts[83], 15735, 16000);
+                        thought(BfThoughts[84], 16005, 16200);
+                        thought(BfThoughts[85], 16210, 16400);
+                        thought(BfThoughts[86], 16450, 16580);
+                        thought(BfThoughts[87], 16600, 16750);
+
+                        thought(BfThoughts[88], 17500, 17750);
+                        thought(BfThoughts[89], 17760, 18020);
+                        thought(BfThoughts[90], 18200, 18400);
+                        thought(BfThoughts[91], 18410, 18550);
+
+
+                    }
 
                 }
 
@@ -341,7 +345,9 @@ const BorderForce = () => {
             const textSize = canvas.width / 16;
             const textSize2 = canvas.width / 8;
 
+            let playing = true;
             let bullets = [];
+            let bomb = { x: canvas.width / 2 - canvas.width / 48, y: canvas.height, size: canvas.width / 24, number: 10, released: false, explode: false };
             let enemies = [];
             let bulletLadyZ = [];
             let bulletEvil = [];
@@ -358,6 +364,7 @@ const BorderForce = () => {
             let blocksDestroyed = 0;
             let performanceRank = '-';
             let roundsMax = 10000;
+            let disappearAll = 0;
 
 
 
@@ -447,8 +454,10 @@ const BorderForce = () => {
                 //Restart stuff
                 if (restartRef.current.className === 'restart1bf') {
                     game.totalEnemies = 0;
+                    game.presentEnemies = 0;
                     game.enemyCreationTime = 500;
                     game.gameOver = false;
+                    game.victory = false;
 
                     player.life = 200;
                     player.roundsFired = 0;
@@ -459,7 +468,12 @@ const BorderForce = () => {
                     wordNum = 0;
                     wordsSet = '';
 
+                    playing = true;
                     bullets = [];
+                    bomb.y = canvas.height;
+                    bomb.number = 10;
+                    bomb.released = false;
+                    bomb.explode = false;
                     enemies = [];
                     bulletLadyZ = [];
                     bulletEvil = [];
@@ -475,6 +489,7 @@ const BorderForce = () => {
                     performanceRank = '-';
                     bulletTank.shot = false;
                     bulletRPG.shot = false;
+                    disappearAll = 0;
 
                     wall = [];
                     //Build wall
@@ -504,7 +519,7 @@ const BorderForce = () => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 if (pauseRef.current.textContent === "||") {
-
+                    if (!playing) playing = true;
                     if (recoilEffect !== 0) {
                         if (count++ > 5) {
                             if (recoilEffectX !== 0)
@@ -551,6 +566,7 @@ const BorderForce = () => {
                                 player.score += 1;
                                 if (enemy.power-- <= 4) {
                                     enemies.splice(index, 1);
+                                    game.presentEnemies -= 1;
                                     if (enemy.enemyMake === 'robot') {
                                         createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 6, 50, 0.1, 1, 1, 0.04);
                                         const explode = new Audio(BfThoughts[34].audioURL);
@@ -558,7 +574,7 @@ const BorderForce = () => {
                                     }
                                     if (enemy.enemyMake === 'ram') {
                                         createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 7, 100, 0.5, 1, 1, 0.05);
-                                        const explode = new Audio(BfThoughts[94].audioURL);
+                                        const explode = new Audio(BfThoughts[34].audioURL);
                                         explode.play();
                                     }
                                     if (!destroyerSuccessful && enemy.enemyMake === 'destroyer') {
@@ -636,7 +652,7 @@ const BorderForce = () => {
                                         ) {
                                             recoilEffect = 1;
                                             recoilEffectY = recoilEffect;
-                                            if (!game.gameOver) player.life -= 1;
+                                            if (!game.gameOver) player.life -= .5;
                                             bulletEvil.splice(bulletEvil.indexOf(bullet), 1);
                                         }
 
@@ -673,7 +689,7 @@ const BorderForce = () => {
                                         ctx.drawImage(allImages, 120, 0, 50, 50, enemy.x - enemy.width / 2, enemy.y + enemy.height * .7, canvas.width / 8, canvas.width / 8);
                                         rocketAudio.play();
                                         bulletRPG.shot = true;
-                                    } 
+                                    }
                                 }
                             }
                             if (enemy.enemyMake === 'robot') {
@@ -718,7 +734,7 @@ const BorderForce = () => {
                                     ) {
                                         recoilEffect = 1;
                                         recoilEffectY = recoilEffect;
-                                        if (!game.gameOver) player.life -= 1;
+                                        if (!game.gameOver) player.life -= .5;
                                         bulletLadyZ.splice(bulletLadyZ.indexOf(bullet), 1);
                                     }
 
@@ -747,6 +763,7 @@ const BorderForce = () => {
                                     player.y < enemy.y + enemy.height) || (player.y < enemy.y && player.y + player.height > enemy.y))
                             ) {
                                 enemies.splice(index, 1);
+                                game.presentEnemies -= 1;
                                 if (enemy.enemyMake === 'robot') {
                                     createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 6, 50, 0.1, 1, 1, 0.04);
                                     const explode = new Audio(BfThoughts[34].audioURL);
@@ -754,7 +771,7 @@ const BorderForce = () => {
                                 }
                                 if (enemy.enemyMake === 'ram') {
                                     createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 7, 100, 0.5, 1, 1, 0.05);
-                                    const explode = new Audio(BfThoughts[94].audioURL);
+                                    const explode = new Audio(BfThoughts[34].audioURL);
                                     explode.play();
                                 }
                                 if (!game.gameOver) player.life -= 5;
@@ -783,7 +800,7 @@ const BorderForce = () => {
                                         }
                                         if (enemy.enemyMake === 'ram') {
                                             createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height, 7, 100, 0.5, 1, 1, 0.05);
-                                            const explode = new Audio(BfThoughts[94].audioURL);
+                                            const explode = new Audio(BfThoughts[34].audioURL);
                                             explode.play();
                                         }
                                         if (enemy.enemyMake === 'destroyer') {
@@ -797,7 +814,7 @@ const BorderForce = () => {
                         });
                         if (enemy.hit) {
                             enemies.splice(enemies.indexOf(enemy), 1);
-
+                            game.presentEnemies -= 1;
                         }
 
                         if (enemy.y >= canvas.height) {
@@ -812,6 +829,7 @@ const BorderForce = () => {
                             }
                             // console.log(successfulInvaders);
                             enemies.splice(enemies.indexOf(enemy), 1);
+                            game.presentEnemies -= 1;
                         }
 
                     });
@@ -819,9 +837,9 @@ const BorderForce = () => {
                     //Draw and update bullets shot by RPG
                     if (bulletRPG.shot) {
                         ctx.fillStyle = 'gray';
-                            ctx.fillRect(bulletRPG.x, bulletRPG.y, bulletRPG.width, bulletRPG.height);
-                            if (bulletRPG.x < canvas.width / 2) bulletRPG.x++;
-                            bulletRPG.y += 6;
+                        ctx.fillRect(bulletRPG.x, bulletRPG.y, bulletRPG.width, bulletRPG.height);
+                        if (bulletRPG.x < canvas.width / 2) bulletRPG.x++;
+                        bulletRPG.y += 6;
                         if (
                             ((player.x > bulletRPG.x &&
                                 player.x < bulletRPG.x + bulletRPG.width) || (player.x < bulletRPG.x && player.x + player.width > bulletRPG.x)) &&
@@ -833,7 +851,7 @@ const BorderForce = () => {
                             bulletRPG.y = canvas.height;
                             recoilEffect = 2;
                             recoilEffectY = recoilEffect;
-                            if (!game.gameOver) player.life -= 5;
+                            if (!game.gameOver) player.life -= 3;
                         }
                         if (bulletRPG.y >= canvas.height) bulletRPG.shot = false;
                     }
@@ -882,6 +900,29 @@ const BorderForce = () => {
                             }
                         });
                         if (bulletTank.y >= canvas.height) bulletTank.shot = false;
+                    }
+
+                    if (bomb.released) {
+                        if (bomb.y > canvas.height / 2.5) {
+                            ctx.drawImage(allImages, 0, 450, 20, 20, bomb.x, bomb.y, bomb.size, bomb.size);
+                            bomb.y -= 10;
+                        } else {
+                            bomb.explode = true;
+                            createExplosion(bomb.x, bomb.y, 30, 500, 1, 12, 1, 0.05);
+                            const explode = new Audio(BfThoughts[94].audioURL);
+                            explode.play();
+                            bomb.released = false;
+                        }
+                    }
+
+                    if (bomb.explode) {
+                        if (disappearAll++ >= 10) {
+                            bomb.y = canvas.height;
+                            player.score += enemies.length;
+                            enemies = [];
+                            disappearAll = 0;
+                            bomb.explode = false;
+                        }
                     }
 
                     // Draw gun
@@ -966,7 +1007,7 @@ const BorderForce = () => {
                         handleHighScore();
                     }
 
-                    if (game.enemyCreationTime < 100) {
+                    if (game.victory) {
                         ctx.font = `${textSize2}px Arial`;
                         ctx.fillStyle = 'red';
                         ctx.textAlign = "center";
@@ -985,6 +1026,10 @@ const BorderForce = () => {
 
                     ctx.font = `${textSize}px Arial`;
                     ctx.fillStyle = 'red';
+
+                    //show bomb left
+                    ctx.fillText("Bomb:" + bomb.number, canvas.width / 2, canvas.height - player.height / 1.5);
+
                     //Show player score
                     ctx.fillText(player.score, canvas.width - player.width, canvas.height - player.height / 1.5);
 
@@ -1029,12 +1074,22 @@ const BorderForce = () => {
                 //For Shooting
                 // startTouchX = e.changedTouches[0].clientX;
                 // startTouchY = e.changedTouches[0].clientY;
-                if (!game.gameOver && game.enemyCreationTime >= 100) {
+                if (playing && !game.gameOver && !game.victory) {
 
                     const touch = e.touches[0];
                     const gunX = canvas.width / 2;
                     const deltaX = touch.clientX - gunX;
                     const deltaY = canvas.height - touch.clientY;
+
+                    // console.log(deltaX, deltaY);
+
+                    if (deltaX >= -canvas.width / 10 && deltaX <= canvas.width / 10 && deltaY <= canvas.width / 10) {
+                        if (!bomb.released && !bomb.explode && bomb.number > 0) {
+                            bomb.released = true;
+                            bomb.number--;
+                        }
+                    }
+
                     gunAngle = (Math.atan2(deltaX, deltaY) * 180) / Math.PI;
                     player.roundsFired++;
                     shootAudio.play();
@@ -1062,7 +1117,7 @@ const BorderForce = () => {
             canvas.addEventListener('touchmove', (e) => {
                 e.preventDefault();
                 // Gun rotation
-                if (!game.gameOver && initialTouchX !== null && game.enemyCreationTime >= 100) {
+                if (playing && !game.gameOver && initialTouchX !== null && !game.victory) {
 
                     const { pageX } = e.touches[0];
 
@@ -1081,7 +1136,20 @@ const BorderForce = () => {
             });
 
             const handleMouseDown = (e) => {
-                if (!game.gameOver && game.enemyCreationTime >= 100) {
+                if (playing && !game.gameOver && !game.victory) {
+                    const mousePosX = (e.clientX - canvasLeftBorder) * correctMouseX;
+                    const mousePosY = (e.clientY - canvasTopBorder) * correctMouseY;
+                    const gunX = canvas.width / 2;
+                    const deltaX = mousePosX - gunX;
+                    const deltaY = canvas.height - mousePosY;
+
+                    if (deltaX >= -canvas.width / 10 && deltaX <= canvas.width / 10 && deltaY <= canvas.width / 10) {
+                        if (!bomb.released && !bomb.explode && bomb.number > 0) {
+                            bomb.released = true;
+                            bomb.number--;
+                        }
+                    }
+
                     player.roundsFired++;
                     shootAudio.play();
                     recoilEffect = 3;
@@ -1106,7 +1174,7 @@ const BorderForce = () => {
                 const gunX = canvas.width / 2;
                 const deltaX = mousePosX - gunX;
                 const deltaY = canvas.height - mousePosY;
-                if (!game.gameOver && game.enemyCreationTime > 100)
+                if (playing && !game.gameOver && !game.victory)
                     gunAngle = (Math.atan2(deltaX, deltaY) * 180) / Math.PI;
             }
 
@@ -1125,7 +1193,7 @@ const BorderForce = () => {
 
             setId = setInterval(() => {
                 // console.log("Set Interval here bro!");
-                if (game.totalEnemies >= 1000) {
+                if (game.totalEnemies >= 1000 && game.totalEnemies < 2050) {
                     player.performance = ((player.score * 9) / player.roundsFired + player.life / 200) * 100 - (successfulInvaders / 30 + blocksDestroyed / 576) * 100;
                     if (player.performance >= 900) performanceRank = 'Legendary!';
                     else if (player.performance >= 800) performanceRank = 'Outstanding!';
@@ -1181,7 +1249,7 @@ const BorderForce = () => {
                     enemyHeight = canvas.height / 8;
                     enemyType = 'ram';
                     resilience = 5;
-                    speedY = 2;
+                    speedY = 2.6;
                 }
                 if (game.gameOver) speedY = 0;
                 let enemyX = Math.random() * (canvas.width - enemyWidth);
@@ -1190,7 +1258,7 @@ const BorderForce = () => {
                     if (destroyerSuccessful) {
                         enemyWidth = canvas.width / 6.86;
                         enemyHeight = canvas.height / 6.6;
-                        resilience = 1;
+                        resilience = 6;
                         speedX = 0;
                         speedY = 4;
                         enemyX = canvas.width - enemyWidth;
@@ -1198,7 +1266,7 @@ const BorderForce = () => {
                     } else {
                         enemyWidth = canvas.width / 6;
                         enemyHeight = canvas.height / 5.3;
-                        resilience = 7;
+                        resilience = 8;
                         speedY = 1.5;
                         enemyX = canvas.width - enemyWidth;
                         moveYLimit = canvas.height;
@@ -1209,7 +1277,7 @@ const BorderForce = () => {
                     enemyWidth = canvas.width / 9.6;
                     enemyHeight = canvas.height / 6.7;
                     enemyType = 'ladyZigzag';
-                    resilience = 1;
+                    resilience = 5;
                     speedX = -4;
                     speedY = 2;
                     if (game.totalEnemies >= 1250)
@@ -1224,7 +1292,7 @@ const BorderForce = () => {
                     enemyWidth = canvas.width / 9.6;
                     enemyHeight = canvas.height / 6.7;
                     enemyType = 'rpg';
-                    resilience = 1;
+                    resilience = 6;
                     speedX = 1;
                     speedY = 1;
                     enemyX = enemyWidth;
@@ -1234,7 +1302,7 @@ const BorderForce = () => {
                     enemyWidth = canvas.width / 3.2;
                     enemyHeight = canvas.height / 4;
                     enemyType = 'tank';
-                    resilience = 15;
+                    resilience = 12;
                     speedX = 1;
                     speedY = 1;
                     enemyX = canvas.width / 2 - enemyWidth / 2;
@@ -1259,11 +1327,17 @@ const BorderForce = () => {
                     if (createEnemy && game.enemyCreationTime >= 100) {
                         enemies.push({ enemyMake: enemyType, power: resilience, x: enemyX, y: enemyY, width: enemyWidth, height: enemyHeight, vx: speedX, vy: speedY, moveTo: moveYLimit, hit: false });
                         game.totalEnemies++;
+                        game.presentEnemies++;
                         if (game.totalEnemies % 50 === 0) {
                             game.enemyCreationTime -= 10;
                         }
                     }
 
+                    if (game.presentEnemies <= 0) console.log("No present enemies.")
+                    if (game.enemyCreationTime < 100 && game.presentEnemies <= 0) game.victory = true;
+
+                } else {
+                    if (playing) playing = false;
                 }
             }, game.enemyCreationTime);
 
