@@ -905,7 +905,7 @@ const BorderForce = () => {
                     if (bomb.released) {
                         if (bomb.y > canvas.height / 2.5) {
                             ctx.drawImage(allImages, 0, 450, 20, 20, bomb.x, bomb.y, bomb.size, bomb.size);
-                            bomb.y -= 10;
+                            bomb.y -= 20;
                         } else {
                             bomb.explode = true;
                             createExplosion(bomb.x, bomb.y, 30, 500, 1, 12, 1, 0.05);
@@ -919,6 +919,8 @@ const BorderForce = () => {
                         if (disappearAll++ >= 10) {
                             bomb.y = canvas.height;
                             player.score += enemies.length;
+                            game.presentEnemies -= enemies.length;
+                            console.log(game.presentEnemies);
                             enemies = [];
                             disappearAll = 0;
                             bomb.explode = false;
@@ -1028,7 +1030,7 @@ const BorderForce = () => {
                     ctx.fillStyle = 'red';
 
                     //show bomb left
-                    ctx.fillText("Bomb:" + bomb.number, canvas.width / 2, canvas.height - player.height / 1.5);
+                    ctx.fillText(bomb.number, canvas.width / 2, canvas.height - player.height / 1.5);
 
                     //Show player score
                     ctx.fillText(player.score, canvas.width - player.width, canvas.height - player.height / 1.5);
@@ -1088,23 +1090,24 @@ const BorderForce = () => {
                             bomb.released = true;
                             bomb.number--;
                         }
-                    }
+                    } else {
 
-                    gunAngle = (Math.atan2(deltaX, deltaY) * 180) / Math.PI;
-                    player.roundsFired++;
-                    shootAudio.play();
-                    recoilEffect = 3;
-                    recoilEffectX = gunAngle < 0 ? recoilEffect * Math.cos(((gunAngle + 90) * Math.PI) / 180) : recoilEffect * Math.cos(((gunAngle + 270) * Math.PI) / 180);
-                    recoilEffectY = recoilEffect * Math.cos((gunAngle * Math.PI) / 180);
-                    const bulletSize = canvas.width / 48;
-                    const bulletX = canvas.width / 2 - bulletSize / 2 + gunHeight * Math.sin((gunAngle * Math.PI) / 180);
-                    const bulletY = canvas.height - gunHeight * Math.cos((gunAngle * Math.PI) / 180);
+                        gunAngle = (Math.atan2(deltaX, deltaY) * 180) / Math.PI;
+                        player.roundsFired++;
+                        shootAudio.play();
+                        recoilEffect = 3;
+                        recoilEffectX = gunAngle < 0 ? recoilEffect * Math.cos(((gunAngle + 90) * Math.PI) / 180) : recoilEffect * Math.cos(((gunAngle + 270) * Math.PI) / 180);
+                        recoilEffectY = recoilEffect * Math.cos((gunAngle * Math.PI) / 180);
+                        const bulletSize = canvas.width / 48;
+                        const bulletX = canvas.width / 2 - bulletSize / 2 + gunHeight * Math.sin((gunAngle * Math.PI) / 180);
+                        const bulletY = canvas.height - gunHeight * Math.cos((gunAngle * Math.PI) / 180);
 
-                    bullets.push({ size: bulletSize, x: bulletX, y: bulletY, angle: gunAngle });
+                        bullets.push({ size: bulletSize, x: bulletX, y: bulletY, angle: gunAngle });
 
-                    if (!showGunFire) {
-                        fireImageNo = ++fireImageNo % 3;
-                        showGunFire = true;
+                        if (!showGunFire) {
+                            fireImageNo = ++fireImageNo % 3;
+                            showGunFire = true;
+                        }
                     }
 
                 }
@@ -1148,22 +1151,23 @@ const BorderForce = () => {
                             bomb.released = true;
                             bomb.number--;
                         }
-                    }
+                    } else {
 
-                    player.roundsFired++;
-                    shootAudio.play();
-                    recoilEffect = 3;
-                    recoilEffectX = gunAngle < 0 ? recoilEffect * Math.cos(((gunAngle + 90) * Math.PI) / 180) : recoilEffect * Math.cos(((gunAngle + 270) * Math.PI) / 180);
-                    recoilEffectY = recoilEffect * Math.cos((gunAngle * Math.PI) / 180);
-                    const bulletSize = canvas.width / 48;
-                    const bulletX = canvas.width / 2 - bulletSize / 2 + gunHeight * Math.sin((gunAngle * Math.PI) / 180);
-                    const bulletY = canvas.height - gunHeight * Math.cos((gunAngle * Math.PI) / 180);
+                        player.roundsFired++;
+                        shootAudio.play();
+                        recoilEffect = 3;
+                        recoilEffectX = gunAngle < 0 ? recoilEffect * Math.cos(((gunAngle + 90) * Math.PI) / 180) : recoilEffect * Math.cos(((gunAngle + 270) * Math.PI) / 180);
+                        recoilEffectY = recoilEffect * Math.cos((gunAngle * Math.PI) / 180);
+                        const bulletSize = canvas.width / 48;
+                        const bulletX = canvas.width / 2 - bulletSize / 2 + gunHeight * Math.sin((gunAngle * Math.PI) / 180);
+                        const bulletY = canvas.height - gunHeight * Math.cos((gunAngle * Math.PI) / 180);
 
-                    bullets.push({ size: bulletSize, x: bulletX, y: bulletY, angle: gunAngle });
+                        bullets.push({ size: bulletSize, x: bulletX, y: bulletY, angle: gunAngle });
 
-                    if (!showGunFire) {
-                        fireImageNo = ++fireImageNo % 3;
-                        showGunFire = true;
+                        if (!showGunFire) {
+                            fireImageNo = ++fireImageNo % 3;
+                            showGunFire = true;
+                        }
                     }
                 }
             }
@@ -1373,6 +1377,7 @@ const BorderForce = () => {
                         <span className='tooltip-textbf'>
                             *Your task is to defend a country's border against an invading army.<br />
                             *Tap screen to shoot in the direction you tap.<br />
+                            *The number, 10, on the screen represents the number of bombs in the your possession. Tap it to release a bomb from the base of your gun.<br />
                             *Move finger to any side of the screen to rotate your gun.<br />
                             *Tap 'O' to restart game.<br />
                             *Tap '||' to pause game.<br />
@@ -1383,6 +1388,7 @@ const BorderForce = () => {
                         <span className='tooltip-text-desktopbf'>
                             *Your task is to defend a country's border against an invading army.<br />
                             *Left click the left mouse button to shoot in the direction of your cursor.<br />
+                            *The number, 10, on the screen represents the number of bombs in the your possession. Tap it to release a bomb from the base of your gun.<br />
                             *Move your mouse to aim the gun at any direction.<br />
                             *Click 'O' to restart game.<br />
                             *Click '||' to pause game.<br />

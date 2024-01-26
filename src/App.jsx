@@ -13,6 +13,7 @@ import WhatsTheWord from './pages/whatsTheWord/WhatsTheWord'
 import LongShot from './pages/longShot/LongShot'
 import BorderForce from './pages/borderForce/BorderForce'
 import Electric from './pages/electricEng/Electric'
+import PicVidToArt from './pages/picToArt/PicVidToArt'
 // import FileConverter from './pages/fileConvert/FileConverter'
 
 
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="wordgame" element={<WhatsTheWord />} />
           <Route path="longshot" element={<LongShot />} />
           <Route path="borderForce" element={<BorderForce />} />
+          <Route path="picvidtoart" element={<PicVidToArt />} />
         </Route>
       </Routes>
     </BrowserRouter>

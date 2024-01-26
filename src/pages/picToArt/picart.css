@@ -1,0 +1,150 @@
+.aroundCanvasArt {
+    /* position: absolute; */
+    background-color: black;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+}
+
+.samePosArt {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* top: 0; */
+    position: fixed;
+    background-color: black;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    color: gray;
+    font-size: larger;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.exitArt {
+    color: gray;
+
+}
+
+.imgArt {
+   
+    text-align: center;
+}
+
+.labelDC{
+    padding: 5px;
+}
+
+.buttonC {
+    padding:3px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.arrangeInfo{
+    margin-left: 7%;
+    margin-right: 7%;
+}
+
+.arrangeInfo2{
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.portraitArt {
+    position:relative;
+    border: none;
+    padding-top: 3rem;
+    background-color: black;
+}
+
+.landscapeArt {
+    position:relative;
+    border:solid 1 black;
+    padding-top: 4rem;
+    background-color: black;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.tooltip-textArt {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    width: 70%;
+    color: rgb(22, 41, 56);
+    font-size: 14px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    top: 25px;
+    text-align: left;
+}
+
+.tooltip-text-desktopArt {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    width: 20%;
+    color: rgb(22, 41, 56);
+    font-size: 20px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    top: 25px;
+    text-align: left;
+}
+
+
+
+@media screen and (min-width: 1300px) {
+
+    .aroundCanvasArt {
+        background-color: gray;
+    
+    }
+    
+    .infoArt:hover .tooltip-text-desktopArt {
+        visibility: visible;
+    }
+}
+
+/* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
+@media screen and (max-width: 1280px) {
+
+    .samePosArt {
+        position: fixed;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: 2;
+    }
+
+
+    .infoArt:hover .tooltip-textArt {
+        visibility: visible;
+    }
+
+    .infoArt .tooltip-textArt:hover {
+        display: none;
+    }
+
+
+    .portraitArt {
+        
+        width: 100%;
+       
+    }
+
+    .landscapeArt {
+        width: 32%;
+        margin-left: 34%;
+        margin-right: 34%;
+
+    }
+}

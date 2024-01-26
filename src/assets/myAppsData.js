@@ -1,10 +1,10 @@
 export const MyApps = [
     {
         id:1,
-        image:"/assets/appImages/electric.png",
-        genre:"Electric Power In Nigeria",
+        image:"/assets/appImages/picvidart.png",
+        genre:"Pic/Vid to Art",
         platform:"HTML",
-        link:"/electric#home",
+        link:"/picvidtoart#home",
     },
     {
         id:2,
