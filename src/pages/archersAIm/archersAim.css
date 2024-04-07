@@ -1,0 +1,149 @@
+.aroundCanvasAA {
+    position: absolute;
+    background-color: black;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+}
+
+.samePosAA {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    background-color: black;
+    width: 30%;
+    margin-top:.5%;
+    margin-left: 35%;
+    margin-right: 35%;
+    color: gray;
+    font-size: larger;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.restart1AA {
+    color: gray;
+
+}
+
+.restart2AA {
+    color: gray;
+
+}
+
+.exitAA {
+    color: gray;
+
+}
+
+.nextAA{
+    position: absolute;
+    margin: auto;
+    padding: 1%;
+    background-color: black;
+    color: white;
+    width: 28%;
+    border: 2px solid gray;
+    border-Radius: 5rem;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    top: calc(8.5% * 8);
+    cursor: pointer;
+}
+
+.portraitAA {
+    border: none;
+    padding: 0;
+    background-color: black;
+}
+
+.landscapeAA {
+    border:solid 1 black;
+    padding: 0;
+    background-color: black;
+    width: 30%;
+    height:95%;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.tooltip-textAA {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    width: 70%;
+    color: rgb(22, 41, 56);
+    font-size: 14px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    top: 25px;
+    text-align: left;
+}
+
+.tooltip-text-desktopAA {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    width: 20%;
+    color: rgb(22, 41, 56);
+    font-size: 20px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    top: 25px;
+    text-align: left;
+}
+
+
+
+@media screen and (min-width: 1300px) {
+
+    .aroundCanvasAA {
+        background-color: gray;
+    
+    }
+    
+    .infoAA:hover .tooltip-text-desktopAA {
+        visibility: visible;
+    }
+}
+
+/* =============== MEDIA QUERIES (MEDIUM DEVICES) ============== */
+@media screen and (max-width: 1280px) {
+
+    .samePosAA {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    .infoAA:hover .tooltip-textAA {
+        visibility: visible;
+    }
+
+    .infoAA .tooltip-textAA:hover {
+        display: none;
+    }
+
+
+    .portraitAA {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+       
+    }
+
+    .landscapeAA {
+        padding: 0;
+        width: 32%;
+        margin-left: 34%;
+        margin-right: 34%;
+
+    }
+}

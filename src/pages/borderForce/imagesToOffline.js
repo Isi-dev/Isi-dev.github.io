@@ -1,6 +1,7 @@
 const ImagesArray = [
     { id: 1, image: '/assets/appImages/borderForceSprite.png' },
     { id: 2, image: '/assets/appImages/whatsDword.png' },
+    { id: 3, image: '/assets/appImages/archersAimSprite.png' },
 ];
 
 

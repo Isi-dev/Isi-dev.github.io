@@ -13,30 +13,43 @@ const PicVidToArt = () => {
     const [maxThreshold, setMaxThreshold] = useState(255);
     const [numGrades, setNumGrades] = useState(255);
     const [contrast, setContrast] = useState(10);
-    const [blur, setBlur] = useState(12);
-    const [cblur, setCBlur] = useState(20);
+    const [blur, setBlur] = useState(10);
+    const [cblur, setCBlur] = useState(5);
     const [invert, setInvert] = useState(false);
     const [inputType, setInputType] = useState('grayscale');
     const [original, setOriginal] = useState(false);
     const [outputContainer, setOutputContainer] = useState(null);
     const [outputFrameContainer, setOutputFrameContainer] = useState(null);
-    const [progress, setProgress] = useState(0);
+    const [progressC, setProgress] = useState(false);
+    const [progressB, setProgressB] = useState(false);
+    const [progressFs, setProgressFs] = useState(false);
+    const [progressF, setProgressF] = useState(false);
 
     let count = 0;
 
-
     const handleInputChange = (event) => {
         // Handle changes in input values and update state accordingly
-        const { id, value, type } = event.target;
+        const { id, value, type, checked } = event.target;
+
+        const isValidNumberInput = (value) => {
+            const number = parseInt(value, 10);
+            return !isNaN(number) && isFinite(value);
+        };
+
+        const isValidFloatInput = (value) => {
+            const number = parseFloat(value);
+            return !isNaN(number) && isFinite(value);
+        };
+
         switch (type) {
             case 'checkbox':
                 // For checkboxes, use the "checked" property to update the state
                 switch (id) {
                     case 'invert':
-                        setInvert(!invert);
+                        setInvert(checked);
                         break;
                     case 'original':
-                        setOriginal(!original);
+                        setOriginal(checked);
                         break;
                     // Add more cases for other checkboxes if needed
                     default:
@@ -47,34 +60,47 @@ const PicVidToArt = () => {
                 // For numeric inputs, parse the value and update the state
                 switch (id) {
                     case 'blackThreshold':
-                        setBlackThreshold(parseInt(value, 10));
+                        if (isValidNumberInput(value)) {
+                            setBlackThreshold(parseInt(value, 10));
+                        }
                         break;
                     case 'penLightness':
-                        setPenLightness(parseFloat(value, 10));
+                        if (isValidFloatInput(value)) {
+                            setPenLightness(parseFloat(value, 10));
+                        }
                         break;
                     case 'maxThresholdInput':
-                        setMaxThreshold(parseInt(value, 10));
+                        if (isValidNumberInput(value)) {
+                            setMaxThreshold(parseInt(value, 10));
+                        }
                         break;
                     case 'numGradesInput':
-                        setNumGrades(parseInt(value, 10));
+                        if (isValidNumberInput(value)) {
+                            setNumGrades(parseInt(value, 10));
+                        }
                         break;
                     case 'contrastInput':
-                        setContrast(parseInt(value, 10));
+                        if (isValidNumberInput(value)) {
+                            setContrast(parseInt(value, 10));
+                        }
                         break;
                     case 'blurInput':
                         setBlur(parseInt(value, 10));
                         break;
                     case 'cblurInput':
-                        setCBlur(parseInt(value, 10));
+                        if (isValidNumberInput(value)) {
+                            setCBlur(parseInt(value, 10));
+                        }
                         break;
                     case 'frameInterval':
-                        setFrameInterval(parseInt(value, 10));
+                        if (isValidNumberInput(value)) {
+                            setFrameInterval(parseInt(value, 10));
+                        }
                         break;
                     default:
                         break;
                 }
                 break;
-            // Add more cases for other input types if needed
             default:
                 break;
         }
@@ -94,6 +120,11 @@ const PicVidToArt = () => {
 
     const handleVideoFileChange = (event) => {
         setSelectedVideoFile(event.target.files[0]);
+
+        // if (selectedVideoFile) {
+        //     videoRef.current.src = URL.createObjectURL(selectedVideoFile);
+        // }
+
     }
 
     const handleConvertImage = () => {
@@ -105,6 +136,8 @@ const PicVidToArt = () => {
             alert('Please select an image.');
             return;
         }
+
+        setProgress(true);
 
         // count = 0;
 
@@ -124,7 +157,7 @@ const PicVidToArt = () => {
             img.onload = function () {
                 const inputTypeC = inputType ? inputType : 'color';
 
-                setProgress(0);
+
 
                 const sketchCanvas = applySketchEffect(img, {
                     blackThreshold: parseInt(blackThreshold, 10),
@@ -139,6 +172,8 @@ const PicVidToArt = () => {
                     original: original,
                 });
 
+                setProgress(false);
+
                 if (count > 0) {
                     count = 0;
                     console.log("input error back to " + count);
@@ -149,6 +184,11 @@ const PicVidToArt = () => {
                 // Set the sketch canvas to the output container
                 setOutputContainer(sketchCanvas.toDataURL());
             };
+        };
+
+        reader.onerror = function (e) {
+            // handle error
+            console.error(e);
         };
 
         // Read the image file as a data URL
@@ -168,6 +208,9 @@ const PicVidToArt = () => {
         if (count > 0) {
             return;
         }
+
+
+
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -200,6 +243,9 @@ const PicVidToArt = () => {
             return createCanvasFromImageData(imageData);
         }
 
+        // setProgress(true);
+        // progressC = true;
+
         convertToGrayscale(data2);
         invertPixelValues(data2);
         applyGaussianBlur(data2, img.width, img.height, options.blur);
@@ -227,7 +273,9 @@ const PicVidToArt = () => {
 
             // Invert the pixel values (reverse black and white)
             // if (invert) invertPixelValues(data3);
+            // setProgress(false);
 
+            // stopProgressC = true;
             return createCanvasFromImageData(imageData3);
         }
 
@@ -248,6 +296,10 @@ const PicVidToArt = () => {
         }
 
         // Return the canvas with the sketch
+        // setProgress(false)
+
+
+        // progressC = false;
         return sketchCanvas;
     }
 
@@ -497,7 +549,7 @@ const PicVidToArt = () => {
         try {
             const fileHandle = await window.showDirectoryPicker();
 
-            const inputFolderHandle = await getValidatedDirectoryHandle(fileHandle, 'picsIn');
+            const inputFolderHandle = await getValidatedDirectoryHandle(fileHandle, 'picsart');
             console.log('Obtained file handle:', fileHandle);
 
             // Get all files in the input folder
@@ -518,6 +570,8 @@ const PicVidToArt = () => {
                 alert('No images found in the input folder.');
                 return;
             }
+
+            setProgressB(true);
 
             // Iterate through images and perform batch conversion
             for (let i = 0; i < inputFolderFiles.length; i++) {
@@ -563,6 +617,7 @@ const PicVidToArt = () => {
                 // Read the image file as a data URL
                 reader.readAsDataURL(fileHandle);
             }
+            setProgressB(false);
         } catch (error) {
             console.error(error);
         }
@@ -604,6 +659,8 @@ const PicVidToArt = () => {
             alert('Please load a video first.');
             return;
         }
+
+        setProgressFs(true);
 
         // Create a canvas for drawing video frames
         const canvas = document.createElement('canvas');
@@ -689,6 +746,7 @@ const PicVidToArt = () => {
 
         // Set interval to capture frames
         const captureInterval = setInterval(captureAndSketchFrame, 100);
+        setProgressFs(false);
     };
 
     const handleConvertCurrentFrame = () => {
@@ -698,6 +756,8 @@ const PicVidToArt = () => {
             alert('Please load a video first.');
             return;
         }
+
+        setProgressF(true);
 
         // Create a canvas container
         setOutputFrameContainer('');
@@ -721,8 +781,6 @@ const PicVidToArt = () => {
         frameImage.onload = function () {
             const inputTypeC = inputType ? inputType : 'color';
 
-            setProgress(0);
-
             const sketchCanvas = applySketchEffect(frameImage, {
                 blackThreshold: parseInt(blackThreshold, 10),
                 penLightness: parseFloat(penLightness),
@@ -736,11 +794,14 @@ const PicVidToArt = () => {
                 original: original,
             });
 
+            setProgressF(false);
+
             if (count > 0) {
                 count = 0;
                 console.log("input error back to " + count);
                 return;
             }
+
 
 
             // Set the sketch canvas to the output container
@@ -780,11 +841,17 @@ const PicVidToArt = () => {
             <div className="samePosArt">
                 <div className='infoArt'>i
                     <span className='tooltip-textArt'>
-                        *How to use.<br />
+                        About<br />
+                        *This app converts pictures to sketches or drawings with or without colors<br />
+                        *The default values will result in a sketch<br />
+                        *The higher the picture quality, the better the result.<br />
 
                     </span>
                     <span className='tooltip-text-desktopArt'>
-                        *How to use.<br />
+                        About<br />
+                        *This app converts pictures to sketches or drawings with or without colors<br />
+                        *The default values will result in a sketch<br />
+                        *The higher the picture quality, the better the result.<br />
                     </span>
                 </div>
                 <div>
@@ -796,7 +863,7 @@ const PicVidToArt = () => {
             </div>
             <div
                 className={window.innerHeight > window.innerWidth ? 'portraitArt' : 'landscapeArt'} >
-                <h1>Pic/Vid To Art</h1>
+                <h2>Pic/Vid To Art</h2>
 
                 <br></br>
                 <h3> Conversion Parameters</h3>
@@ -804,40 +871,68 @@ const PicVidToArt = () => {
                 <input type="file" id="imageInput" accept="image/*" onChange={handleFileChange} className='buttonC' />
                 <br></br>
 
+                <div className="tooltipArt">
+                    <span className="info-icon">i</span>
+                    <span className="tooltiptextArt">Enter a value between 10 and 254. The higher the value, the more detailed the image. </span>
+                </div>
+                <label htmlFor="blackThreshold"> Details (10-254): </label>
 
-                <label htmlFor="blackThreshold">Details (10-254): </label>
                 <input type="number" id="blackThreshold" min="10" max="254" value={blackThreshold}
                     onChange={handleInputChange}
                 />
                 <br></br>
 
-                <label htmlFor="penLightness">Sketch (0.1-2.0): </label>
+                <div className="tooltipArt">
+                    <span className="info-icon">i</span>
+                    <span className="tooltiptextArt">Enter a value between 0.1 and 2. The higher the value, the lighter the sketch. </span>
+                </div>
+                <label htmlFor="penLightness"> Sketch (0.1-2.0): </label>
                 <input type="number" id="penLightness" step="0.1" min="0.1" max="2.0" value={penLightness}
                     onChange={handleInputChange}
                 />
                 <br></br>
-
-                <label htmlFor="maxThresholdInput">Pixels Threshold (2-255): </label>
+                <div className="tooltipArt">
+                    <span className="info-icon">i</span>
+                    <span className="tooltiptextArt">Enter a value between 2 and 255. The higher the value, the more grades of black will be displayed. Depending on the image,
+                        nothing may be displayed at values lower than the default </span>
+                </div>
+                <label htmlFor="maxThresholdInput"> Pixels Threshold (2-255): </label>
                 <input type="number" id="maxThresholdInput" min="2" max="255" value={maxThreshold}
                     onChange={handleInputChange} />
                 <br></br>
-
-                <label htmlFor="numGradesInput">Pixels Variation (2-255): </label>
+                <div className="tooltipArt">
+                    <span className="info-icon">i</span>
+                    <span className="tooltiptextArt">Enter a value between 2 and 255. The value chosen divides the Pixels Threshold into equally spaced grayscale variations. This value
+                        should always be less than that set for the pixels threshold. </span>
+                </div>
+                <label htmlFor="numGradesInput"> Pixels Variation (2-255): </label>
                 <input type="number" id="numGradesInput" min="2" max="255" value={numGrades}
                     onChange={handleInputChange} />
                 <br></br>
 
-                <label htmlFor="contrastInput">Contrast (1-20): </label>
+                <div className="tooltipArt">
+                    <span className="info-icon">i</span>
+                    <span className="tooltiptextArt">Enter a value between 1 and 20. The higher the value, the lighter a colored image. </span>
+                </div>
+                <label htmlFor="contrastInput"> Contrast (1-20): </label>
                 <input type="number" id="contrastInput" min="1" max="20" value={contrast}
                     onChange={handleInputChange} />
                 <br></br>
 
-                <label htmlFor="blurInput">Pen Thickness (0-20): </label>
+                <div className="tooltipArt">
+                    <span className="info-icon">i</span>
+                    <span className="tooltiptextArt">Enter a value between 0 and 20. The higher the value, the thicker the lines drawn. </span>
+                </div>
+                <label htmlFor="blurInput"> Pen Thickness (0-20): </label>
                 <input type="number" id="blurInput" min="0" max="20" value={blur}
                     onChange={handleInputChange} />
                 <br></br>
 
-                <label htmlFor="cblurInput">Color Blur (0-40): </label>
+                <div className="tooltipArt">
+                    <span className="info-icon">i</span>
+                    <span className="tooltiptextArt">Enter a value between 0 and 40. The higher the value, the more blurry the image. </span>
+                </div>
+                <label htmlFor="cblurInput"> Color Blur (0-40): </label>
                 <input type="number" id="cblurInput" min="0" max="40" value={cblur}
                     onChange={handleInputChange} />
                 <br></br>
@@ -870,13 +965,18 @@ const PicVidToArt = () => {
                 <br></br>
                 <br></br>
                 <br></br>
-                <h2> Convert the selected Pic</h2>
-                <p className="arrangeInfo">Click the button below to convert the file you chose into a sketch, line Art etc, depending on the conversion parameters. You may choose to download
-                    the resulting image thereafter.</p>
-                <button type="button" onClick={handleConvertImage} className='buttonC'>Convert Pic</button>
-                {progress > 0 && progress < 100 && (
-                    <p>Conversion Progress: {progress.toFixed(2)}%</p>
-                )}
+                <h3> Convert the selected Pic</h3>
+                {/* <p className="arrangeInfo">Click the button below to convert the file you chose into a sketch, line Art etc, depending on the conversion parameters. You may choose to download
+                    the resulting image thereafter.</p> */}
+                <div className="tooltipArt">
+                    <span className="info-icon">i</span>
+                    <span className="tooltiptextArt">Click the convert pic button to convert the file you chose into a sketch, line Art etc, depending on the conversion parameters. You may choose to download
+                        the resulting image thereafter. </span>
+                </div>
+
+                <button type="button" onClick={handleConvertImage} className='buttonC'>  Convert Pic</button>
+                <br></br>
+                {progressC && <div className="loading-spinner"></div>}
                 {outputContainer && (
                     <div >
                         <img src={outputContainer} className='imgArt' alt="Converted" />
@@ -888,18 +988,27 @@ const PicVidToArt = () => {
                 <br></br>
                 <br></br>
                 <br></br>
-                <h2> Convert All Pics In a Folder</h2>
-                <p className="arrangeInfo">Create a folder named 'picsIn' in your pictures folder and place all the pictures you want to convert into folder 'picsIn'.
+                <h3> Convert All Pics In a Folder</h3>
+                {/* <p className="arrangeInfo">Create a folder named 'picsart' in your pictures folder and place all the pictures you want to convert into folder 'picsart'.
                     Click the button below and select the pictures folder. Click 'view files', then 'save changes' on the alerts that appear and the images will be downloaded into your downloads folder.</p>
-                <button type="button" onClick={handleConvertBatchImages} className='buttonC'>Convert & Download Pics</button>
+                <div className="tooltipArt"> */}
+                <div className="tooltipArt">
+                    <span className="info-icon">i</span>
+                    <span className="tooltiptextArt">Create a folder named 'picsart' in your pictures folder and place all the pictures you want to convert into folder 'picsart'.
+                        Click the Convert & Download Pics button and select the pictures folder. Click 'view files', then 'save changes' on the alerts that appear and the images will be downloaded into your downloads folder. </span>
+                </div>
+                <button type="button" onClick={handleConvertBatchImages} className='buttonC'>  Convert & Download Pics</button>
+                <br></br>
+                {progressB && <div className="loading-spinner"></div>}
                 <br></br>
                 <br></br>
                 <br></br>
                 <br></br>
-                <h2> Get Image Frames From Video</h2>
-                <br></br>
+                <h3> Get Image Frames From Video</h3>
+                {/* <br></br> */}
                 <div className="arrangeInfo2">
                     <input type="file" id="videoInput" accept="video/*" onChange={handleVideoFileChange} className='buttonC' />
+                    <br></br>
                     <button type="button" onClick={handleLoadVideo} className='buttonC'>Load Video</button>
                 </div>
                 <br></br>
@@ -909,9 +1018,13 @@ const PicVidToArt = () => {
                 <br></br>
                 <button type="button" onClick={handleConvertFrames} className='buttonC'>Convert & Download Frames</button>
                 <br></br>
+                {progressFs && <div className="loading-spinner"></div>}
+                <br></br>
                 <br></br>
                 < video ref={videoRef} width='400' controls />
                 <button type="button" onClick={handleConvertCurrentFrame} className='buttonC'>Convert Current Frame</button>
+                <br></br>
+                {progressF && <div className="loading-spinner"></div>}
                 <br></br>
                 <br></br>
                 {outputFrameContainer && (

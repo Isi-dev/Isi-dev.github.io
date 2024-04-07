@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 import './whatsTheWord.css'
 import WordsFromDBPromise from './components/wordSet';
+import { WordsAd } from './components/wordsAds';
 import { HashLink as Link } from 'react-router-hash-link';
 import ImagesFromDBPromise from '../borderForce/imagesToOffline';
 
@@ -19,7 +20,7 @@ const WhatsTheWord = () => {
 
         const fetchData = async () => {
             try {
-                const words = await WordsFromDBPromise;          
+                const words = await WordsFromDBPromise;
                 WordSet = Array.from(words);
 
                 const imagesOffline = await ImagesFromDBPromise;
@@ -31,7 +32,7 @@ const WhatsTheWord = () => {
                 setTimeout(() => {
                     initializeComponent();
                 }, 0);
-                
+
             } catch (error) {
                 console.error(error);
                 setLoading(false); // Set loading to false in case of an error
@@ -75,6 +76,8 @@ const WhatsTheWord = () => {
             const canvasTopBorder = canvas.getBoundingClientRect().top;
             const correctMouseX = canvas.width / canvas.getBoundingClientRect().width;
             const correctMouseY = canvas.height / canvas.getBoundingClientRect().height;
+            const adStartY = canvas.height / 5;
+            const clickAdY = canvas.height * 0.75;
 
             var allImages = new Image();
             if (ImagesOffline && ImagesOffline.length > 0) {
@@ -142,8 +145,9 @@ const WhatsTheWord = () => {
             }
 
             class LockKeySet {
-                constructor(wordSets) {
+                constructor(wordSets, ads) {
                     this.wordSets = wordSets;
+                    this.ads = ads;
                     this.currentWordSetIndex = 0;
                     if (typeof (Storage) !== "undefined") {
                         this.currentWordSetIndex = JSON.parse(localStorage.getItem('startFromLast')) || this.currentWordSetIndex;
@@ -188,6 +192,17 @@ const WhatsTheWord = () => {
                     context.fillText(line, x, y);
                 }
 
+
+                drawAd() {
+                    if (this.currentWordSetIndex > 0 && (this.currentWordSetIndex) % 20 === 0) {
+                        const dataNum = (this.currentWordSetIndex) / 20 - 1;
+
+                        var adImage = new Image();
+                        adImage.src = this.ads[dataNum].image;
+                        context.drawImage(adImage, 0, 0, 300, 450, 0, adStartY, canvas.width, canvas.height - adStartY);
+                    }
+                }
+
                 draw() {
                     if (this.show) {
                         context.textAlign = "center";
@@ -204,6 +219,9 @@ const WhatsTheWord = () => {
                         });
                     }
                 }
+
+
+
 
                 handleTouchStart(event) {
                     event.preventDefault();
@@ -222,6 +240,16 @@ const WhatsTheWord = () => {
                             break;
                         }
                     };
+
+                    //handle clicking of ads
+                    if (touchY > clickAdY) {
+                        if (this.currentWordSetIndex > 0 && (this.currentWordSetIndex) % 20 === 0) {
+                            const dataNum = (this.currentWordSetIndex) / 20 - 1;
+                            let adLink = this.ads[dataNum].link;
+                            window.open(adLink, '_blank');
+                            // window.location.href = adLink;
+                        }
+                    }
                 }
 
                 handleTouchMove(event) {
@@ -317,6 +345,16 @@ const WhatsTheWord = () => {
                             break;
                         }
                     };
+
+                    //handle clicking of ads
+                    if (mousePosY > clickAdY) {
+                        if (this.currentWordSetIndex > 0 && (this.currentWordSetIndex) % 20 === 0) {
+                            const dataNum = (this.currentWordSetIndex) / 20 - 1;
+                            let adLink = this.ads[dataNum].link;
+                            window.open(adLink, '_blank');
+                            // window.location.href = adLink;
+                        }
+                    }
                 }
 
                 handleMouseMove(event) {
@@ -399,7 +437,7 @@ const WhatsTheWord = () => {
 
             }
 
-            var lockKey = new LockKeySet(WordSet);
+            var lockKey = new LockKeySet(WordSet, WordsAd);
 
             var gate = {
                 posX1: 0,
@@ -573,6 +611,7 @@ const WhatsTheWord = () => {
 
                 if (pauseRef.current.textContent === "||") {
                     //update Stuff
+                    lockKey.drawAd();
                     gate.open();
                     escapee.draw();
                     catcher.draw();
@@ -616,9 +655,9 @@ const WhatsTheWord = () => {
     if (loading) {
         return (
             <>
-            <div>
-                <p style={{ textalign: 'center' }}>Loading...</p>
-            </div>
+                <div>
+                    <p style={{ textalign: 'center' }}>Loading...</p>
+                </div>
             </>
         );
     }

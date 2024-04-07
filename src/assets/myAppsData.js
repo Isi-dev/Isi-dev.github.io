@@ -1,10 +1,11 @@
 export const MyApps = [
     {
         id:1,
-        image:"/assets/appImages/picvidart.png",
-        genre:"Pic/Vid to Art",
+        image:"/assets/appImages/archerAim.png",
+        genre:"Archer's Aim",
         platform:"HTML",
-        link:"/picvidtoart#home",
+        link:"/archersAim#home",
+       
     },
     {
         id:2,
@@ -50,10 +51,10 @@ export const MyApps = [
     },
     {
         id:8,
-        image:"/assets/appImages/brainGame.png",
-        genre:"Brain Exercise Game",
-        platform:"Android",
-        link:"https://play.google.com/store/apps/details?id=com.tHN.game.android",
+        image:"/assets/appImages/picvidart.png",
+        genre:"Pic/Vid to Art",
+        platform:"HTML",
+        link:"/picvidtoart#home",
     },
     {
         id:9,
