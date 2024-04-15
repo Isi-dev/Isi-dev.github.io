@@ -105,7 +105,7 @@ const WordSet = [
   { id: 104, correctWord: ['D', 'E', 'B', 'U', 'N', 'K'], scrambledWord: ['D', 'U', 'B', 'E', 'N', 'K'], hint: "Hint: (expose the falseness of a belief or idea. It was easy to _ the conspiracy theory.)", audio: '/assets/wordSound/debunk.mp3' },
   { id: 105, correctWord: ['C', 'R', 'A', 'F', 'T', 'Y'], scrambledWord: ['C', 'R', 'Y', 'F', 'T', 'A'], hint: "Hint: (clever at achieving goals through deceit. He is indeed a _ con artist.)", audio: '/assets/wordSound/crafty.mp3' },
   { id: 106, correctWord: ['C', 'O', 'M', 'P', 'E', 'L'], scrambledWord: ['P', 'O', 'M', 'C', 'E', 'L'], hint: "Hint: (strongly persuade someone. His sincerity and conviction _ us to support his cause.)", audio: '/assets/wordSound/compel.mp3' },
-  { id: 107, correctWord: ['D', 'E', 'C', 'E', 'I', 'T'], scrambledWord: ['D', 'E', 'C', 'E', 'I', 'T'], hint: "Hint: (act of misleading or tricking others. Her _ was uncovered from the inconsistencies in her claims.)", audio: '/assets/wordSound/deceit.mp3' },
+  { id: 107, correctWord: ['D', 'E', 'C', 'E', 'I', 'T'], scrambledWord: ['C', 'E', 'D', 'E', 'I', 'T'], hint: "Hint: (act of misleading or tricking others. Her _ was uncovered from the inconsistencies in her claims.)", audio: '/assets/wordSound/deceit.mp3' },
   { id: 108, correctWord: ['E', 'N', 'T', 'A', 'I', 'L'], scrambledWord: ['L', 'N', 'T', 'A', 'I', 'E'], hint: "Hint: (involve or require. Completing the project will _ long hours of work.)", audio: '/assets/wordSound/entail.mp3' },
   { id: 109, correctWord: ['E', 'X', 'O', 'T', 'I', 'C'], scrambledWord: ['O', 'X', 'E', 'T', 'I', 'C'], hint: "Hint: (foreign or unusual with a sense of intrigue or fascination. The tropical island was known for its _ wildlife.)", audio: '/assets/wordSound/exotic.mp3' },
   { id: 110, correctWord: ['E', 'N', 'G', 'A', 'G', 'E'], scrambledWord: ['A', 'N', 'G', 'E', 'G', 'E'], hint: "Hint: (occupy someone's attention. The teacher tried to _ the students in a discussion on communism.)", audio: '/assets/wordSound/engage.mp3' },
@@ -138,13 +138,189 @@ const WordSet = [
   { id: 137, correctWord: ['S', 'C', 'H', 'I', 'S', 'M'], scrambledWord: ['M', 'C', 'H', 'S', 'S', 'I'], hint: "Hint: (division within a group, typically due to different opinions. Disagreement over immigration policy led to the _ in the party.)", audio: '/assets/wordSound/schism.mp3' },
   { id: 138, correctWord: ['R', 'E', 'F', 'U', 'G', 'E'], scrambledWord: ['U', 'E', 'F', 'R', 'G', 'E'], hint: "Hint: (state or place of safety. We found _ in a cave.)", audio: '/assets/wordSound/refuge.mp3' },
   { id: 139, correctWord: ['S', 'C', 'A', 'T', 'H', 'E'], scrambledWord: ['A', 'C', 'T', 'S', 'H', 'E'], hint: "Hint: (harm or damage something, or criticize harshly. Don began to _ the artist's work, calling it uninspired and forgettable.)", audio: '/assets/wordSound/scathe.mp3' },
-  { id: 140, correctWord: ['R', 'E', 'L', 'I', 'S', 'H'], scrambledWord: ['L', 'E', 'R', 'I', 'S', 'H'], hint: "Hint: (great enjoyment. They ate the food with relish.)", audio: '/assets/wordSound/relish.mp3' },
+  { id: 140, correctWord: ['R', 'E', 'L', 'I', 'S', 'H'], scrambledWord: ['L', 'E', 'R', 'I', 'S', 'H'], hint: "Hint: (great enjoyment. They ate the food with _.)", audio: '/assets/wordSound/relish.mp3' },
   { id: 141, correctWord: ['S', 'C', 'A', 'N', 'T', 'Y'], scrambledWord: ['T', 'A', 'S', 'C', 'N', 'Y'], hint: "Bonus: (small or insufficient. Historical records provide scanty details about the ancient civilization.)", audio: '/assets/wordSound/scanty.mp3' },
   { id: 142, correctWord: ['S', 'U', 'L', 'L', 'E', 'N'], scrambledWord: ['L', 'U', 'S', 'L', 'E', 'N'], hint: "Hint: (gloomy, depressed mood. He gave me a _ look.)", audio: '/assets/wordSound/sullen.mp3' },
   { id: 143, correctWord: ['S', 'H', 'R', 'E', 'W', 'D'], scrambledWord: ['R', 'E', 'W', 'S', 'H', 'D'], hint: "Hint: (having sharp powers of judgment. He was a _ investigator.)", audio: '/assets/wordSound/shrewd.mp3' },
   { id: 144, correctWord: ['T', 'H', 'R', 'I', 'F', 'T'], scrambledWord: ['I', 'H', 'R', 'T', 'F', 'T'], hint: "Hint: (careful management of resources. His _ enabled him build two houses from his average salary.)", audio: '/assets/wordSound/thrift.mp3' },
   { id: 145, correctWord: ['S', 'T', 'A', 'P', 'L', 'E'], scrambledWord: ['P', 'A', 'S', 'T', 'L', 'E'], hint: "Hint: (basic and essential consumables. Bread and milk are _ items in most households.)", audio: '/assets/wordSound/staple.mp3' },
   { id: 146, correctWord: ['S', 'U', 'B', 'T', 'L', 'E'], scrambledWord: ['B', 'U', 'S', 'T', 'L', 'E'], hint: "Hint: (difficult to detect or grasp; not obvious. Jane's compliment was so _ that I almost missed it.)", audio: '/assets/wordSound/subtle.mp3' },
+  {
+    id: 147,
+    correctWord: ['T', 'R', 'I', 'F', 'L', 'E'],
+    scrambledWord: ['I', 'T', 'F', 'E', 'L', 'R'],
+    hint: "Hint: (something of little value or importance. Don't waste your time on such a _ matter.)",
+    audio: '/assets/wordSound/trifle.mp3'
+  },
+  {
+    id: 148,
+    correctWord: ['V', 'I', 'A', 'B', 'L', 'E'],
+    scrambledWord: ['A', 'I', 'E', 'L', 'V', 'B'],
+    hint: "Hint: (capable of working successfully. The business plan seemed _.)",
+    audio: '/assets/wordSound/viable.mp3'
+  },
+  {
+    id: 149,
+    correctWord: ['W', 'I', 'L', 'F', 'U', 'L'],
+    scrambledWord: ['F', 'I', 'L', 'W', 'U', 'L'],
+    hint: "Hint: (deliberate and intentional, often in a stubborn or headstrong manner. Tom's _ disregard for authority often got him into trouble.)",
+    audio: '/assets/wordSound/wilful.mp3'
+  },
+  {
+    id: 150,
+    correctWord: ['Z', 'E', 'A', 'L', 'O', 'T'],
+    scrambledWord: ['O', 'Z', 'A', 'T', 'E', 'L'],
+    hint: "Hint: (a person who is fanatical and uncompromising in pursuit of their religious, political, or other ideals. The political _ would not listen to any opposing viewpoints.)",
+    audio: '/assets/wordSound/zealot.mp3'
+  },
+  {
+    id: 151,
+    correctWord: ['A', 'F', 'F', 'E', 'C', 'T'],
+    scrambledWord: ['T', 'A', 'C', 'E', 'F', 'F'],
+    hint: "Hint: (to produce an effect or change in someone or something. The new policy will _ everyone in the company.)",
+    audio: '/assets/wordSound/affect.mp3'
+  },
+  { 
+    id: 152, 
+    correctWord: ['A', 'N', 'O', 'I', 'N', 'T'], 
+    scrambledWord: ['N', 'A', 'I', 'O', 'T', 'N'], 
+    hint: "Hint: (to smear or rub with oil, typically as part of a religious ceremony. The priest will _ the newborn with holy oil.)", 
+    audio: '/assets/wordSound/anoint.mp3' 
+  },
+  { 
+    id: 153, 
+    correctWord: ['D', 'I', 'L', 'A', 'T', 'E'], 
+    scrambledWord: ['I', 'D', 'A', 'E', 'L', 'T'], 
+    hint: "Hint: (to make or become wider, larger, or more open. The doctor will use eye drops to _ your pupils.)", 
+    audio: '/assets/wordSound/dilate.mp3' 
+  },
+  { 
+    id: 154, 
+    correctWord: ['A', 'R', 'T', 'F', 'U', 'L'], 
+    scrambledWord: ['T', 'A', 'R', 'U', 'F', 'L'], 
+    hint: "Hint: (clever or skillful, especially in a deceitful way. The con artist's _ manipulation of the facts fooled many.)", 
+    audio: '/assets/wordSound/artful.mp3' 
+  },
+  { 
+    id: 155, 
+    correctWord: ['D', 'I', 'C', 'T', 'U', 'M'], 
+    scrambledWord: ['I', 'D', 'T', 'U', 'M', 'C'], 
+    hint: "Hint: (a formal pronouncement from an authoritative source. The king issued a _ declaring martial law.)", 
+    audio: '/assets/wordSound/dictum.mp3' 
+  },
+  { 
+    id: 156, 
+    correctWord: ['A', 'S', 'T', 'U', 'T', 'E'], 
+    scrambledWord: ['T', 'A', 'S', 'U', 'E', 'T'], 
+    hint: "Hint: (having or showing an ability to accurately assess situations or people and turn this to one's advantage. The _ businessman always knew the best deals.)", 
+    audio: '/assets/wordSound/astute.mp3' 
+  },
+  { 
+    id: 157, 
+    correctWord: ['D', 'E', 'X', 'T', 'E', 'R'], 
+    scrambledWord: ['E', 'D', 'X', 'T', 'E', 'R'], 
+    hint: "Hint: (on or starting from the wearer's right. The coat's _ pocket was where he always kept his keys for easy access.)", 
+    audio: '/assets/wordSound/dexter.mp3' 
+  },
+  { 
+    id: 158, 
+    correctWord: ['B', 'A', 'N', 'T', 'E', 'R'], 
+    scrambledWord: ['A', 'B', 'T', 'E', 'R', 'N'], 
+    hint: "Hint: (the playful and friendly exchange of teasing remarks. The group engaged in lighthearted _ during the game.)", 
+    audio: '/assets/wordSound/banter.mp3' 
+  },
+  { 
+    id: 159, 
+    correctWord: ['C', 'A', 'N', 'D', 'O', 'R'], 
+    scrambledWord: ['A', 'C', 'N', 'R', 'O', 'D'], 
+    hint: "Hint: (the quality of being open and honest in expression; frankness. His _ was appreciated in the board meeting.)", 
+    audio: '/assets/wordSound/candor.mp3' 
+  },
+  { 
+    id: 160, 
+    correctWord: ['C', 'A', 'L', 'L', 'O', 'W'], 
+    scrambledWord: ['A', 'L', 'W', 'L', 'C', 'O'], 
+    hint: "Hint: (inexperienced and immature. His _ behavior showed that he lacked life experience.)", 
+    audio: '/assets/wordSound/callow.mp3' 
+  },
+  { 
+    id: 161, 
+    correctWord: ['C', 'A', 'N', 'D', 'I', 'D'], 
+    scrambledWord: ['A', 'C', 'D', 'D', 'I', 'N'], 
+    hint: "Bonus: (truthful and straightforward; frank. She appreciated his candid opinion on the matter.)", 
+    audio: '/assets/wordSound/candid.mp3' 
+  },
+  { 
+    id: 162, 
+    correctWord: ['L', 'E', 'E', 'W', 'A', 'Y'], 
+    scrambledWord: ['E', 'L', 'Y', 'W', 'A', 'E'], 
+    hint: "Hint: (the amount of freedom to move or act that is available. The teacher allowed some _ in choosing the topic for the essay.)", 
+    audio: '/assets/wordSound/leeway.mp3' 
+  },
+  { 
+    id: 163, 
+    correctWord: ['I', 'N', 'D', 'I', 'C', 'T'], 
+    scrambledWord: ['N', 'I', 'T', 'I', 'C', 'D'], 
+    hint: "Hint: (to formally accuse of or charge with a serious crime. The grand jury decided to _ the suspect on multiple counts of fraud.)", 
+    audio: '/assets/wordSound/indict.mp3' 
+  },
+  { 
+    id: 164, 
+    correctWord: ['I', 'M', 'P', 'U', 'G', 'N'], 
+    scrambledWord: ['P', 'I', 'U', 'G', 'M', 'N'], 
+    hint: "Hint: (to challenge the validity or honesty of a statement or motive. The lawyer sought to _ the witness's credibility.)", 
+    audio: '/assets/wordSound/impugn.mp3' 
+  },
+  { 
+    id: 165, 
+    correctWord: ['H', 'Y', 'B', 'R', 'I', 'D'], 
+    scrambledWord: ['Y', 'B', 'R', 'D', 'I', 'H'], 
+    hint: "Hint: (a thing made by combining two different elements. The car is a _ of electric and gasoline-powered engines.)", 
+    audio: '/assets/wordSound/hybrid.mp3' 
+  },
+  { 
+    id: 166, 
+    correctWord: ['H', 'A', 'R', 'R', 'O', 'W'], 
+    scrambledWord: ['A', 'R', 'O', 'H', 'W', 'R'], 
+    hint: "Hint: (to cause distress or torment. The constant criticism seemed to _ her spirit.)", 
+    audio: '/assets/wordSound/harrow.mp3' 
+  },
+  { 
+    id: 167, 
+    correctWord: ['H', 'A', 'M', 'P', 'E', 'R'], 
+    scrambledWord: ['A', 'M', 'R', 'P', 'E', 'H'], 
+    hint: "Hint: (to hinder or obstruct the progress of. The heavy rain _ed our plans for a picnic.)", 
+    audio: '/assets/wordSound/hamper.mp3' 
+  },
+  { 
+    id: 168, 
+    correctWord: ['F', 'U', 'S', 'I', 'O', 'N'], 
+    scrambledWord: ['U', 'F', 'I', 'S', 'O', 'N'], 
+    hint: "Hint: (the process or result of joining two or more things together to form a single entity. The restaurant offers a _ of different cuisines.)", 
+    audio: '/assets/wordSound/fusion.mp3' 
+  },
+  { 
+    id: 169, 
+    correctWord: ['F', 'O', 'S', 'T', 'E', 'R'], 
+    scrambledWord: ['O', 'T', 'E', 'S', 'F', 'R'], 
+    hint: "Hint: (to encourage or promote the development of something. The organization works to _ a sense of community among local residents.)", 
+    audio: '/assets/wordSound/foster.mp3' 
+  },
+  { 
+    id: 170, 
+    correctWord: ['F', 'E', 'R', 'V', 'O', 'R'], 
+    scrambledWord: ['E', 'R', 'V', 'O', 'F', 'R'], 
+    hint: "Hint: (intense and passionate feeling. She spoke with great _ about her love for the arts.)", 
+    audio: '/assets/wordSound/fervor.mp3' 
+  },
+  { 
+    id: 171, 
+    correctWord: ['E', 'N', 'A', 'M', 'O', 'R'], 
+    scrambledWord: ['N', 'A', 'R', 'E', 'O', 'M'], 
+    hint: "Hint: (to fill with love or fascination. He became _ed with the idea of traveling to exotic locations.)", 
+    audio: '/assets/wordSound/enamor.mp3' 
+  },
+
   // { id: 147, correctWord: ['B', 'E', 'N', 'I', 'G', 'N'], scrambledWord: ['Y', 'I', 'W', 'T', 'T', 'Y'], hint: "Hint: (persuade.)", audio: '/assets/wordSound/witty.mp3' },
 
 

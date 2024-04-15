@@ -113,6 +113,62 @@ const ArchersAim = () => {
                 objectsCreatedNo++;
             }
 
+            //Create explosion effect
+            // Define the explosion particles
+            let particles = [];
+
+            // Create a particle class
+            class Particle {
+                constructor(x, y, radius, color, velocity) {
+                    this.x = x;
+                    this.y = y;
+                    this.radius = radius;
+                    this.color = color;
+                    this.velocity = velocity;
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                update() {
+                    this.x += this.velocity.x;
+                    this.y += this.velocity.y;
+                }
+            }
+
+
+            // Create an explosion function
+            function createExplosion(x, y, rad, numParticles, speedFactor1, speedFactor2, colorGroup) {
+                for (let i = 0; i < numParticles; i++) {
+                    const angle = (Math.PI * 2) * (i / numParticles);
+                    const speed = speedFactor1 + Math.random() * speedFactor2;
+                    const velocity = {
+                        x: Math.cos(angle) * speed,
+                        y: Math.sin(angle) * speed
+                    };
+                    // const radius = 3;
+                    const radius = rad;
+                    // const color = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`;
+                    const isBlack = Math.random() <= 0.2;
+                    const isWhite = Math.random() >= 0.8;
+                    const isRed = Math.random() < 0.8 && Math.random() >= 0.5;
+                    let color = 'yellow';
+                    if (colorGroup === 1)
+                        color = isRed ? 'pink' : isWhite ? 'white' : isBlack ? 'orange' : 'yellow';
+                    if (colorGroup === 2)
+                        color = isRed ? 'lightgreen' : isWhite ? 'green' : isBlack ? 'yellow' : 'purple';
+                    if (colorGroup === 3)
+                        color = isRed ? 'red' : isWhite ? 'white' : isBlack ? 'yellow' : 'blue';
+                    particles.push(new Particle(x, y, radius, color, velocity));
+                }
+            }
+
 
 
             // Game loop
@@ -123,7 +179,7 @@ const ArchersAim = () => {
                     bullets = [];
                     objectsToHit = [];
                     objectsCreatedNo = 0;
-
+                    particles = [];
 
                 };
 
@@ -144,35 +200,87 @@ const ArchersAim = () => {
                             const colNo = Math.random();
                             // console.log(colNo);
                             if (colNo < 0.5) color = "yellow";
-                            createObject("circle", Math.random() * canvas.width * 0.8, canvas.height / 10, 0, 0, canvas.height / 10, canvas.width / 10, canvas.width / 10, color);
+                            createObject("circle", Math.random() * canvas.width * 0.8 + canvas.width / 10, canvas.height / 10, 0, 0, canvas.height / 10, canvas.width / 10, canvas.width / 10, color);
                         }
+
+                        else if (objectsCreatedNo > 20 && objectsCreatedNo <= 60) {
+                            let color = "pink";
+                            const colNo = Math.random();
+                            // console.log(colNo);
+                            if (colNo < 0.5) color = "yellow";
+                            createObject("circle", Math.random() * canvas.width / 2 * 0.7 + canvas.width / 10, canvas.height / 10 + canvas.height / 3 * Math.random(), 0, 0, canvas.height / 10, canvas.width / 10, canvas.width / 10, color);
+                            color = "green";
+                            if (colNo < 0.5) color = "purple";
+                            createObject("circle2", canvas.width / 2 + Math.random() * canvas.width / 2 * 0.8, canvas.height / 10 + canvas.height / 3 * Math.random(), 0, 0, canvas.height / 10, canvas.width / 10, canvas.width / 10, color);
+                        }
+
+                        else if (objectsCreatedNo > 60 && objectsCreatedNo <= 100) {
+                            let color = "pink";
+                            const colNo = Math.random();
+                            // console.log(colNo);
+                            if (colNo < 0.5) color = "yellow";
+                            createObject("circle", Math.random() * canvas.width / 3 * 0.7 + canvas.width / 10, canvas.height / 10 + canvas.height / 3 * Math.random(), 0, 0, canvas.height / 10, canvas.width / 10, canvas.width / 10, color);
+                            color = "green";
+                            if (colNo < 0.5) color = "purple";
+                            createObject("circle2", canvas.width / 3 + Math.random() * canvas.width / 3 * 0.8, canvas.height / 10 + canvas.height / 3 * Math.random(), 0, 0, canvas.height / 10, canvas.width / 10, canvas.width / 10, color);
+                            color = "red";
+                            if (colNo < 0.5) color = "yellow";
+                            createObject("circle3", 2 * canvas.width / 3 + Math.random() * canvas.width / 3 * 0.8, canvas.height / 10 + canvas.height / 3 * Math.random(), 0, 0, canvas.height / 10, canvas.width / 10, canvas.width / 10, color);
+
+                            // console.log(objectsCreatedNo);
+                        }
+
                         objectAppearanceDelay = 0;
                     }
 
                     if (objectsToHit.length > 0) {
-                        //First 10 circles
-                        if (objectsCreatedNo <= 20) {
-                            objectsToHit.forEach((obj) => {
-                                ctx.beginPath();
+                        //First 20 circles
+                        // if (objectsCreatedNo <= 20) {
+                        objectsToHit.forEach((obj) => {
+
+                            ctx.beginPath();
+                            if (obj.make === 'circle') {
                                 if (obj.color === "pink")
                                     ctx.fillStyle = "yellow";
                                 else ctx.fillStyle = "pink";
-                                ctx.arc(obj.x, obj.y, obj.width / 1.5, 0, 2 * Math.PI);
-                                ctx.fill();
 
-                                ctx.beginPath();
-                                ctx.fillStyle = obj.color;
-                                ctx.strokeStyle = "black";
-                                ctx.arc(obj.x, obj.y, obj.width / 2, 0, 2 * Math.PI);
-                                ctx.fill();
-                                ctx.stroke();
+                            }
 
-                                ctx.beginPath();
+                            if (obj.make === 'circle2') {
+                                if (obj.color === "green")
+                                    ctx.fillStyle = "purple";
+                                else ctx.fillStyle = "green";
+                            }
+
+                            if (obj.make === 'circle3') {
+                                if (obj.color === "red")
+                                    ctx.fillStyle = "yellow";
+                                else ctx.fillStyle = "red";
+                            }
+
+
+                            ctx.arc(obj.x, obj.y, obj.width / 1.5, 0, 2 * Math.PI);
+                            ctx.fill();
+
+                            ctx.beginPath();
+                            ctx.fillStyle = obj.color;
+                            ctx.strokeStyle = "black";
+                            ctx.arc(obj.x, obj.y, obj.width / 2, 0, 2 * Math.PI);
+                            ctx.fill();
+                            ctx.stroke();
+
+                            ctx.beginPath();
+                            if (obj.make === 'circle')
                                 ctx.fillStyle = 'brown';
-                                ctx.arc(obj.x, obj.y, obj.width / 15, 0, 2 * Math.PI);
-                                ctx.fill();
-                            });
-                        }
+                            if (obj.make === 'circle2')
+                                ctx.fillStyle = 'yellow';
+                            if (obj.make === 'circle3')
+                                ctx.fillStyle = 'blue';
+                            ctx.arc(obj.x, obj.y, obj.width / 15, 0, 2 * Math.PI);
+                            ctx.fill();
+
+                        });
+                        // }
                     }
 
 
@@ -199,8 +307,11 @@ const ArchersAim = () => {
                                 (
                                     bullet.y <= obj.y + obj.height / 2 && bullet.y > obj.y - obj.height / 4)
                             ) {
+                                if (obj.make === 'circle') createExplosion(obj.x, obj.y, 3, 100, 10, 10, 1);
+                                if (obj.make === 'circle2') createExplosion(obj.x, obj.y, 3, 100, 10, 10, 2);
+                                if (obj.make === 'circle3') createExplosion(obj.x, obj.y, 3, 100, 10, 10, 3);
                                 objectsToHit.splice(index, 1);
-                                bullet.speed = 3;
+                                bullet.speed = 4;
                             }
                         });
 
@@ -213,13 +324,21 @@ const ArchersAim = () => {
                     });
 
                     if (!player.arrowAim) {
-                        if (player.backToAim++ > 30) {
+                        if (player.backToAim++ > 25) {
                             player.arrowAim = true;
                             player.backToAim = 0;
                         }
                     }
 
-
+                    //Show and update particles
+                    for (let i = 0; i < particles.length; i++) {
+                        particles[i].update();
+                        particles[i].draw();
+                        if (particles[i].x <= 0 || particles[i].x >= canvas.width || particles[i].y <= 0 || particles[i].y >= canvas.height) {
+                            particles.splice(i, 1);
+                            i--;
+                        }
+                    }
 
 
 
@@ -288,7 +407,7 @@ const ArchersAim = () => {
                 const arrowY = canvas.height - (sArcherHeight + arrowHeight) * Math.cos(((ang) * Math.PI) / 180);
 
                 if (player.arrowAim) {
-                    bullets.push({ width: arrowWidth, height: arrowHeight, x: arrowX, y: arrowY, angle: ang, speed:4 });
+                    bullets.push({ width: arrowWidth, height: arrowHeight, x: arrowX, y: arrowY, angle: ang, speed: 5 });
                     player.arrowAim = false;
                 }
                 initialTouchX = null; // Reset the initial touch position on touchend
@@ -407,7 +526,7 @@ const ArchersAim = () => {
                 <canvas
                     ref={canvasRef} className={window.innerHeight > window.innerWidth ? 'portraitAA' : 'landscapeAA'}
 
-                    style={{ backgroundColor: 'skyblue' }}
+                    style={{ backgroundColor: 'lightblue' }}
                 ></canvas>
             </div>
         );

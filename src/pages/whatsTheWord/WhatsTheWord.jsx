@@ -154,7 +154,7 @@ const WhatsTheWord = () => {
                     }
 
                     //For testing
-                    //   this.currentWordSetIndex = 126;
+                      this.currentWordSetIndex = 150;
 
                     this.show = true;
                     this.droppedInLock = false;
